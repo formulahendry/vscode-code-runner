@@ -13,14 +13,11 @@
         "Other"
     ],
     "keywords": [
-        "code",
-        "run",
         "javascript",
         "php",
         "python",
         "perl",
-        "ruby",
-        "go"
+        "ruby"
     ],
     "bugs": {
         "url": "https://github.com/formulahendry/vscode-code-runner/issues",
