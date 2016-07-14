@@ -4,6 +4,7 @@
     "description": "Run code snippet/file for multiple languages",
     "version": "0.0.1",
     "publisher": "formulahendry",
+    "icon": "images/logo.png",
     "engines": {
         "vscode": "^1.0.0"
     },
