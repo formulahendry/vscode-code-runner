@@ -1,0 +1,89 @@
+{
+    "name": "code-runner",
+    "displayName": "Code Runner",
+    "description": "Run code snippet/file for multiple languages",
+    "version": "0.0.1",
+    "publisher": "formulahendry",
+    "engines": {
+        "vscode": "^1.0.0"
+    },
+    "categories": [
+        "Languages",
+        "Other"
+    ],
+    "keywords": [
+        "code",
+        "run",
+        "javascript",
+        "php",
+        "python",
+        "perl",
+        "ruby",
+        "go"
+    ],
+    "bugs": {
+        "url": "https://github.com/formulahendry/vscode-code-runner/issues",
+        "email": "formulahendry@gmail.com"
+    },
+    "homepage": "https://github.com/formulahendry/vscode-code-runner/blob/master/README.md",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/formulahendry/vscode-code-runner.git"
+    },
+    "activationEvents": [
+        "onCommand:code-runner.run"
+    ],
+    "main": "./out/src/extension",
+    "contributes": {
+        "commands": [
+            {
+                "command": "code-runner.run",
+                "title": "Run Code"
+            },
+            {
+                "command": "code-runner.stop",
+                "title": "Stop Code Run"
+            }
+        ],
+        "keybindings": [
+            {
+                "command": "code-runner.run",
+                "key": "ctrl+alt+n"
+            },
+            {
+                "command": "code-runner.stop",
+                "key": "ctrl+alt+m"
+            }
+        ],
+        "configuration": {
+            "type": "object",
+            "title": "Run Code configuration",
+            "properties": {
+                "code-runner.executorMap": {
+                    "type": "object",
+                    "default": {
+                        "javascript": "node",
+                        "php": "php",
+                        "python": "python",
+                        "perl": "perl",
+                        "ruby": "ruby",
+                        "go": "go run"
+                    },
+                    "description": "Set the executor of each language."
+                }
+            }
+        }
+    },
+    "scripts": {
+        "vscode:prepublish": "node ./node_modules/vscode/bin/compile",
+        "compile": "node ./node_modules/vscode/bin/compile -watch -p ./",
+        "postinstall": "node ./node_modules/vscode/bin/install"
+    },
+    "dependencies": {
+        "tree-kill": "^1.1.0"
+    },
+    "devDependencies": {
+        "typescript": "^1.8.5",
+        "vscode": "^0.11.0"
+    }
+}
