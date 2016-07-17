@@ -2,7 +2,7 @@
 
 [![Marketplace Version](http://vsmarketplacebadge.apphb.com/version/formulahendry.code-runner.svg)](https://marketplace.visualstudio.com/items?itemName=formulahendry.code-runner) [![Installs](http://vsmarketplacebadge.apphb.com/installs/formulahendry.code-runner.svg)](https://marketplace.visualstudio.com/items?itemName=formulahendry.code-runner) [![Rating](http://vsmarketplacebadge.apphb.com/rating/formulahendry.code-runner.svg)](https://marketplace.visualstudio.com/items?itemName=formulahendry.code-runner) [![Build Status](https://travis-ci.org/formulahendry/vscode-code-runner.svg?branch=master)](https://travis-ci.org/formulahendry/vscode-code-runner)
 
-Run code snippet or code file for multiple languages: **javascript, php, python, perl, ruby, go, lua, groovy**
+Run code snippet or code file for multiple languages: **javascript, php, python, perl, ruby, go, lua, groovy, powershell, bat/cmd, bash/sh**
 
 ## Features
 
@@ -37,6 +37,9 @@ e.g. To set the interpreter PATH for ruby and php:
 ```
 
 ## Change Log
+### 0.0.3
+* Add support for powershell, bat/cmd and bash/sh
+
 ### 0.0.2
 * Add support for lua and groovy
 

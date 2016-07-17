@@ -27,7 +27,7 @@ export class CodeManager {
         }
 
         let executor = this.getExecutor();
-        if (!executor) {
+        if (executor == null) {
             vscode.window.showInformationMessage('Code language not supported or defined.');
             return;
         }
@@ -39,12 +39,11 @@ export class CodeManager {
 
     public stop(): void {
         if (this._isRunning) {
-            this._isRunning = false;
-            fs.unlink(this._tmpFile);
+            this._isRunning = false;       
             let kill = require('tree-kill');
             kill(this._process.pid);
             this._outputChannel.appendLine('');
-            this._outputChannel.appendLine('Code run stopped.');
+            this._outputChannel.append('Code run stopped.');
         }
     }
 
