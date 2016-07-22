@@ -2,7 +2,7 @@
     "name": "code-runner",
     "displayName": "Code Runner",
     "description": "Run code snippet/file for js, php, python, perl, ruby, go, lua, groovy, powershell, bat/cmd, bash/sh, F#, C#",
-    "version": "0.0.5",
+    "version": "0.1.0",
     "publisher": "formulahendry",
     "icon": "images/logo.png",
     "engines": {
@@ -29,7 +29,8 @@
         "url": "https://github.com/formulahendry/vscode-code-runner.git"
     },
     "activationEvents": [
-        "onCommand:code-runner.run"
+        "onCommand:code-runner.run",
+        "onCommand:code-runner.runByLanguage"
     ],
     "main": "./out/src/extension",
     "contributes": {
@@ -37,6 +38,10 @@
             {
                 "command": "code-runner.run",
                 "title": "Run Code"
+            },
+            {
+                "command": "code-runner.runByLanguage",
+                "title": "Run By Language"
             },
             {
                 "command": "code-runner.stop",
@@ -47,6 +52,10 @@
             {
                 "command": "code-runner.run",
                 "key": "ctrl+alt+n"
+            },
+            {
+                "command": "code-runner.runByLanguage",
+                "key": "ctrl+alt+j"
             },
             {
                 "command": "code-runner.stop",
@@ -75,6 +84,11 @@
                         "csharp": "scriptcs"
                     },
                     "description": "Set the executor of each language."
+                },
+                "code-runner.defaultLanguage": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Set the default language to run "
                 }
             }
         }

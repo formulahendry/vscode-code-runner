@@ -11,14 +11,22 @@ export class CodeManager {
     private _isRunning: boolean;
     private _process;
     private _tmpFile: string;
+    private _languageId: string;
 
     constructor() {
         this._outputChannel = vscode.window.createOutputChannel('Code');
     }
 
-    public run(): void {
+    public run(languageId: string = null): void {
         if (this._isRunning) {
             vscode.window.showInformationMessage('Code is already running!');
+            return;
+        }
+
+        let executor = this.getExecutor(languageId);
+        // undefined or null
+        if (executor == null) {
+            vscode.window.showInformationMessage('Code language not supported or defined.');
             return;
         }
 
@@ -28,15 +36,17 @@ export class CodeManager {
             return;
         }
 
-        let executor = this.getExecutor();
-        if (executor == null) {
-            vscode.window.showInformationMessage('Code language not supported or defined.');
-            return;
-        }
-
         this.createRandomFile(code);
 
         this.ExecuteCommand(executor);
+    }
+
+    public runByLanguage(): void {
+        vscode.window.showInputBox({ prompt: "Enter language: e.g. php, javascript, bat, shellscript..." }).then((languageId) => {
+            if (languageId !== undefined) {
+                this.run(languageId);
+            }
+        });
     }
 
     public stop(): void {
@@ -58,8 +68,7 @@ export class CodeManager {
         let selection = editor.selection;
         let text = selection.isEmpty ? editor.document.getText() : editor.document.getText(selection);
 
-        let languageId = editor.document.languageId;
-        if (languageId === "php") {
+        if (this._languageId === "php") {
             text = text.trim();
             if (!text.startsWith("<?php")) {
                 text = "<?php\r\n" + text;
@@ -76,20 +85,32 @@ export class CodeManager {
     private createRandomFile(content: string) {
         let fileName = vscode.window.activeTextEditor.document.fileName;
         let fileType = "";
-        let index = fileName.lastIndexOf(".");
-        if (index !== -1) {
-            fileType = fileName.substr(index);
+        if (this._languageId === 'bat') {
+            fileType = '.bat';
+        } else {
+            let index = fileName.lastIndexOf(".");
+            if (index !== -1) {
+                fileType = fileName.substr(index);
+            } else {
+                fileType = '.' + this._languageId;
+            }
         }
         let tmpFileName = this.rndName() + fileType;
         this._tmpFile = join(WorkingDirectory, tmpFileName);
         fs.writeFileSync(this._tmpFile, content);
     }
 
-    private getExecutor(): string {
-        let languageId = vscode.window.activeTextEditor.document.languageId;
+    private getExecutor(languageId: string): string {
+        this._languageId = languageId === null ? vscode.window.activeTextEditor.document.languageId : languageId;
         let config = vscode.workspace.getConfiguration('code-runner');
         let executorMap = config.get<any>('executorMap');
-        return executorMap[languageId];
+        let executor = executorMap[this._languageId];
+        // undefined or null
+        if (executor == null) {
+            this._languageId = config.get<string>('defaultLanguage');
+            executor = executorMap[this._languageId];
+        }
+        return executor;
     }
 
     private ExecuteCommand(executor: string) {
@@ -97,7 +118,7 @@ export class CodeManager {
         this._outputChannel.show();
         let exec = require('child_process').exec;
         let command = executor + ' \"' + this._tmpFile + '\"';
-        this._outputChannel.appendLine('>> Running ' + vscode.window.activeTextEditor.document.languageId);
+        this._outputChannel.appendLine('>> Running ' + this._languageId);
         this._process = exec(command, { cwd: WorkingDirectory });
 
         this._process.stdout.on('data', (data) => {

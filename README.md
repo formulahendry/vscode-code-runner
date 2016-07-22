@@ -10,6 +10,8 @@ Run code snippet or code file for multiple languages: **javascript, php, python,
 * Run selected code snippet in Text Editor
 * Stop code running
 * View output in Output Window
+* Set default language to run
+* Select language to run
 
 ## Usages
 
@@ -17,6 +19,10 @@ Run code snippet or code file for multiple languages: **javascript, php, python,
 * To stop the running code, use shortcut `Ctrl+Alt+M`, or press `F1` and then select/type `Stop Code Run`
 
 ![Usage](images/usage.gif)
+
+* To select language to run, use shortcut `Ctrl+Alt+J`, or press `F1` and then select/type `Run By Language`, then type the language: e.g `php, javascript, bat, shellscript...`
+
+![Usage](images/usageRunByLanguage.gif)
 
 ## Configuration
 
@@ -36,10 +42,22 @@ e.g. To set the interpreter PATH for ruby and php:
 }
 ```
 
+Besides, you could set the default language to run:
+```json
+{
+    "code-runner.defaultLanguage": "javascript"
+}
+```
+**For the default language:** It should be set with language id defined in [VS Code](https://github.com/Microsoft/vscode/tree/master/extensions). The languages you could set are `javascript, php, python, perl, ruby, go, lua, groovy, powershell, bat, shellscript, fsharp, csharp`
+
 ## Note
 To run C# script, you need to install [scriptcs](http://scriptcs.net/)
 
 ## Change Log
+### 0.1.0
+* Add support to set default language to run
+* Add support to select language to run
+
 ### 0.0.5
 * Add support for C# script
 
