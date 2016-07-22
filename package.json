@@ -1,8 +1,8 @@
 {
     "name": "code-runner",
     "displayName": "Code Runner",
-    "description": "Run code snippet/file for js, php, python, perl, ruby, go, lua, groovy, powershell, bat/cmd, bash/sh, F#",
-    "version": "0.0.4",
+    "description": "Run code snippet/file for js, php, python, perl, ruby, go, lua, groovy, powershell, bat/cmd, bash/sh, F#, C#",
+    "version": "0.0.5",
     "publisher": "formulahendry",
     "icon": "images/logo.png",
     "engines": {
@@ -71,7 +71,8 @@
                         "powershell": "powershell -ExecutionPolicy ByPass -File",
                         "bat": "",
                         "shellscript": "bash",
-                        "fsharp": "fsi"
+                        "fsharp": "fsi",
+                        "csharp": "scriptcs"
                     },
                     "description": "Set the executor of each language."
                 }

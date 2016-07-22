@@ -4,6 +4,8 @@ import {join} from 'path';
 import * as os from 'os';
 import * as fs from 'fs';
 
+const WorkingDirectory = os.tmpdir();
+
 export class CodeManager {
     private _outputChannel: vscode.OutputChannel;
     private _isRunning: boolean;
@@ -39,7 +41,7 @@ export class CodeManager {
 
     public stop(): void {
         if (this._isRunning) {
-            this._isRunning = false;       
+            this._isRunning = false;
             let kill = require('tree-kill');
             kill(this._process.pid);
             this._outputChannel.appendLine('');
@@ -79,7 +81,7 @@ export class CodeManager {
             fileType = fileName.substr(index);
         }
         let tmpFileName = this.rndName() + fileType;
-        this._tmpFile = join(os.tmpdir(), tmpFileName);
+        this._tmpFile = join(WorkingDirectory, tmpFileName);
         fs.writeFileSync(this._tmpFile, content);
     }
 
@@ -94,9 +96,9 @@ export class CodeManager {
         this._isRunning = true;
         this._outputChannel.show();
         let exec = require('child_process').exec;
-        let command = executor + ' \"' + this._tmpFile + '\"'
+        let command = executor + ' \"' + this._tmpFile + '\"';
         this._outputChannel.appendLine('>> Running ' + vscode.window.activeTextEditor.document.languageId);
-        this._process = exec(command);
+        this._process = exec(command, { cwd: WorkingDirectory });
 
         this._process.stdout.on('data', (data) => {
             this._outputChannel.append(data);
