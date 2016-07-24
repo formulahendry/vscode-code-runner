@@ -2,7 +2,7 @@
 
 [![Marketplace Version](http://vsmarketplacebadge.apphb.com/version/formulahendry.code-runner.svg)](https://marketplace.visualstudio.com/items?itemName=formulahendry.code-runner) [![Installs](http://vsmarketplacebadge.apphb.com/installs/formulahendry.code-runner.svg)](https://marketplace.visualstudio.com/items?itemName=formulahendry.code-runner) [![Rating](http://vsmarketplacebadge.apphb.com/rating/formulahendry.code-runner.svg)](https://marketplace.visualstudio.com/items?itemName=formulahendry.code-runner) [![Build Status](https://travis-ci.org/formulahendry/vscode-code-runner.svg?branch=master)](https://travis-ci.org/formulahendry/vscode-code-runner)
 
-Run code snippet or code file for multiple languages: **javascript, php, python, perl, ruby, go, lua, groovy, powershell, bat/cmd, bash/sh, F# script, C# script**
+Run code snippet or code file for multiple languages: **javascript, php, python, perl, ruby, go, lua, groovy, powershell, bat/cmd, bash/sh, F# script, C# script, VBScript**
 
 ## Features
 
@@ -48,7 +48,7 @@ Besides, you could set the default language to run:
     "code-runner.defaultLanguage": "javascript"
 }
 ```
-**For the default language:** It should be set with language id defined in [VS Code](https://github.com/Microsoft/vscode/tree/master/extensions). The languages you could set are `javascript, php, python, perl, ruby, go, lua, groovy, powershell, bat, shellscript, fsharp, csharp`
+**For the default language:** It should be set with language id defined in [VS Code](https://github.com/Microsoft/vscode/tree/master/extensions). The languages you could set are `javascript, php, python, perl, ruby, go, lua, groovy, powershell, bat, shellscript, fsharp, csharp, vbscript`
 
 ## Note
 To run C# script, you need to install [scriptcs](http://scriptcs.net/)
