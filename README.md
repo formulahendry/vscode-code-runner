@@ -50,10 +50,23 @@ Besides, you could set the default language to run:
 ```
 **For the default language:** It should be set with language id defined in [VS Code](https://github.com/Microsoft/vscode/tree/master/extensions). The languages you could set are `javascript, php, python, perl, ruby, go, lua, groovy, powershell, bat, shellscript, fsharp, csharp, vbscript`
 
+Also, you could set the executor per file extension:
+```json
+{
+    "code-runner.executorMapByFileExtension": {
+        ".vbs": "cscript //Nologo"
+    }
+}
+```
+
 ## Note
 To run C# script, you need to install [scriptcs](http://scriptcs.net/)
 
 ## Change Log
+### 0.1.1
+* Add support for VBScript
+* Add config entry to set the executor per file extension
+
 ### 0.1.0
 * Add support to set default language to run
 * Add support to select language to run

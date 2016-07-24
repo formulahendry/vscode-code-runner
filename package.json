@@ -2,7 +2,7 @@
     "name": "code-runner",
     "displayName": "Code Runner",
     "description": "Run code snippet/file for js, php, python, perl, ruby, go, lua, groovy, powershell, bat/cmd, bash/sh, F#, C#, VBScript",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "publisher": "formulahendry",
     "icon": "images/logo.png",
     "engines": {
@@ -85,6 +85,13 @@
                         "vbscript": "cscript //Nologo"
                     },
                     "description": "Set the executor of each language."
+                },
+                "code-runner.executorMapByFileExtension": {
+                    "type": "object",
+                    "default": {
+                        ".vbs": "cscript //Nologo"
+                    },
+                    "description": "Set the executor of each file extension."
                 },
                 "code-runner.defaultLanguage": {
                     "type": "string",

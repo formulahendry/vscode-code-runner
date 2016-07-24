@@ -23,20 +23,23 @@ export class CodeManager {
             return;
         }
 
-        let executor = this.getExecutor(languageId);
+        let editor = vscode.window.activeTextEditor;
+        if (!editor) {
+            vscode.window.showInformationMessage('No code found or selected.');
+            return;
+        }
+
+        let fileExtension = this.getFileExtension(editor);
+        let executor = this.getExecutor(languageId, fileExtension);
         // undefined or null
         if (executor == null) {
             vscode.window.showInformationMessage('Code language not supported or defined.');
             return;
         }
 
-        let code = this.getCode();
-        if (!code) {
-            vscode.window.showInformationMessage('No code found or selected.');
-            return;
-        }
+        let code = this.getCode(editor);
 
-        this.createRandomFile(code);
+        this.createRandomFile(code, fileExtension);
 
         this.ExecuteCommand(executor);
     }
@@ -59,12 +62,7 @@ export class CodeManager {
         }
     }
 
-    private getCode(): string {
-        let editor = vscode.window.activeTextEditor;
-        if (!editor) {
-            return null;
-        }
-
+    private getCode(editor: vscode.TextEditor): string {
         let selection = editor.selection;
         let text = selection.isEmpty ? editor.document.getText() : editor.document.getText(selection);
 
@@ -82,15 +80,14 @@ export class CodeManager {
         return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 10);
     }
 
-    private createRandomFile(content: string) {
+    private createRandomFile(content: string, fileExtension: string) {
         let fileName = vscode.window.activeTextEditor.document.fileName;
         let fileType = "";
         if (this._languageId === 'bat') {
             fileType = '.bat';
         } else {
-            let index = fileName.lastIndexOf(".");
-            if (index !== -1) {
-                fileType = fileName.substr(index);
+            if (fileExtension) {
+                fileType = fileExtension;
             } else {
                 fileType = '.' + this._languageId;
             }
@@ -100,17 +97,35 @@ export class CodeManager {
         fs.writeFileSync(this._tmpFile, content);
     }
 
-    private getExecutor(languageId: string): string {
+    private getExecutor(languageId: string, fileExtension: string): string {
         this._languageId = languageId === null ? vscode.window.activeTextEditor.document.languageId : languageId;
         let config = vscode.workspace.getConfiguration('code-runner');
         let executorMap = config.get<any>('executorMap');
         let executor = executorMap[this._languageId];
-        // undefined or null
+        // executor is undefined or null
+        if (executor == null && fileExtension) {
+            let executorMapByFileExtension = config.get<any>('executorMapByFileExtension');
+            executor = executorMapByFileExtension[fileExtension];
+            if (executor != null) {
+                this._languageId = fileExtension;
+            }
+        }
         if (executor == null) {
             this._languageId = config.get<string>('defaultLanguage');
             executor = executorMap[this._languageId];
         }
+
         return executor;
+    }
+
+    private getFileExtension(editor: vscode.TextEditor): string {
+        let fileName = editor.document.fileName;
+        let index = fileName.lastIndexOf(".");
+        if (index !== -1) {
+            return fileName.substr(index);
+        } else {
+            return "";
+        }
     }
 
     private ExecuteCommand(executor: string) {
