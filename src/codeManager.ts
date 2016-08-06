@@ -110,7 +110,7 @@ export class CodeManager {
             }
         }
         let tmpFileName = this.rndName() + fileType;
-        this._tmpFile = join(TmpDir, tmpFileName);
+        this._tmpFile = join(this._cwd, tmpFileName);
         fs.writeFileSync(this._tmpFile, content);
     }
 

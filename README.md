@@ -75,6 +75,9 @@ To set the the working directory
 To run C# script, you need to install [scriptcs](http://scriptcs.net/)
 
 ## Change Log
+### 0.1.3
+* Resolve [GitHub issue#5](https://github.com/formulahendry/vscode-code-runner/issues/5): Put the temp code file in working directory instead of os temp folder
+
 ### 0.1.2
 * Resolve [GitHub issue#5](https://github.com/formulahendry/vscode-code-runner/issues/5): Add support to set working directory
 
