@@ -59,10 +59,25 @@ Also, you could set the executor per file extension:
 }
 ```
 
+To set the the working directory
+```json
+{
+    "code-runner.cwd": "path/to/working/directory"
+}
+```
+
+## About CWD Setting (current working directory)
+1. By default, use the `code-runner.cwd` setting
+2. If `code-runner.cwd` is not set, use the path of root folder that is open in VS Code
+3. If no folder is open, use the os temp folder
+
 ## Note
 To run C# script, you need to install [scriptcs](http://scriptcs.net/)
 
 ## Change Log
+### 0.1.2
+* Resolve [GitHub issue#5](https://github.com/formulahendry/vscode-code-runner/issues/5): Add support to set working directory
+
 ### 0.1.1
 * Add support for VBScript
 * Add config entry to set the executor per file extension

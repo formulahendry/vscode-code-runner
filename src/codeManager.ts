@@ -4,7 +4,7 @@ import {join} from 'path';
 import * as os from 'os';
 import * as fs from 'fs';
 
-const WorkingDirectory = os.tmpdir();
+const TmpDir = os.tmpdir();
 
 export class CodeManager {
     private _outputChannel: vscode.OutputChannel;
@@ -12,6 +12,8 @@ export class CodeManager {
     private _process;
     private _tmpFile: string;
     private _languageId: string;
+    private _cwd: string;
+    private _config: vscode.WorkspaceConfiguration;
 
     constructor() {
         this._outputChannel = vscode.window.createOutputChannel('Code');
@@ -28,6 +30,8 @@ export class CodeManager {
             vscode.window.showInformationMessage('No code found or selected.');
             return;
         }
+
+        this.initialize();
 
         let fileExtension = this.getFileExtension(editor);
         let executor = this.getExecutor(languageId, fileExtension);
@@ -62,6 +66,19 @@ export class CodeManager {
         }
     }
 
+    private initialize(): void {
+        this._config = vscode.workspace.getConfiguration('code-runner');
+        this._cwd = this._config.get<string>('cwd');
+        if (this._cwd) {
+            return;
+        }
+        this._cwd = vscode.workspace.rootPath;
+        if (this._cwd) {
+            return;
+        }
+        this._cwd = TmpDir;
+    }
+
     private getCode(editor: vscode.TextEditor): string {
         let selection = editor.selection;
         let text = selection.isEmpty ? editor.document.getText() : editor.document.getText(selection);
@@ -93,25 +110,24 @@ export class CodeManager {
             }
         }
         let tmpFileName = this.rndName() + fileType;
-        this._tmpFile = join(WorkingDirectory, tmpFileName);
+        this._tmpFile = join(TmpDir, tmpFileName);
         fs.writeFileSync(this._tmpFile, content);
     }
 
     private getExecutor(languageId: string, fileExtension: string): string {
         this._languageId = languageId === null ? vscode.window.activeTextEditor.document.languageId : languageId;
-        let config = vscode.workspace.getConfiguration('code-runner');
-        let executorMap = config.get<any>('executorMap');
+        let executorMap = this._config.get<any>('executorMap');
         let executor = executorMap[this._languageId];
         // executor is undefined or null
         if (executor == null && fileExtension) {
-            let executorMapByFileExtension = config.get<any>('executorMapByFileExtension');
+            let executorMapByFileExtension = this._config.get<any>('executorMapByFileExtension');
             executor = executorMapByFileExtension[fileExtension];
             if (executor != null) {
                 this._languageId = fileExtension;
             }
         }
         if (executor == null) {
-            this._languageId = config.get<string>('defaultLanguage');
+            this._languageId = this._config.get<string>('defaultLanguage');
             executor = executorMap[this._languageId];
         }
 
@@ -134,7 +150,7 @@ export class CodeManager {
         let exec = require('child_process').exec;
         let command = executor + ' \"' + this._tmpFile + '\"';
         this._outputChannel.appendLine('>> Running ' + this._languageId);
-        this._process = exec(command, { cwd: WorkingDirectory });
+        this._process = exec(command, { cwd: this._cwd });
 
         this._process.stdout.on('data', (data) => {
             this._outputChannel.append(data);
