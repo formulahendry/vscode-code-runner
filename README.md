@@ -59,10 +59,17 @@ Also, you could set the executor per file extension:
 }
 ```
 
-To set the the working directory
+To set the the working directory:
 ```json
 {
     "code-runner.cwd": "path/to/working/directory"
+}
+```
+
+To set whether to clear previous output before each run (default is false):
+```json
+{
+    "code-runner.clearPreviousOutput": false
 }
 ```
 
@@ -75,6 +82,12 @@ To set the the working directory
 To run C# script, you need to install [scriptcs](http://scriptcs.net/)
 
 ## Change Log
+### 0.2.0
+* Resolve [GitHub issue#6](https://github.com/formulahendry/vscode-code-runner/issues/6): Add config entry to set whether to clear previous output before each run
+* Resolve [GitHub issue#7](https://github.com/formulahendry/vscode-code-runner/issues/7): Add colorizer for output and refine output
+* Use the current file to run if there is no selection and it is not untitled
+* If there is selection and the file is not untitled, create tmp file in the file folder to run the code sinnpet
+
 ### 0.1.3
 * Resolve [GitHub issue#5](https://github.com/formulahendry/vscode-code-runner/issues/5): Put the temp code file in working directory instead of os temp folder
 
