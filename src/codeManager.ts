@@ -146,6 +146,10 @@ export class CodeManager {
 
     private ExecuteCommand(executor: string) {
         this._isRunning = true;
+        let clearPreviousOutput = this._config.get<boolean>('clearPreviousOutput');
+        if (clearPreviousOutput) {
+            this._outputChannel.clear();
+        }
         this._outputChannel.show();
         let exec = require('child_process').exec;
         let command = executor + ' \"' + this._tmpFile + '\"';

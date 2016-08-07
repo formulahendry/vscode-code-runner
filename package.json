@@ -102,6 +102,11 @@
                     "type": "string",
                     "default": "",
                     "description": "Set the working directory."
+                },
+                "code-runner.clearPreviousOutput": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Whether to clear previous output before each run."
                 }
             }
         }
