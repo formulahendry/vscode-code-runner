@@ -1,6 +1,6 @@
 'use strict';
 import * as vscode from 'vscode';
-import {join} from 'path';
+import { join, dirname } from 'path';
 import * as os from 'os';
 import * as fs from 'fs';
 
@@ -10,7 +10,8 @@ export class CodeManager {
     private _outputChannel: vscode.OutputChannel;
     private _isRunning: boolean;
     private _process;
-    private _tmpFile: string;
+    private _codeFile: string;
+    private _isTmpFile: boolean;
     private _languageId: string;
     private _cwd: string;
     private _config: vscode.WorkspaceConfiguration;
@@ -41,9 +42,7 @@ export class CodeManager {
             return;
         }
 
-        let code = this.getCode(editor);
-
-        this.createRandomFile(code, fileExtension);
+        this.getCodeFile(editor, fileExtension);
 
         this.ExecuteCommand(executor);
     }
@@ -61,8 +60,6 @@ export class CodeManager {
             this._isRunning = false;
             let kill = require('tree-kill');
             kill(this._process.pid);
-            this._outputChannel.appendLine('');
-            this._outputChannel.append('Code run stopped.');
         }
     }
 
@@ -79,26 +76,33 @@ export class CodeManager {
         this._cwd = TmpDir;
     }
 
-    private getCode(editor: vscode.TextEditor): string {
+    private getCodeFile(editor: vscode.TextEditor, fileExtension: string): void {
         let selection = editor.selection;
-        let text = selection.isEmpty ? editor.document.getText() : editor.document.getText(selection);
 
-        if (this._languageId === "php") {
-            text = text.trim();
-            if (!text.startsWith("<?php")) {
-                text = "<?php\r\n" + text;
+        if (selection.isEmpty && !editor.document.isUntitled) {
+            this._isTmpFile = false;
+            this._codeFile = editor.document.fileName;
+        } else {
+            let text = selection.isEmpty ? editor.document.getText() : editor.document.getText(selection);
+
+            if (this._languageId === "php") {
+                text = text.trim();
+                if (!text.startsWith("<?php")) {
+                    text = "<?php\r\n" + text;
+                }
             }
-        }
 
-        return text;
+            this._isTmpFile = true;
+            let folder = editor.document.isUntitled ? this._cwd : dirname(editor.document.fileName);
+            this.createRandomFile(text, folder, fileExtension);
+        }
     }
 
     private rndName(): string {
         return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 10);
     }
 
-    private createRandomFile(content: string, fileExtension: string) {
-        let fileName = vscode.window.activeTextEditor.document.fileName;
+    private createRandomFile(content: string, folder: string, fileExtension: string) {
         let fileType = "";
         if (this._languageId === 'bat') {
             fileType = '.bat';
@@ -109,9 +113,9 @@ export class CodeManager {
                 fileType = '.' + this._languageId;
             }
         }
-        let tmpFileName = this.rndName() + fileType;
-        this._tmpFile = join(this._cwd, tmpFileName);
-        fs.writeFileSync(this._tmpFile, content);
+        let tmpFileName = 'temp-' + this.rndName() + fileType;
+        this._codeFile = join(folder, tmpFileName);
+        fs.writeFileSync(this._codeFile, content);
     }
 
     private getExecutor(languageId: string, fileExtension: string): string {
@@ -152,8 +156,9 @@ export class CodeManager {
         }
         this._outputChannel.show();
         let exec = require('child_process').exec;
-        let command = executor + ' \"' + this._tmpFile + '\"';
-        this._outputChannel.appendLine('>> Running ' + this._languageId);
+        let command = executor + ' \"' + this._codeFile + '\"';
+        this._outputChannel.appendLine('[Running] ' + command);
+        let startTime = new Date();
         this._process = exec(command, { cwd: this._cwd });
 
         this._process.stdout.on('data', (data) => {
@@ -166,10 +171,14 @@ export class CodeManager {
 
         this._process.on('close', (code) => {
             this._isRunning = false;
+            let endTime = new Date();
+            let elapsedTime = (endTime.getTime() - startTime.getTime())/1000;
             this._outputChannel.appendLine('');
-            this._outputChannel.appendLine('[Done]');
+            this._outputChannel.appendLine('[Done] exited with code=' + code + ' in ' + elapsedTime + ' seconds');
             this._outputChannel.appendLine('');
-            fs.unlink(this._tmpFile);
+            if (this._isTmpFile) {
+                fs.unlink(this._codeFile);
+            }
         });
     }
 }
