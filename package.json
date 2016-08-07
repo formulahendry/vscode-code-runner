@@ -109,7 +109,22 @@
                     "description": "Whether to clear previous output before each run."
                 }
             }
-        }
+        },
+        "languages": [
+            {
+                "id": "code-runner-output",
+                "mimetypes": [
+                    "text/x-code-output"
+                ]
+            }
+        ],
+        "grammars": [
+            {
+                "language": "code-runner-output",
+                "scopeName": "code-runner.output",
+                "path": "./syntaxes/code-runner-output.tmLanguage"
+            }
+        ]
     },
     "scripts": {
         "vscode:prepublish": "node ./node_modules/vscode/bin/compile",
