@@ -55,9 +55,19 @@
                         <key>name</key>
                         <string>token.string</string>
                     </dict>
+                    <key>6</key>
+                    <dict>
+                        <key>name</key>
+                        <string>token.warn-token</string>
+                    </dict>
+                    <key>7</key>
+                    <dict>
+                        <key>name</key>
+                        <string>token.string</string>
+                    </dict>
                 </dict>
                 <key>match</key>
-                <string>(\[Done\])(.*)(?:(code=0)|(code=1))(.*)</string>
+                <string>(\[Done\])(.+)(?:(code=0)|(code=\d+))(.+)(\d+\.\d+)(.+)</string>
                 <key>name</key>
                 <string>code-runner.done</string>
             </dict>
