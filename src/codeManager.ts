@@ -42,9 +42,7 @@ export class CodeManager {
             return;
         }
 
-        this.getCodeFile(editor, fileExtension);
-
-        this.ExecuteCommand(executor);
+        this.getCodeFileAndExecute(editor, fileExtension, executor);
     }
 
     public runByLanguage(): void {
@@ -76,12 +74,18 @@ export class CodeManager {
         this._cwd = TmpDir;
     }
 
-    private getCodeFile(editor: vscode.TextEditor, fileExtension: string): void {
+    private getCodeFileAndExecute(editor: vscode.TextEditor, fileExtension: string, executor: string): any {
         let selection = editor.selection;
 
         if (selection.isEmpty && !editor.document.isUntitled) {
             this._isTmpFile = false;
             this._codeFile = editor.document.fileName;
+
+            if (this._config.get<boolean>('saveFileBeforeRun')) {
+                return editor.document.save().then(() => {
+                    this.executeCommand(executor);
+                });
+            }
         } else {
             let text = selection.isEmpty ? editor.document.getText() : editor.document.getText(selection);
 
@@ -94,8 +98,10 @@ export class CodeManager {
 
             this._isTmpFile = true;
             let folder = editor.document.isUntitled ? this._cwd : dirname(editor.document.fileName);
-            this.createRandomFile(text, folder, fileExtension);
+            this.createRandomFile(text, folder, fileExtension);           
         }
+
+        this.executeCommand(executor);
     }
 
     private rndName(): string {
@@ -148,7 +154,7 @@ export class CodeManager {
         }
     }
 
-    private ExecuteCommand(executor: string) {
+    private executeCommand(executor: string) {
         this._isRunning = true;
         let clearPreviousOutput = this._config.get<boolean>('clearPreviousOutput');
         if (clearPreviousOutput) {
@@ -172,7 +178,7 @@ export class CodeManager {
         this._process.on('close', (code) => {
             this._isRunning = false;
             let endTime = new Date();
-            let elapsedTime = (endTime.getTime() - startTime.getTime())/1000;
+            let elapsedTime = (endTime.getTime() - startTime.getTime()) / 1000;
             this._outputChannel.appendLine('');
             this._outputChannel.appendLine('[Done] exited with code=' + code + ' in ' + elapsedTime + ' seconds');
             this._outputChannel.appendLine('');
