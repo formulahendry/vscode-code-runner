@@ -3,6 +3,7 @@ import * as vscode from 'vscode';
 import { join, dirname } from 'path';
 import * as os from 'os';
 import * as fs from 'fs';
+import { AppInsightsClient } from './appInsightsClient';
 
 const TmpDir = os.tmpdir();
 
@@ -15,9 +16,11 @@ export class CodeManager {
     private _languageId: string;
     private _cwd: string;
     private _config: vscode.WorkspaceConfiguration;
+    private _appInsightsClient: AppInsightsClient;
 
     constructor() {
         this._outputChannel = vscode.window.createOutputChannel('Code');
+        this._appInsightsClient = new AppInsightsClient();
     }
 
     public run(languageId: string = null): void {
@@ -46,6 +49,7 @@ export class CodeManager {
     }
 
     public runByLanguage(): void {
+        this._appInsightsClient.sendEvent('runByLanguage');
         vscode.window.showInputBox({ prompt: "Enter language: e.g. php, javascript, bat, shellscript..." }).then((languageId) => {
             if (languageId !== undefined) {
                 this.run(languageId);
@@ -54,6 +58,7 @@ export class CodeManager {
     }
 
     public stop(): void {
+        this._appInsightsClient.sendEvent('stop');
         if (this._isRunning) {
             this._isRunning = false;
             let kill = require('tree-kill');
@@ -165,6 +170,7 @@ export class CodeManager {
         let exec = require('child_process').exec;
         let command = executor + ' \"' + this._codeFile + '\"';
         this._outputChannel.appendLine('[Running] ' + command);
+        this._appInsightsClient.sendEvent(executor);
         let startTime = new Date();
         this._process = exec(command, { cwd: this._cwd });
 

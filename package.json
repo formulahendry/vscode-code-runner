@@ -120,6 +120,11 @@
                     "type": "boolean",
                     "default": false,
                     "description": "Whether to save the file before running."
+                },
+                "code-runner.enableAppInsights": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Whether to enable AppInsights to track user telemetry data."
                 }
             }
         },
@@ -145,7 +150,8 @@
         "postinstall": "node ./node_modules/vscode/bin/install"
     },
     "dependencies": {
-        "tree-kill": "^1.1.0"
+        "tree-kill": "^1.1.0",
+        "applicationinsights": "^0.15.18"
     },
     "devDependencies": {
         "typescript": "^1.8.5",
