@@ -73,6 +73,13 @@ To set whether to clear previous output before each run (default is false):
 }
 ```
 
+To set whether to save the file before running (default is false):
+```json
+{
+    "code-runner.saveFileBeforeRun": false
+}
+```
+
 ## About CWD Setting (current working directory)
 1. By default, use the `code-runner.cwd` setting
 2. If `code-runner.cwd` is not set, use the path of root folder that is open in VS Code
@@ -81,7 +88,21 @@ To set whether to clear previous output before each run (default is false):
 ## Note
 To run C# script, you need to install [scriptcs](http://scriptcs.net/)
 
+## Telemetry data
+By default, telemetry data collection is turned on to understand user behavior to improve this extension. To disable it, update the settings.json as below:
+```json
+{
+    "code-runner.enableAppInsights": false
+}
+```
+
 ## Change Log
+### 0.2.1
+* Resolve [GitHub issue#8](https://github.com/formulahendry/vscode-code-runner/issues/8): Fix output highlight
+* Resolve [GitHub issue#10](https://github.com/formulahendry/vscode-code-runner/issues/10): Add option to save the file before running
+* Resolve [GitHub issue#11](https://github.com/formulahendry/vscode-code-runner/issues/11): Set the mapping of languageId to file extension
+* Add Application Insights to track telemetry data to improve this extension
+
 ### 0.2.0
 * Resolve [GitHub issue#6](https://github.com/formulahendry/vscode-code-runner/issues/6): Add config entry to set whether to clear previous output before each run
 * Resolve [GitHub issue#7](https://github.com/formulahendry/vscode-code-runner/issues/7): Add colorizer for output and refine output
