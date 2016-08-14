@@ -93,6 +93,14 @@
                     },
                     "description": "Set the executor of each file extension."
                 },
+                "code-runner.languageIdToFileExtensionMap": {
+                    "type": "object",
+                    "default": {
+                        "bat": ".bat",
+                        "powershell": ".ps1"
+                    },
+                    "description": "Set the mapping of languageId to file extension."
+                },
                 "code-runner.defaultLanguage": {
                     "type": "string",
                     "default": "",

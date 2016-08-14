@@ -98,7 +98,7 @@ export class CodeManager {
 
             this._isTmpFile = true;
             let folder = editor.document.isUntitled ? this._cwd : dirname(editor.document.fileName);
-            this.createRandomFile(text, folder, fileExtension);           
+            this.createRandomFile(text, folder, fileExtension);
         }
 
         this.executeCommand(executor);
@@ -110,8 +110,9 @@ export class CodeManager {
 
     private createRandomFile(content: string, folder: string, fileExtension: string) {
         let fileType = "";
-        if (this._languageId === 'bat') {
-            fileType = '.bat';
+        let languageIdToFileExtensionMap = this._config.get<any>('languageIdToFileExtensionMap');
+        if (languageIdToFileExtensionMap[this._languageId]) {
+            fileType = languageIdToFileExtensionMap[this._languageId];
         } else {
             if (fileExtension) {
                 fileType = fileExtension;
