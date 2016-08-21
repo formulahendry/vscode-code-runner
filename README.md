@@ -15,7 +15,7 @@ Run code snippet or code file for multiple languages: **javascript, php, python,
 
 ## Usages
 
-* Open code file or select code snippet in Text Editor, then use shortcut `Ctrl+Alt+N`, or press `F1` and then select/type `Run Code`, the code will run and the output will be shown in the Output Window.
+* Open code file or select code snippet in Text Editor, then use shortcut `Ctrl+Alt+N`, or press `F1` and then select/type `Run Code`, or right click the Text Editor and then click `Run Code` in context menu, the code will run and the output will be shown in the Output Window.
 * To stop the running code, use shortcut `Ctrl+Alt+M`, or press `F1` and then select/type `Stop Code Run`
 
 ![Usage](images/usage.gif)
@@ -97,6 +97,9 @@ By default, telemetry data collection is turned on to understand user behavior t
 ```
 
 ## Change Log
+### 0.2.2
+* Resolve [GitHub issue#12](https://github.com/formulahendry/vscode-code-runner/issues/12): Add 'Run Code' entry to editor context menu
+
 ### 0.2.1
 * Resolve [GitHub issue#8](https://github.com/formulahendry/vscode-code-runner/issues/8): Fix output highlight
 * Resolve [GitHub issue#10](https://github.com/formulahendry/vscode-code-runner/issues/10): Add option to save the file before running

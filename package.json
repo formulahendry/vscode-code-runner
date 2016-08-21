@@ -2,7 +2,7 @@
     "name": "code-runner",
     "displayName": "Code Runner",
     "description": "Run code snippet/file for js, php, python, perl, ruby, go, lua, groovy, powershell, bat/cmd, bash/sh, F#, C#, VBScript",
-    "version": "0.2.1",
+    "version": "0.2.2",
     "publisher": "formulahendry",
     "icon": "images/logo.png",
     "engines": {
@@ -62,6 +62,14 @@
                 "key": "ctrl+alt+m"
             }
         ],
+        "menus": {
+            "editor/context": [
+                {
+                    "command": "code-runner.run",
+                    "group": "navigation"
+                }
+            ]
+        },
         "configuration": {
             "type": "object",
             "title": "Run Code configuration",
