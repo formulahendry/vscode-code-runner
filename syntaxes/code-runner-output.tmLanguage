@@ -67,7 +67,7 @@
                     </dict>
                 </dict>
                 <key>match</key>
-                <string>(\[Done\])(.+)(?:(code=0)|(code=\d+))(.+)(\d+\.\d+)(.+)</string>
+                <string>(\[Done\])(.+)(?:(code=0)|(code=\d+))([^\d]+)(\d+(?:\.\d+)?)([^\d]+)</string>
                 <key>name</key>
                 <string>code-runner.done</string>
             </dict>

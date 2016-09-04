@@ -97,6 +97,9 @@ By default, telemetry data collection is turned on to understand user behavior t
 ```
 
 ## Change Log
+### 0.2.3
+* Resolve [GitHub issue#18](https://github.com/formulahendry/vscode-code-runner/issues/18): Fix output highlight when execution time is greater than 10 seconds
+
 ### 0.2.2
 * Resolve [GitHub issue#12](https://github.com/formulahendry/vscode-code-runner/issues/12): Add 'Run Code' entry to editor context menu
 
