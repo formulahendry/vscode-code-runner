@@ -35,7 +35,7 @@ export class CodeManager {
             return;
         }
 
-        this.initialize();
+        this.initialize(editor);
 
         let fileExtension = this.getFileExtension(editor);
         let executor = this.getExecutor(languageId, fileExtension);
@@ -66,13 +66,17 @@ export class CodeManager {
         }
     }
 
-    private initialize(): void {
+    private initialize(editor: vscode.TextEditor): void {
         this._config = vscode.workspace.getConfiguration('code-runner');
         this._cwd = this._config.get<string>('cwd');
         if (this._cwd) {
             return;
         }
-        this._cwd = vscode.workspace.rootPath;
+        if (this._config.get<boolean>('fileDirectoryAsCwd') && !editor.document.isUntitled) {
+            this._cwd = dirname(editor.document.fileName);
+        } else {
+            this._cwd = vscode.workspace.rootPath;
+        }
         if (this._cwd) {
             return;
         }

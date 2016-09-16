@@ -2,7 +2,7 @@
     "name": "code-runner",
     "displayName": "Code Runner",
     "description": "Run code snippet/file for js, php, python, perl, ruby, go, lua, groovy, powershell, bat/cmd, bash/sh, F#, C#, VBScript",
-    "version": "0.2.3",
+    "version": "0.2.4",
     "publisher": "formulahendry",
     "icon": "images/logo.png",
     "engines": {
@@ -118,6 +118,11 @@
                     "type": "string",
                     "default": "",
                     "description": "Set the working directory."
+                },
+                "code-runner.fileDirectoryAsCwd": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Whether to use the directory of the file to be executed as the working directory."
                 },
                 "code-runner.clearPreviousOutput": {
                     "type": "boolean",

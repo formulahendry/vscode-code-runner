@@ -82,8 +82,9 @@ To set whether to save the file before running (default is false):
 
 ## About CWD Setting (current working directory)
 1. By default, use the `code-runner.cwd` setting
-2. If `code-runner.cwd` is not set, use the path of root folder that is open in VS Code
-3. If no folder is open, use the os temp folder
+2. If `code-runner.cwd` is not set and `code-runner.fileDirectoryAsCwd` is `ture`, use the directory of the file to be executed
+3. If `code-runner.cwd` is not set and `code-runner.fileDirectoryAsCwd` is `false`, use the path of root folder that is open in VS Code
+4. If no folder is open, use the os temp folder
 
 ## Note
 To run C# script, you need to install [scriptcs](http://scriptcs.net/)
@@ -97,6 +98,9 @@ By default, telemetry data collection is turned on to understand user behavior t
 ```
 
 ## Change Log
+### 0.2.4
+* Resolve [GitHub issue#20](https://github.com/formulahendry/vscode-code-runner/issues/20): Add config entry to determine whether to use the directory of the file to be executed as the working directory
+
 ### 0.2.3
 * Resolve [GitHub issue#18](https://github.com/formulahendry/vscode-code-runner/issues/18): Fix output highlight when execution time is greater than 10 seconds
 
