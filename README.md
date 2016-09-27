@@ -87,7 +87,8 @@ To set whether to save the file before running (default is false):
 4. If no folder is open, use the os temp folder
 
 ## Note
-To run C# script, you need to install [scriptcs](http://scriptcs.net/)
+* To run C# script, you need to install [scriptcs](http://scriptcs.net/)
+* To run TypeScript, you need to install [ts-node](https://github.com/TypeStrong/ts-node)
 
 ## Telemetry data
 By default, telemetry data collection is turned on to understand user behavior to improve this extension. To disable it, update the settings.json as below:
@@ -98,6 +99,9 @@ By default, telemetry data collection is turned on to understand user behavior t
 ```
 
 ## Change Log
+### 0.3.1
+* Update README.md about running TypeScript with ts-node
+
 ### 0.3.0
 * Add support for TypeScript, CoffeeScript, Scala
 
