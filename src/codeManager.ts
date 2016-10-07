@@ -50,7 +50,9 @@ export class CodeManager {
 
     public runByLanguage(): void {
         this._appInsightsClient.sendEvent('runByLanguage');
-        vscode.window.showInputBox({ prompt: "Enter language: e.g. php, javascript, bat, shellscript..." }).then((languageId) => {
+        let config = vscode.workspace.getConfiguration('code-runner');
+        var executorMap = config.get<any>('executorMap');
+        vscode.window.showQuickPick(Object.keys(executorMap), { placeHolder: "Type or select language to run" }).then((languageId) => {
             if (languageId !== undefined) {
                 this.run(languageId);
             }

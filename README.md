@@ -20,7 +20,7 @@ Run code snippet or code file for multiple languages: **JavaScript, PHP, Python,
 
 ![Usage](images/usage.gif)
 
-* To select language to run, use shortcut `Ctrl+Alt+J`, or press `F1` and then select/type `Run By Language`, then type the language: e.g `php, javascript, bat, shellscript...`
+* To select language to run, use shortcut `Ctrl+Alt+J`, or press `F1` and then select/type `Run By Language`, then type or select the language to run: e.g `php, javascript, bat, shellscript...`
 
 ![Usage](images/usageRunByLanguage.gif)
 
@@ -99,6 +99,9 @@ By default, telemetry data collection is turned on to understand user behavior t
 ```
 
 ## Change Log
+### 0.3.3
+* Add support to run by language from a suggestion list
+
 ### 0.3.2
 * Add support for Swift, Julia, Crystal
 
