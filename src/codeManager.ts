@@ -172,10 +172,13 @@ export class CodeManager {
         if (clearPreviousOutput) {
             this._outputChannel.clear();
         }
+        let showExecutionMessage = this._config.get<boolean>('showExecutionMessage');        
         this._outputChannel.show();
         let exec = require('child_process').exec;
         let command = executor + ' \"' + this._codeFile + '\"';
-        this._outputChannel.appendLine('[Running] ' + command);
+        if (showExecutionMessage) {
+            this._outputChannel.appendLine('[Running] ' + command);
+        } 
         this._appInsightsClient.sendEvent(executor);
         let startTime = new Date();
         this._process = exec(command, { cwd: this._cwd });
@@ -193,8 +196,10 @@ export class CodeManager {
             let endTime = new Date();
             let elapsedTime = (endTime.getTime() - startTime.getTime()) / 1000;
             this._outputChannel.appendLine('');
-            this._outputChannel.appendLine('[Done] exited with code=' + code + ' in ' + elapsedTime + ' seconds');
-            this._outputChannel.appendLine('');
+            if (showExecutionMessage) {
+                this._outputChannel.appendLine('[Done] exited with code=' + code + ' in ' + elapsedTime + ' seconds');
+                this._outputChannel.appendLine('');
+            }
             if (this._isTmpFile) {
                 fs.unlink(this._codeFile);
             }
