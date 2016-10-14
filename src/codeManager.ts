@@ -9,6 +9,7 @@ const TmpDir = os.tmpdir();
 
 export class CodeManager {
     private _outputChannel: vscode.OutputChannel;
+    private _terminal: vscode.Terminal;
     private _isRunning: boolean;
     private _process;
     private _codeFile: string;
@@ -20,7 +21,12 @@ export class CodeManager {
 
     constructor() {
         this._outputChannel = vscode.window.createOutputChannel('Code');
+        this._terminal = null;
         this._appInsightsClient = new AppInsightsClient();
+    }
+
+    public onDidCloseTerminal(): void {
+        this._terminal = null;
     }
 
     public run(languageId: string = null): void {
@@ -167,18 +173,35 @@ export class CodeManager {
     }
 
     private executeCommand(executor: string) {
+        if (this._config.get<boolean>('runInTerminal')) {
+            this.executeCommandInTerminal(executor);
+        } else {
+            this.executeCommandInOutputChannel(executor);
+        }
+    }
+
+    private executeCommandInTerminal(executor: string) {
+        if (this._terminal === null) {
+            this._terminal = vscode.window.createTerminal('Code');
+        }
+        this._terminal.show();
+        let command = executor + ' \"' + this._codeFile + '\"';
+        this._terminal.sendText(command);
+    }
+
+    private executeCommandInOutputChannel(executor: string) {
         this._isRunning = true;
         let clearPreviousOutput = this._config.get<boolean>('clearPreviousOutput');
         if (clearPreviousOutput) {
             this._outputChannel.clear();
         }
-        let showExecutionMessage = this._config.get<boolean>('showExecutionMessage');        
+        let showExecutionMessage = this._config.get<boolean>('showExecutionMessage');
         this._outputChannel.show();
         let exec = require('child_process').exec;
         let command = executor + ' \"' + this._codeFile + '\"';
         if (showExecutionMessage) {
             this._outputChannel.appendLine('[Running] ' + command);
-        } 
+        }
         this._appInsightsClient.sendEvent(executor);
         let startTime = new Date();
         this._process = exec(command, { cwd: this._cwd });

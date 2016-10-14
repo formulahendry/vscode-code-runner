@@ -6,7 +6,7 @@
     "publisher": "formulahendry",
     "icon": "images/logo.png",
     "engines": {
-        "vscode": "^1.0.0"
+        "vscode": "^1.6.0"
     },
     "categories": [
         "Languages",
@@ -152,6 +152,11 @@
                     "type": "boolean",
                     "default": true,
                     "description": "Whether to show extra execution message like [Running] ... and [Done] ..."
+                },
+                "code-runner.runInTerminal": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Whether to run code in Integrated Terminal"
                 }
             }
         },

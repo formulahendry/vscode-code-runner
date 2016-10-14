@@ -8,6 +8,10 @@ export function activate(context: vscode.ExtensionContext) {
 
     let codeManager = new CodeManager();
 
+    vscode.window.onDidCloseTerminal(() => {
+        codeManager.onDidCloseTerminal();
+    });
+
     let run = vscode.commands.registerCommand('code-runner.run', () => {
         codeManager.run();
     });
