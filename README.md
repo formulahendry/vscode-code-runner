@@ -12,6 +12,7 @@ Run code snippet or code file for multiple languages: **JavaScript, PHP, Python,
 * View output in Output Window
 * Set default language to run
 * Select language to run
+* Support REPL by running code in Integrated Terminal
 
 ## Usages
 
@@ -87,6 +88,13 @@ To set whether to show extra execution message like [Running] ... and [Done] ...
 }
 ```
 
+**[REPL support]** To set whether to run code in Integrated Terminal (only support to run whole file in Integrated Terminal, neither untitled file nor code snippet) (default is false):
+```json
+{
+    "code-runner.runInTerminal": false
+}
+```
+
 ## About CWD Setting (current working directory)
 1. By default, use the `code-runner.cwd` setting
 2. If `code-runner.cwd` is not set and `code-runner.fileDirectoryAsCwd` is `ture`, use the directory of the file to be executed
@@ -106,6 +114,9 @@ By default, telemetry data collection is turned on to understand user behavior t
 ```
 
 ## Change Log
+### 0.4.0
+* Add support to run code in Integrated Terminal
+
 ### 0.3.4
 * Resolve [GitHub issue#24](https://github.com/formulahendry/vscode-code-runner/issues/24): Add config entry to set whether to Whether to show extra execution message
 
