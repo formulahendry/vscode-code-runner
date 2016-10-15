@@ -173,7 +173,7 @@ export class CodeManager {
     }
 
     private executeCommand(executor: string) {
-        if (this._config.get<boolean>('runInTerminal')) {
+        if (this._config.get<boolean>('runInTerminal') && !this._isTmpFile) {
             this.executeCommandInTerminal(executor);
         } else {
             this.executeCommandInOutputChannel(executor);

@@ -114,6 +114,9 @@ By default, telemetry data collection is turned on to understand user behavior t
 ```
 
 ## Change Log
+### 0.4.1
+* Avoid running code in Integrated Terminal when it is untitled file or code snippet
+
 ### 0.4.0
 * Add support to run code in Integrated Terminal
 
