@@ -1,8 +1,8 @@
 {
     "name": "code-runner",
     "displayName": "Code Runner",
-    "description": "Run code snippet/file for JS, PHP, Python, Perl, Ruby, Go, Lua, Groovy, PowerShell, BAT/CMD, BASH/SH, F#, C#, VBScript, TypeScript, CoffeeScript, Scala, Swift, Julia, Crystal",
-    "version": "0.4.1",
+    "description": "Run code snippet/file for JS, PHP, Python, Perl, Ruby, Go, Lua, Groovy, PowerShell, BAT/CMD, BASH/SH, F#, C#, VBScript, TypeScript, CoffeeScript, Scala, Swift, Julia, Crystal, OCaml",
+    "version": "0.4.2",
     "publisher": "formulahendry",
     "icon": "images/logo.png",
     "engines": {
@@ -96,7 +96,8 @@
                         "scala": "scala",
                         "swift": "swift",
                         "julia": "julia",
-                        "crystal": "crystal"
+                        "crystal": "crystal",
+                        "ocaml": "ocaml"
                     },
                     "description": "Set the executor of each language."
                 },
@@ -106,7 +107,8 @@
                         ".vbs": "cscript //Nologo",
                         ".scala": "scala",
                         ".jl": "julia",
-                        ".cr": "crystal"
+                        ".cr": "crystal",
+                        ".ml": "ocaml"
                     },
                     "description": "Set the executor of each file extension."
                 },
