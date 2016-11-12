@@ -180,12 +180,74 @@ export class CodeManager {
         }
     }
 
+    /**
+     * Gets the base name of the code file, that is without its directory.
+     */
+    private getCodeBaseFile(): string {
+        let regexMatch = this._codeFile.match(/.*[\/\\](.*)/)
+        return regexMatch.length ? regexMatch[1] : this._codeFile
+    }
+
+    /**
+     * Gets the code file name without its directory and extension.
+     */
+    private getCodeFileWithoutDirAndExt(): string {
+        let regexMatch = this._codeFile.match(/.*[\/\\](.*(?=\..*))/)
+        return regexMatch.length ? regexMatch[1] : this._codeFile
+    }
+
+    /**
+     * Gets the directory of the code file.
+     */
+    private getCodeFileDir(): string {
+        let regexMatch = this._codeFile.match(/(.*[\/\\]).*/)
+        return regexMatch.length ? regexMatch[1] : this._codeFile 
+    }
+
+    /**
+     * Includes double quotes around a given file name.
+     */
+    private quoteFileName(fileName: string): string {
+        return ' \"' + fileName + '\"'
+    }
+
+    /**
+     * Gets the executor to run a source code file
+     * and generates the complete command that allow that file to be run.
+     * This executor command may include a variable $1 to indicate the place where
+     * the source code file name have to be included.
+     * If no such a variable is present in the executor command,
+     * the file name is appended to the end of the executor command.   
+     *
+     * @param executor The command used to run a source code file
+     * @return the complete command to run the file, that includes the file name   
+     */
+    private getFinalCommandToRunCodeFile(executor: string): string {
+        var placeholders: { regex: RegExp, replaceValue: string }[] = [
+            //A placeholder that has to be replaced by the code file name without its extension
+            { "regex": /\$fileNameWithoutExt/g, "replaceValue":this.quoteFileName(this.getCodeFileWithoutDirAndExt()) },
+            //A placeholder that has to be replaced by the full code file name
+            { "regex": /\$fullFileName/g, "replaceValue":this.quoteFileName(this._codeFile) },
+            //A placeholder that has to be replaced by the code file name without the directory
+            { "regex": /\$fileName/g, "replaceValue":this.quoteFileName(this.getCodeBaseFile()) },
+            //A placeholder that has to be replaced by the directory of the code file
+            { "regex": /\$dir/g, "replaceValue":this.quoteFileName(this.getCodeFileDir()) }            
+        ];
+
+        var cmd = executor
+        placeholders.forEach(placeholder => {
+            cmd = cmd.replace(placeholder.regex, placeholder.replaceValue)
+        });        
+
+       return (cmd != executor ? cmd : executor + this.quoteFileName(this._codeFile))
+    }
+
     private executeCommandInTerminal(executor: string) {
         if (this._terminal === null) {
             this._terminal = vscode.window.createTerminal('Code');
         }
         this._terminal.show();
-        let command = executor + ' \"' + this._codeFile + '\"';
+        let command = this.getFinalCommandToRunCodeFile(executor);
         this._terminal.sendText(command);
     }
 
@@ -198,7 +260,7 @@ export class CodeManager {
         let showExecutionMessage = this._config.get<boolean>('showExecutionMessage');
         this._outputChannel.show();
         let exec = require('child_process').exec;
-        let command = executor + ' \"' + this._codeFile + '\"';
+        let command = this.getFinalCommandToRunCodeFile(executor);
         if (showExecutionMessage) {
             this._outputChannel.appendLine('[Running] ' + command);
         }
