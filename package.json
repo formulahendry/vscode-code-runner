@@ -78,6 +78,8 @@
                     "type": "object",
                     "default": {
                         "javascript": "node",
+                        "java": "cd $dir && javac $fileName && java $fileNameWithoutExt",
+                        "c": "gcc $fullFileName && ./a.out",
                         "php": "php",
                         "python": "python",
                         "perl": "perl",
