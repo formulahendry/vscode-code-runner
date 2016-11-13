@@ -1,3 +1,7 @@
+### 0.5.0
+* Add placeholders into configuration for compiled language
+* Add support for C, C++, Java
+
 ### 0.4.2
 * Add support for OCaml Script
 

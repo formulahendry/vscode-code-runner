@@ -2,6 +2,7 @@
 import * as vscode from 'vscode';
 
 const appInsights = require("applicationinsights");
+const compilers = ['gcc', 'g++', 'javac'];
 
 export class AppInsightsClient {
     private _client;
@@ -15,6 +16,12 @@ export class AppInsightsClient {
 
     public sendEvent(eventName: string): void {
         if (this._enableAppInsights) {
+            for (let i in compilers) {
+                if (eventName.indexOf(compilers[i] + ' ') >= 0) {
+                    eventName = compilers[i];
+                    break;
+                }
+            }
             this._client.trackEvent(eventName === '' ? 'bat' : eventName);
         }
     }
