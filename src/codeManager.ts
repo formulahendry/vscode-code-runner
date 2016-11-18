@@ -208,7 +208,7 @@ export class CodeManager {
      * Includes double quotes around a given file name.
      */
     private quoteFileName(fileName: string): string {
-        return ' \"' + fileName + '\"'
+        return '\"' + fileName + '\"'
     }
 
     /**
@@ -225,11 +225,11 @@ export class CodeManager {
     private getFinalCommandToRunCodeFile(executor: string): string {
         var placeholders: { regex: RegExp, replaceValue: string }[] = [
             //A placeholder that has to be replaced by the code file name without its extension
-            { "regex": /\$fileNameWithoutExt/g, "replaceValue":this.quoteFileName(this.getCodeFileWithoutDirAndExt()) },
+            { "regex": /\$fileNameWithoutExt/g, "replaceValue":this.getCodeFileWithoutDirAndExt() },
             //A placeholder that has to be replaced by the full code file name
             { "regex": /\$fullFileName/g, "replaceValue":this.quoteFileName(this._codeFile) },
             //A placeholder that has to be replaced by the code file name without the directory
-            { "regex": /\$fileName/g, "replaceValue":this.quoteFileName(this.getCodeBaseFile()) },
+            { "regex": /\$fileName/g, "replaceValue":this.getCodeBaseFile() },
             //A placeholder that has to be replaced by the directory of the code file
             { "regex": /\$dir/g, "replaceValue":this.quoteFileName(this.getCodeFileDir()) }            
         ];
@@ -239,14 +239,14 @@ export class CodeManager {
             cmd = cmd.replace(placeholder.regex, placeholder.replaceValue)
         });        
 
-       return (cmd != executor ? cmd : executor + this.quoteFileName(this._codeFile))
+        return (cmd != executor ? cmd : executor + ' ' + this.quoteFileName(this._codeFile))
     }
 
     private executeCommandInTerminal(executor: string) {
         if (this._terminal === null) {
             this._terminal = vscode.window.createTerminal('Code');
         }
-        this._terminal.show();
+        this._terminal.show(true);
         let command = this.getFinalCommandToRunCodeFile(executor);
         this._terminal.sendText(command);
     }
@@ -258,7 +258,7 @@ export class CodeManager {
             this._outputChannel.clear();
         }
         let showExecutionMessage = this._config.get<boolean>('showExecutionMessage');
-        this._outputChannel.show();
+        this._outputChannel.show(true);
         let exec = require('child_process').exec;
         let command = this.getFinalCommandToRunCodeFile(executor);
         if (showExecutionMessage) {

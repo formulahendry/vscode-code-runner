@@ -2,7 +2,7 @@
     "name": "code-runner",
     "displayName": "Code Runner",
     "description": "Run code snippet/file for C, C++, Java, JS, PHP, Python, Perl, Ruby, Go, Lua, Groovy, PowerShell, BAT/CMD, BASH/SH, F#, C#, VBScript, TypeScript, CoffeeScript, Scala, Swift, Julia, Crystal, OCaml",
-    "version": "0.5.0",
+    "version": "0.5.1",
     "publisher": "formulahendry",
     "icon": "images/logo.png",
     "engines": {
@@ -65,8 +65,14 @@
         "menus": {
             "editor/context": [
                 {
+                    "when": "!inOutput",
                     "command": "code-runner.run",
                     "group": "navigation"
+                },
+                {
+                    "when": "inOutput",
+                    "command": "code-runner.stop",
+                    "group": "stop-code-run"
                 }
             ]
         },

@@ -1,3 +1,10 @@
+### 0.5.1
+* Resolve [GitHub issue#21](https://github.com/formulahendry/vscode-code-runner/issues/21): Remove "Run Code" in Output Channel
+* Add "Stop Code Run" in Output Channel
+* Resolve [GitHub issue#32](https://github.com/formulahendry/vscode-code-runner/issues/32): Preserve focus of Text Editor after code is running
+* Not add quote for $fileNameWithoutExt and $fileName
+* Not add extra space for placeholders
+
 ### 0.5.0
 * Add placeholders into configuration for compiled language
 * Add support for C, C++, Java
