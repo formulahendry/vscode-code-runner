@@ -242,21 +242,24 @@ export class CodeManager {
      * @return the complete command to run the file, that includes the file name   
      */
     private getFinalCommandToRunCodeFile(executor: string, appendFile: boolean = true): string {
-        var placeholders: { regex: RegExp, replaceValue: string }[] = [
-            //A placeholder that has to be replaced by the code file name without its extension
-            { "regex": /\$fileNameWithoutExt/g, "replaceValue": this.getCodeFileWithoutDirAndExt() },
-            //A placeholder that has to be replaced by the full code file name
-            { "regex": /\$fullFileName/g, "replaceValue": this.quoteFileName(this._codeFile) },
-            //A placeholder that has to be replaced by the code file name without the directory
-            { "regex": /\$fileName/g, "replaceValue": this.getCodeBaseFile() },
-            //A placeholder that has to be replaced by the directory of the code file
-            { "regex": /\$dir/g, "replaceValue": this.quoteFileName(this.getCodeFileDir()) }
-        ];
-
         var cmd = executor
-        placeholders.forEach(placeholder => {
-            cmd = cmd.replace(placeholder.regex, placeholder.replaceValue)
-        });
+
+        if (this._codeFile) {
+            var placeholders: { regex: RegExp, replaceValue: string }[] = [
+                //A placeholder that has to be replaced by the code file name without its extension
+                { "regex": /\$fileNameWithoutExt/g, "replaceValue": this.getCodeFileWithoutDirAndExt() },
+                //A placeholder that has to be replaced by the full code file name
+                { "regex": /\$fullFileName/g, "replaceValue": this.quoteFileName(this._codeFile) },
+                //A placeholder that has to be replaced by the code file name without the directory
+                { "regex": /\$fileName/g, "replaceValue": this.getCodeBaseFile() },
+                //A placeholder that has to be replaced by the directory of the code file
+                { "regex": /\$dir/g, "replaceValue": this.quoteFileName(this.getCodeFileDir()) }
+            ];
+
+            placeholders.forEach(placeholder => {
+                cmd = cmd.replace(placeholder.regex, placeholder.replaceValue)
+            });
+        }
 
         return (cmd != executor ? cmd : executor + (appendFile ? ' ' + this.quoteFileName(this._codeFile) : ''));
     }

@@ -1,3 +1,6 @@
+### 0.6.1
+* Minor fix for running custom command when there is no active editor window
+
 ### 0.6.0
 * Add support to run custom command
 
