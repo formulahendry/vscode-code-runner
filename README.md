@@ -2,12 +2,13 @@
 
 [![Marketplace Version](http://vsmarketplacebadge.apphb.com/version/formulahendry.code-runner.svg)](https://marketplace.visualstudio.com/items?itemName=formulahendry.code-runner) [![Installs](http://vsmarketplacebadge.apphb.com/installs/formulahendry.code-runner.svg)](https://marketplace.visualstudio.com/items?itemName=formulahendry.code-runner) [![Rating](http://vsmarketplacebadge.apphb.com/rating/formulahendry.code-runner.svg)](https://marketplace.visualstudio.com/items?itemName=formulahendry.code-runner) [![Build Status](https://travis-ci.org/formulahendry/vscode-code-runner.svg?branch=master)](https://travis-ci.org/formulahendry/vscode-code-runner)
 
-Run code snippet or code file for multiple languages: **C, C++, Java, JavaScript, PHP, Python, Perl, Ruby, Go, Lua, Groovy, PowerShell, BAT/CMD, BASH/SH, F# Script, C# Script, VBScript, TypeScript, CoffeeScript, Scala, Swift, Julia, Crystal, OCaml Script**
+Run code snippet or code file for multiple languages: **C, C++, Java, JavaScript, PHP, Python, Perl, Ruby, Go, Lua, Groovy, PowerShell, BAT/CMD, BASH/SH, F# Script, C# Script, VBScript, TypeScript, CoffeeScript, Scala, Swift, Julia, Crystal, OCaml Script**, and custom command
 
 ## Features
 
 * Run code file of current active Text Editor
 * Run selected code snippet in Text Editor
+* Run custom command
 * Stop code running
 * View output in Output Window
 * Set default language to run
@@ -24,6 +25,8 @@ Run code snippet or code file for multiple languages: **C, C++, Java, JavaScript
 * To select language to run, use shortcut `Ctrl+Alt+J`, or press `F1` and then select/type `Run By Language`, then type or select the language to run: e.g `php, javascript, bat, shellscript...`
 
 ![Usage](images/usageRunByLanguage.gif)
+
+* To run custom command, then use shortcut `Ctrl+Alt+K`, or press `F1` and then select/type `Run Custom Command`
 
 ## Configuration
 
@@ -61,7 +64,7 @@ Besides, you could set the default language to run:
     "code-runner.defaultLanguage": "javascript"
 }
 ```
-**For the default language:** It should be set with language id defined in [VS Code](https://github.com/Microsoft/vscode/tree/master/extensions). The languages you could set are `javascript, php, python, perl, ruby, go, lua, groovy, powershell, bat, shellscript, fsharp, csharp, vbscript, typescript, coffeescript`
+**For the default language:** It should be set with language id defined in [VS Code](https://github.com/Microsoft/vscode/tree/master/extensions). The languages you could set are `java, c, cpp, javascript, php, python, perl, ruby, go, lua, groovy, powershell, bat, shellscript, fsharp, csharp, vbscript, typescript, coffeescript`
 
 Also, you could set the executor per file extension:
 ```json
@@ -69,6 +72,13 @@ Also, you could set the executor per file extension:
     "code-runner.executorMapByFileExtension": {
         ".vbs": "cscript //Nologo"
     }
+}
+```
+
+To set the custom command to run:
+```json
+{
+    "code-runner.customCommand": "echo Hello"
 }
 ```
 

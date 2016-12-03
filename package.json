@@ -1,8 +1,8 @@
 {
     "name": "code-runner",
     "displayName": "Code Runner",
-    "description": "Run code snippet/file for C, C++, Java, JS, PHP, Python, Perl, Ruby, Go, Lua, Groovy, PowerShell, BAT/CMD, BASH/SH, F#, C#, VBScript, TypeScript, CoffeeScript, Scala, Swift, Julia, Crystal, OCaml",
-    "version": "0.5.1",
+    "description": "Run code snippet/file for C, C++, Java, JS, PHP, Python, Perl, Ruby, Go, Lua, Groovy, PowerShell, BAT/CMD, BASH/SH, F#, C#, VBScript, TypeScript, CoffeeScript, Scala, Swift, Julia, Crystal, OCaml, and custom command",
+    "version": "0.6.0",
     "publisher": "formulahendry",
     "icon": "images/logo.png",
     "engines": {
@@ -30,6 +30,7 @@
     },
     "activationEvents": [
         "onCommand:code-runner.run",
+        "onCommand:code-runner.runCustomCommand",
         "onCommand:code-runner.runByLanguage"
     ],
     "main": "./out/src/extension",
@@ -38,6 +39,10 @@
             {
                 "command": "code-runner.run",
                 "title": "Run Code"
+            },
+            {
+                "command": "code-runner.runCustomCommand",
+                "title": "Run Custom Command"
             },
             {
                 "command": "code-runner.runByLanguage",
@@ -52,6 +57,10 @@
             {
                 "command": "code-runner.run",
                 "key": "ctrl+alt+n"
+            },
+            {
+                "command": "code-runner.runCustomCommand",
+                "key": "ctrl+alt+k"
             },
             {
                 "command": "code-runner.runByLanguage",
@@ -120,6 +129,11 @@
                         ".ml": "ocaml"
                     },
                     "description": "Set the executor of each file extension."
+                },
+                "code-runner.customCommand": {
+                    "type": "string",
+                    "default": "echo Hello",
+                    "description": "Set the custom command to run."
                 },
                 "code-runner.languageIdToFileExtensionMap": {
                     "type": "object",

@@ -16,6 +16,10 @@ export function activate(context: vscode.ExtensionContext) {
         codeManager.run();
     });
 
+    let runCustomCommand = vscode.commands.registerCommand('code-runner.runCustomCommand', () => {
+        codeManager.runCustomCommand();
+    });    
+
     let runByLanguage = vscode.commands.registerCommand('code-runner.runByLanguage', () => {
         codeManager.runByLanguage();
     });
@@ -25,6 +29,7 @@ export function activate(context: vscode.ExtensionContext) {
     });
 
     context.subscriptions.push(run);
+    context.subscriptions.push(runCustomCommand);
     context.subscriptions.push(runByLanguage);
     context.subscriptions.push(stop);
 }

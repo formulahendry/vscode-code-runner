@@ -1,3 +1,6 @@
+### 0.6.0
+* Add support to run custom command
+
 ### 0.5.1
 * Resolve [GitHub issue#21](https://github.com/formulahendry/vscode-code-runner/issues/21): Remove "Run Code" in Output Channel
 * Add "Stop Code Run" in Output Channel
