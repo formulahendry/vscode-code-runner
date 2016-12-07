@@ -1,3 +1,7 @@
+### 0.6.2
+* Add support for R Language
+* Add donation section in README.md
+
 ### 0.6.1
 * Minor fix for running custom command when there is no active editor window
 
