@@ -1,3 +1,7 @@
+### 0.6.3
+* Add support for AppleScript
+* Add PayPal link in donation section
+
 ### 0.6.2
 * Add support for R Language
 * Add donation section in README.md
