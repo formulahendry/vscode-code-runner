@@ -2,7 +2,7 @@
     "name": "code-runner",
     "displayName": "Code Runner",
     "description": "Run code snippet/file for C, C++, Java, JS, PHP, Python, Perl, Ruby, Go, Lua, Groovy, PowerShell, BAT/CMD, BASH/SH, F#, C#, VBScript, TypeScript, CoffeeScript, Scala, Swift, Julia, Crystal, OCaml, R, AppleScript",
-    "version": "0.6.3",
+    "version": "0.6.4",
     "publisher": "formulahendry",
     "icon": "images/logo.png",
     "engines": {
@@ -94,8 +94,8 @@
                     "default": {
                         "javascript": "node",
                         "java": "cd $dir && javac $fileName && java $fileNameWithoutExt",
-                        "c": "gcc $fullFileName && ./a.out",
-                        "cpp": "g++ $fullFileName && ./a.out",
+                        "c": "cd $dir && gcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+                        "cpp": "cd $dir && g++ $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
                         "php": "php",
                         "python": "python",
                         "perl": "perl",

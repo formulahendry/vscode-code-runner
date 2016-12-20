@@ -1,3 +1,6 @@
+### 0.6.4
+* Resolve [GitHub issue#41](https://github.com/formulahendry/vscode-code-runner/issues/41): Fix running C/C++ in Windows
+
 ### 0.6.3
 * Add support for AppleScript
 * Add PayPal link in donation section
