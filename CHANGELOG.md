@@ -1,3 +1,7 @@
+### 0.6.5
+* Resolve [GitHub issue#43](https://github.com/formulahendry/vscode-code-runner/issues/43): Add support for Elixir
+* Upgrade applicationinsights npm since [telemetry data requires HTTPS](https://azure.microsoft.com/en-us/updates/application-insights-telemetry-data-now-requires-https-with-shutdown-of-http-data-collectors/)  
+
 ### 0.6.4
 * Resolve [GitHub issue#41](https://github.com/formulahendry/vscode-code-runner/issues/41): Fix running C/C++ in Windows
 
