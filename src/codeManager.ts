@@ -199,6 +199,10 @@ export class CodeManager {
         }
     }
 
+    private getWorkspaceRoot(codeFileDir: string): string {
+        return vscode.workspace.rootPath ? vscode.workspace.rootPath : codeFileDir;
+    }
+
     /**
      * Gets the base name of the code file, that is without its directory.
      */
@@ -245,7 +249,11 @@ export class CodeManager {
         var cmd = executor
 
         if (this._codeFile) {
-            var placeholders: { regex: RegExp, replaceValue: string }[] = [
+            let codeFileDir = this.getCodeFileDir();
+            let placeholders: { regex: RegExp, replaceValue: string }[] = [
+                //A placeholder that has to be replaced by the path of the folder opened in VS Code
+                //If no folder is opened, replace with the directory of the code file
+                { "regex": /\$workspaceRoot/g, "replaceValue": this.getWorkspaceRoot(codeFileDir) },
                 //A placeholder that has to be replaced by the code file name without its extension
                 { "regex": /\$fileNameWithoutExt/g, "replaceValue": this.getCodeFileWithoutDirAndExt() },
                 //A placeholder that has to be replaced by the full code file name
@@ -253,7 +261,7 @@ export class CodeManager {
                 //A placeholder that has to be replaced by the code file name without the directory
                 { "regex": /\$fileName/g, "replaceValue": this.getCodeBaseFile() },
                 //A placeholder that has to be replaced by the directory of the code file
-                { "regex": /\$dir/g, "replaceValue": this.quoteFileName(this.getCodeFileDir()) }
+                { "regex": /\$dir/g, "replaceValue": this.quoteFileName(codeFileDir) }
             ];
 
             placeholders.forEach(placeholder => {

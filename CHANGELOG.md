@@ -1,3 +1,7 @@
+### 0.6.6
+* Resolve [GitHub issue#54](https://github.com/formulahendry/vscode-code-runner/issues/54): Add support for VB.NET
+* Resolve [GitHub issue#51](https://github.com/formulahendry/vscode-code-runner/issues/51): Add support for $workspaceRoot
+
 ### 0.6.5
 * Resolve [GitHub issue#43](https://github.com/formulahendry/vscode-code-runner/issues/43): Add support for Elixir
 * Upgrade applicationinsights npm since [telemetry data requires HTTPS](https://azure.microsoft.com/en-us/updates/application-insights-telemetry-data-now-requires-https-with-shutdown-of-http-data-collectors/)  
