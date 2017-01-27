@@ -19,7 +19,7 @@
                     <key>2</key>
                     <dict>
                         <key>name</key>
-                        <string>token.string</string>
+                        <string>string</string>
                     </dict>
                 </dict>
                 <key>match</key>
@@ -38,7 +38,7 @@
                     <key>2</key>
                     <dict>
                         <key>name</key>
-                        <string>token.string</string>
+                        <string>string</string>
                     </dict>
                     <key>3</key>
                     <dict>
@@ -53,17 +53,17 @@
                     <key>5</key>
                     <dict>
                         <key>name</key>
-                        <string>token.string</string>
+                        <string>string</string>
                     </dict>
                     <key>6</key>
                     <dict>
                         <key>name</key>
-                        <string>token.warn-token</string>
+                        <string>constant.numeric</string>
                     </dict>
                     <key>7</key>
                     <dict>
                         <key>name</key>
-                        <string>token.string</string>
+                        <string>string</string>
                     </dict>
                 </dict>
                 <key>match</key>

@@ -1,8 +1,8 @@
 {
   "name": "code-runner",
   "displayName": "Code Runner",
-  "description": "Run code snippet/file for C, C++, Java, JS, PHP, Python, Perl, Ruby, Go, Lua, Groovy, PowerShell, BAT/CMD, BASH/SH, F#, C#, VBScript, TypeScript, CoffeeScript, Scala, Swift, Julia, Crystal, OCaml, R, AppleScript, Elixir, VB.NET",
-  "version": "0.6.6",
+  "description": "Run code snippet/file for C, C++, Java, JS, PHP, Python, Perl, Ruby, Go, Lua, Groovy, PowerShell, BAT/CMD, BASH/SH, F#, C#, VBScript, TypeScript, CoffeeScript, Scala, Swift, Julia, Crystal, OCaml, R, AppleScript, Elixir, VB.NET, Clojure",
+  "version": "0.6.7",
   "publisher": "formulahendry",
   "icon": "images/logo.png",
   "engines": {
@@ -117,7 +117,8 @@
             "crystal": "crystal",
             "ocaml": "ocaml",
             "r": "Rscript",
-            "applescript": "osascript"
+            "applescript": "osascript",
+            "clojure": "lein exec"
           },
           "description": "Set the executor of each language."
         },

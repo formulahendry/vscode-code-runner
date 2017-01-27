@@ -1,3 +1,8 @@
+### 0.6.7
+* Resolve [GitHub issue#57](https://github.com/formulahendry/vscode-code-runner/issues/57): Add support for Clojure 
+* Fix output color due to changed VS Code 1.9
+* Improve output color for numeric
+
 ### 0.6.6
 * Resolve [GitHub issue#54](https://github.com/formulahendry/vscode-code-runner/issues/54): Add support for VB.NET
 * Resolve [GitHub issue#51](https://github.com/formulahendry/vscode-code-runner/issues/51): Add support for $workspaceRoot
