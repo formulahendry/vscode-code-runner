@@ -29,7 +29,7 @@ export class CodeManager {
         this._terminal = null;
     }
 
-    public run(languageId: string = null): void {
+    public runCode(languageId: string = null): void {
         if (this._isRunning) {
             vscode.window.showInformationMessage('Code is already running!');
             return;
@@ -54,6 +54,17 @@ export class CodeManager {
         this.getCodeFileAndExecute(editor, fileExtension, executor);
     }
 
+    public runCodeByLanguage(): void {
+        this._appInsightsClient.sendEvent('runCodeByLanguage');
+        let config = vscode.workspace.getConfiguration('code-runner');
+        var executorMap = config.get<any>('executorMap');
+        vscode.window.showQuickPick(Object.keys(executorMap), { placeHolder: "Type or select language to run" }).then((languageId) => {
+            if (languageId !== undefined) {
+                this.runCode(languageId);
+            }
+        });
+    }
+
     public runCustomCommand(): void {
         if (this._isRunning) {
             vscode.window.showInformationMessage('Code is already running!');
@@ -71,17 +82,6 @@ export class CodeManager {
         } else {
             this.executeCommand(executor, false);
         }
-    }
-
-    public runByLanguage(): void {
-        this._appInsightsClient.sendEvent('runByLanguage');
-        let config = vscode.workspace.getConfiguration('code-runner');
-        var executorMap = config.get<any>('executorMap');
-        vscode.window.showQuickPick(Object.keys(executorMap), { placeHolder: "Type or select language to run" }).then((languageId) => {
-            if (languageId !== undefined) {
-                this.run(languageId);
-            }
-        });
     }
 
     public stop(): void {
@@ -211,13 +211,16 @@ export class CodeManager {
         return regexMatch.length ? regexMatch[1] : this._codeFile
     }
 
-    /**
-     * Gets the code file name without its directory and extension.
-     */
-    private getCodeFileWithoutDirAndExt(): string {
-        let regexMatch = this._codeFile.match(/.*[\/\\](.*(?=\..*))/)
-        return regexMatch.length ? regexMatch[1] : this._codeFile
-    }
+    // NOT USED.
+    // Also, it needs a refactor from the author side. 
+    // It causes problems after placeholders changes, when combined as "$dir$fileNameWithoutExt" in the executor mapping settings.
+    // /**
+    //  * Gets the code file name without its directory and extension.
+    //  */
+    // private getCodeFileWithoutDirAndExt(): string {
+    //     let regexMatch = this._codeFile.match(/.*[\/\\](.*(?=\..*))/)
+    //     return regexMatch.length ? regexMatch[1] : this._codeFile
+    // }
 
     /**
      * Gets the directory of the code file.
@@ -251,17 +254,22 @@ export class CodeManager {
         if (this._codeFile) {
             let codeFileDir = this.getCodeFileDir();
             let placeholders: { regex: RegExp, replaceValue: string }[] = [
-                //A placeholder that has to be replaced by the path of the folder opened in VS Code
-                //If no folder is opened, replace with the directory of the code file
+                // A placeholder that has to be replaced by the path of the folder opened in VS Code;
+                // If no folder is opened, replace with the directory of the code file
                 { "regex": /\$workspaceRoot/g, "replaceValue": this.getWorkspaceRoot(codeFileDir) },
-                //A placeholder that has to be replaced by the code file name without its extension
-                { "regex": /\$fileNameWithoutExt/g, "replaceValue": this.getCodeFileWithoutDirAndExt() },
-                //A placeholder that has to be replaced by the full code file name
-                { "regex": /\$fullFileName/g, "replaceValue": this.quoteFileName(this._codeFile) },
-                //A placeholder that has to be replaced by the code file name without the directory
+                // A placeholder that has to be replaced by the full code file path
+                { "regex": /\$fullFilePath/g, "replaceValue": this._codeFile },
+                // A placeholder that has to be replaced by the code file name without the directory
                 { "regex": /\$fileName/g, "replaceValue": this.getCodeBaseFile() },
-                //A placeholder that has to be replaced by the directory of the code file
-                { "regex": /\$dir/g, "replaceValue": this.quoteFileName(codeFileDir) }
+                // A placeholder that has to be replaced by the directory of the code file
+                { "regex": /\$dir/g, "replaceValue": codeFileDir }
+                
+                // NOT USED.
+                // It needs a refactor from the author side. It causes problems after placeholders changes, when combined as "$dir$fileNameWithoutExt" in the executor mapping settings.
+                //
+                // A placeholder that has to be replaced by the code file name without its extension
+                // { "regex": /\$fileNameWithoutExt/g, "replaceValue": this.getCodeFileWithoutDirAndExt() },
+
             ];
 
             placeholders.forEach(placeholder => {
