@@ -160,9 +160,13 @@
 				"code-runner.languageIdToFileExtensionMap": {
 					"type": "object",
 					"default": {
-						"Batch File": ".bat",
+						"Batch File": [".bat", ".cmd"],
 						"C#": ".cs",
-						"PowerShell": ".ps1",
+						"Perl": [".pl", ".pls", ".pm"],
+						"PowerShell": [".ps1", ".ps2", ".psm1"],
+						"Python": [".py", ".pyc"],
+						"Ruby": [".rb", ".rbw"],
+						"VB Script": [".vbe", ".vbs"],
 						"VB.NET": ".vb"
 					},
 					"description": "Set the mapping of languageId to file extension."
