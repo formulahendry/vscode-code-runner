@@ -1,222 +1,246 @@
 {
-  "name": "code-runner",
-  "displayName": "Code Runner",
-  "description": "Run code snippet/file for C, C++, Java, JS, PHP, Python, Perl, Ruby, Go, Lua, Groovy, PowerShell, BAT/CMD, BASH/SH, F#, C#, VBScript, TypeScript, CoffeeScript, Scala, Swift, Julia, Crystal, OCaml, R, AppleScript, Elixir, VB.NET, Clojure",
-  "version": "0.6.7",
-  "publisher": "formulahendry",
-  "icon": "images/logo.png",
-  "engines": {
-    "vscode": "^1.6.0"
-  },
-  "categories": [
-    "Languages",
-    "Other"
-  ],
-  "keywords": [
-    "javascript",
-    "php",
-    "python",
-    "perl",
-    "ruby"
-  ],
-  "bugs": {
-    "url": "https://github.com/formulahendry/vscode-code-runner/issues",
-    "email": "formulahendry@gmail.com"
-  },
-  "homepage": "https://github.com/formulahendry/vscode-code-runner/blob/master/README.md",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/formulahendry/vscode-code-runner.git"
-  },
-  "activationEvents": [
-    "onCommand:code-runner.run",
-    "onCommand:code-runner.runCustomCommand",
-    "onCommand:code-runner.runByLanguage"
-  ],
-  "main": "./out/src/extension",
-  "contributes": {
-    "commands": [
-      {
-        "command": "code-runner.run",
-        "title": "Run Code"
-      },
-      {
-        "command": "code-runner.runCustomCommand",
-        "title": "Run Custom Command"
-      },
-      {
-        "command": "code-runner.runByLanguage",
-        "title": "Run By Language"
-      },
-      {
-        "command": "code-runner.stop",
-        "title": "Stop Code Run"
-      }
-    ],
-    "keybindings": [
-      {
-        "command": "code-runner.run",
-        "key": "ctrl+alt+n"
-      },
-      {
-        "command": "code-runner.runCustomCommand",
-        "key": "ctrl+alt+k"
-      },
-      {
-        "command": "code-runner.runByLanguage",
-        "key": "ctrl+alt+j"
-      },
-      {
-        "command": "code-runner.stop",
-        "key": "ctrl+alt+m"
-      }
-    ],
-    "menus": {
-      "editor/context": [
-        {
-          "when": "!inOutput",
-          "command": "code-runner.run",
-          "group": "navigation"
-        },
-        {
-          "when": "inOutput",
-          "command": "code-runner.stop",
-          "group": "stop-code-run"
-        }
-      ]
-    },
-    "configuration": {
-      "type": "object",
-      "title": "Run Code configuration",
-      "properties": {
-        "code-runner.executorMap": {
-          "type": "object",
-          "default": {
-            "javascript": "node",
-            "java": "cd $dir && javac $fileName && java $fileNameWithoutExt",
-            "c": "cd $dir && gcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
-            "cpp": "cd $dir && g++ $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
-            "php": "php",
-            "python": "python",
-            "perl": "perl",
-            "ruby": "ruby",
-            "go": "go run",
-            "lua": "lua",
-            "groovy": "groovy",
-            "powershell": "powershell -ExecutionPolicy ByPass -File",
-            "bat": "",
-            "shellscript": "bash",
-            "fsharp": "fsi",
-            "csharp": "scriptcs",
-            "vbscript": "cscript //Nologo",
-            "typescript": "ts-node",
-            "coffeescript": "coffee",
-            "scala": "scala",
-            "swift": "swift",
-            "julia": "julia",
-            "crystal": "crystal",
-            "ocaml": "ocaml",
-            "r": "Rscript",
-            "applescript": "osascript",
-            "clojure": "lein exec"
-          },
-          "description": "Set the executor of each language."
-        },
-        "code-runner.executorMapByFileExtension": {
-          "type": "object",
-          "default": {
-            ".vb": "cd $dir && vbc /nologo $fileName && $fileNameWithoutExt",
-            ".vbs": "cscript //Nologo",
-            ".scala": "scala",
-            ".jl": "julia",
-            ".cr": "crystal",
-            ".ml": "ocaml",
-            ".exs": "elixir"
-          },
-          "description": "Set the executor of each file extension."
-        },
-        "code-runner.customCommand": {
-          "type": "string",
-          "default": "echo Hello",
-          "description": "Set the custom command to run."
-        },
-        "code-runner.languageIdToFileExtensionMap": {
-          "type": "object",
-          "default": {
-            "bat": ".bat",
-            "powershell": ".ps1"
-          },
-          "description": "Set the mapping of languageId to file extension."
-        },
-        "code-runner.defaultLanguage": {
-          "type": "string",
-          "default": "",
-          "description": "Set the default language to run."
-        },
-        "code-runner.cwd": {
-          "type": "string",
-          "default": "",
-          "description": "Set the working directory."
-        },
-        "code-runner.fileDirectoryAsCwd": {
-          "type": "boolean",
-          "default": false,
-          "description": "Whether to use the directory of the file to be executed as the working directory."
-        },
-        "code-runner.clearPreviousOutput": {
-          "type": "boolean",
-          "default": false,
-          "description": "Whether to clear previous output before each run."
-        },
-        "code-runner.saveFileBeforeRun": {
-          "type": "boolean",
-          "default": false,
-          "description": "Whether to save the file before running."
-        },
-        "code-runner.enableAppInsights": {
-          "type": "boolean",
-          "default": true,
-          "description": "Whether to enable AppInsights to track user telemetry data."
-        },
-        "code-runner.showExecutionMessage": {
-          "type": "boolean",
-          "default": true,
-          "description": "Whether to show extra execution message like [Running] ... and [Done] ..."
-        },
-        "code-runner.runInTerminal": {
-          "type": "boolean",
-          "default": false,
-          "description": "Whether to run code in Integrated Terminal"
-        }
-      }
-    },
-    "languages": [
-      {
-        "id": "code-runner-output",
-        "mimetypes": [
-          "text/x-code-output"
-        ]
-      }
-    ],
-    "grammars": [
-      {
-        "language": "code-runner-output",
-        "scopeName": "code-runner.output",
-        "path": "./syntaxes/code-runner-output.tmLanguage"
-      }
-    ]
-  },
-  "scripts": {
-    "vscode:prepublish": "node ./node_modules/vscode/bin/compile",
-    "compile": "node ./node_modules/vscode/bin/compile -watch -p ./",
-    "postinstall": "node ./node_modules/vscode/bin/install"
-  },
-  "dependencies": {
-    "applicationinsights": "^0.17.1",
-    "tree-kill": "^1.1.0"
-  },
-  "devDependencies": {
-    "typescript": "^1.8.5",
-    "vscode": "^0.11.0"
-  }
+	"name": "code-runner",
+	"displayName": "Code Runner",
+	"description": "Run code snippet/file for AppleScript, BASH/SH, Batch/CMD, C/C++, C#, Clojure, CoffeeScript, Crystal, Elixir, F#, Go, Groovy, Java, JavaScript, Julia, LUA, OCaml, Perl, PHP, PowerShell, Python, R, Ruby, Scala, Swift, TypeScript, VB Script and VB.NET.",
+	"version": "0.6.8",
+	"publisher": "formulahendry",
+	"icon": "images/logo.png",
+	"engines": {
+		"vscode": "^1.6.0"
+	},
+	"categories": [
+		"Languages",
+		"Other"
+	],
+	"keywords": [
+		"javascript",
+		"perl",
+		"php",
+		"python",
+		"ruby"
+	],
+	"bugs": {
+		"url": "https://github.com/formulahendry/vscode-code-runner/issues",
+		"email": "formulahendry@gmail.com"
+	},
+	"homepage": "https://github.com/formulahendry/vscode-code-runner/blob/master/README.md",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/formulahendry/vscode-code-runner.git"
+	},
+	"activationEvents": [
+		"onCommand:code-runner.runCode",
+		"onCommand:code-runner.runCodeByLanguage",
+		"onCommand:code-runner.runCustomCommand"
+	],
+	"main": "./out/src/extension",
+	"contributes": {
+		"commands": [
+			{
+				"command": "code-runner.runCode",
+				"title": "Code Runner: Run Code"
+			},
+			{
+				"command": "code-runner.runCodeByLanguage",
+				"title": "Code Runner: Run Code By Language"
+			},
+			{
+				"command": "code-runner.runCustomCommand",
+				"title": "Code Runner: Run Custom Command"
+			},
+			{
+				"command": "code-runner.stop",
+				"title": "Code Runner: Stop Code Run"
+			}
+		],
+		"keybindings": [
+			{
+				"command": "code-runner.runCode",
+				"key": "ctrl+alt+n"
+			},
+			{
+				"command": "code-runner.runCodeByLanguage",
+				"key": "ctrl+alt+j"
+			},
+			{
+				"command": "code-runner.runCustomCommand",
+				"key": "ctrl+alt+k"
+			},
+			{
+				"command": "code-runner.stop",
+				"key": "ctrl+alt+m"
+			}
+		],
+		"menus": {
+			"editor/context": [
+				{
+					"when": "!inOutput",
+					"command": "code-runner.runCode",
+					"group": "navigation"
+				},
+				{
+					"when": "inOutput",
+					"command": "code-runner.stop",
+					"group": "stop-code-run"
+				}
+			]
+		},
+		"configuration": {
+			"type": "object",
+			"title": "Run Code configuration",
+			"properties": {
+				"code-runner.executorMap": {
+					"type": "object",
+					"default": {
+						"AppleScript": "osascript.exe",
+						"Batch File": "CMD.exe /C",
+						"C":   "gcc.exe \"$fullFilePath\" -o \"$fullFilePath.exe\" && \"$fullFilePath.exe\"",
+						"C++": "g++.exe \"$fullFilePath\" -o \"$fullFilePath.exe\" && \"$fullFilePath.exe\"",
+						"C#": "csc.exe /NoLogo out:\"$fullFilePath.exe\" \"$fullFilePath\" && \"$fullFilePath.exe\"",
+						"Clojure": "lein.exe exec",
+						"CoffeeScript": "coffee.exe",
+						"Crystal": "crystal.exe",
+						"Elixir": "elixir.exe",
+						"F#": "fsi.exe",
+						"Go": "go.exe run",
+						"Groovy": "groovy.exe",
+						"Java": "javac.exe \"$fullFilePath\" && java.exe \"$fullFilePath.jar\"",
+						"JavaScript": "cscript.exe //NoLogo",
+						"Julia": "julia.exe",
+						"LUA": "lua.exe",
+						"OCaml": "ocaml.exe",
+						"Perl": "perl.exe",
+						"PHP": "php",
+						"PowerShell": "powershell.exe -ExecutionPolicy ByPass -File",
+						"Python": "python.exe",
+						"R": "Rscript.exe",
+						"Ruby": "ruby.exe",
+						"Scala": "scala.exe",
+						"Shell Script (Bash)": "bash",
+						"Swift": "swift.exe",
+						"TypeScript": "ts-node.exe",
+						"VB Script": "cscript.exe //NoLogo",
+						"VB.NET": "vbc.exe /NoLogo out:\"$fullFilePath.exe\" \"$fullFilePath\" && \"$fullFilePath.exe\""
+					},
+					"description": "Set the executor of each language."
+				},
+				"code-runner.executorMapByFileExtension": {
+					"type": "object",
+					"default": {
+						".bat": "CMD.exe /C",
+						".cmd": "CMD.exe /C",
+						".cr": "crystal.exe",
+						".cs": "csc.exe /NoLogo out:\"$fullFilePath.exe\" \"$fullFilePath\" && \"$fullFilePath.exe\"",
+						".exs": "elixir.exe",
+						".jl": "julia.exe",
+						".js": "cscript.exe //NoLogo",
+						".ml": "ocaml.exe",
+						".pl": "perl.exe",
+						".pls": "perl.exe",
+						".pm": "perl.exe",
+						".ps1":  "powershell.exe -ExecutionPolicy ByPass -File",
+						".ps2":  "powershell.exe -ExecutionPolicy ByPass -File",
+						".psm1": "powershell.exe -ExecutionPolicy ByPass -File",
+						".py": "python.exe",
+						".pyc": "python.exe",
+						".rb": "ruby.exe",
+						".rbw": "ruby.exe",
+						".scala": "scala.exe",
+						".vb": "vbc.exe /NoLogo out:\"$fullFilePath.exe\" \"$fullFilePath\" && \"$fullFilePath.exe\"",
+						".vbe": "cscript.exe //NoLogo",
+						".vbs": "cscript.exe //NoLogo"
+					},
+					"description": "Set the executor of each file extension."
+				},
+				"code-runner.customCommand": {
+					"type": "string",
+					"default": "Echo Hello World!",
+					"description": "Set the custom command to run."
+				},
+				"code-runner.languageIdToFileExtensionMap": {
+					"type": "object",
+					"default": {
+						"Batch File": ".bat",
+						"C#": ".cs",
+						"PowerShell": ".ps1",
+						"VB.NET": ".vb"
+					},
+					"description": "Set the mapping of languageId to file extension."
+				},
+				"code-runner.defaultLanguage": {
+					"type": "string",
+					"default": "",
+					"description": "Set the default language to run."
+				},
+				"code-runner.cwd": {
+					"type": "string",
+					"default": "",
+					"description": "Set the working directory."
+				},
+				"code-runner.fileDirectoryAsCwd": {
+					"type": "boolean",
+					"default": false,
+					"description": "Whether to use the directory of the file to be executed as the working directory."
+				},
+				"code-runner.clearPreviousOutput": {
+					"type": "boolean",
+					"default": false,
+					"description": "Whether to clear previous output before each run."
+				},
+				"code-runner.saveFileBeforeRun": {
+					"type": "boolean",
+					"default": true,
+					"description": "Whether to save the file before running."
+				},
+				"code-runner.enableAppInsights": {
+					"type": "boolean",
+					"default": true,
+					"description": "Whether to enable AppInsights to track user telemetry data."
+				},
+				"code-runner.showExecutionMessage": {
+					"type": "boolean",
+					"default": true,
+					"description": "Whether to show extra execution message like [Running] ... and [Done] ..."
+				},
+				"code-runner.runInTerminal": {
+					"type": "boolean",
+					"default": false,
+					"description": "Whether to run code in Integrated Terminal"
+				}
+			}
+		},
+		"languages": [
+			{
+				"id": "code-runner-output",
+				"mimetypes": [
+					"text/x-code-output"
+				]
+			}
+		],
+		"grammars": [
+			{
+				"language": "code-runner-output",
+				"scopeName": "code-runner.output",
+				"path": "./syntaxes/code-runner-output.tmLanguage"
+			}
+		]
+	},
+	"scripts": {
+		"vscode:prepublish": "node ./node_modules/vscode/bin/compile",
+		"compile": "node ./node_modules/vscode/bin/compile -watch -p ./",
+		"postinstall": "node ./node_modules/vscode/bin/install"
+	},
+	"dependencies": {
+		"applicationinsights": "^0.17.1",
+		"tree-kill": "^1.1.0"
+	},
+	"devDependencies": {
+		"typescript": "^1.8.5",
+		"vscode": "^0.11.0"
+	},
+	"__metadata": {
+		"id": "a6a0c5b2-d078-4bf5-a9ee-4e37054414b3",
+		"publisherId": "38bbe3f0-5204-4170-845e-c2f966d979b8",
+		"publisherDisplayName": "Jun Han"
+	}
 }
