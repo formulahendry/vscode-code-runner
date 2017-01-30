@@ -12,25 +12,25 @@ export function activate(context: vscode.ExtensionContext) {
         codeManager.onDidCloseTerminal();
     });
 
-    let run = vscode.commands.registerCommand('code-runner.run', () => {
-        codeManager.run();
+    let run = vscode.commands.registerCommand('code-runner.runCode', () => {
+        codeManager.runCode();
     });
 
+    let runByLanguage = vscode.commands.registerCommand('code-runner.runCodeByLanguage', () => {
+        codeManager.runCodeByLanguage();
+    });
+    
     let runCustomCommand = vscode.commands.registerCommand('code-runner.runCustomCommand', () => {
         codeManager.runCustomCommand();
     });    
-
-    let runByLanguage = vscode.commands.registerCommand('code-runner.runByLanguage', () => {
-        codeManager.runByLanguage();
-    });
 
     let stop = vscode.commands.registerCommand('code-runner.stop', () => {
         codeManager.stop();
     });
 
-    context.subscriptions.push(run);
+    context.subscriptions.push(runCode);
+    context.subscriptions.push(runCodeByLanguage);
     context.subscriptions.push(runCustomCommand);
-    context.subscriptions.push(runByLanguage);
     context.subscriptions.push(stop);
 }
 
