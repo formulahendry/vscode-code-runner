@@ -12,11 +12,11 @@ export function activate(context: vscode.ExtensionContext) {
         codeManager.onDidCloseTerminal();
     });
 
-    let run = vscode.commands.registerCommand('code-runner.runCode', () => {
+    let runCode = vscode.commands.registerCommand('code-runner.runCode', () => {
         codeManager.runCode();
     });
 
-    let runByLanguage = vscode.commands.registerCommand('code-runner.runCodeByLanguage', () => {
+    let runCodeByLanguage = vscode.commands.registerCommand('code-runner.runCodeByLanguage', () => {
         codeManager.runCodeByLanguage();
     });
     
