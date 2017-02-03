@@ -231,7 +231,7 @@ export class CodeManager {
      * Gets the directory of the code file without a trailing slash.
      */
     private getCodeFileDirWithoutTrailingSlash(): string {
-        return this.getCodeFileDir().replace(/\\$/, "")
+        return this.getCodeFileDir().replace(/(\\|\/)$/, "")
     }
 
     /**
