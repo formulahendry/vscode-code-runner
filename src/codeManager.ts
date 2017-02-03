@@ -228,6 +228,13 @@ export class CodeManager {
     }
 
     /**
+     * Gets the directory of the code file without a trailing slash.
+     */
+    private getCodeFileDirWithoutTrailingSlash(): string {
+        return this.getCodeFileDir().replace(/\\$/, "")
+    }
+
+    /**
      * Includes double quotes around a given file name.
      */
     private quoteFileName(fileName: string): string {
@@ -260,6 +267,8 @@ export class CodeManager {
                 { "regex": /\$fullFileName/g, "replaceValue": this.quoteFileName(this._codeFile) },
                 //A placeholder that has to be replaced by the code file name without the directory
                 { "regex": /\$fileName/g, "replaceValue": this.getCodeBaseFile() },
+                //A placeholder that has to be replaced by the directory of the code file without a trailing slash
+                { "regex": /\$dirWithoutTrailingSlash/g, "replaceValue": this.quoteFileName(this.getCodeFileDirWithoutTrailingSlash()) },
                 //A placeholder that has to be replaced by the directory of the code file
                 { "regex": /\$dir/g, "replaceValue": this.quoteFileName(codeFileDir) }
             ];
