@@ -1,3 +1,6 @@
+### 0.6.8
+* Add support for Haxe
+
 ### 0.6.7
 * Resolve [GitHub issue#57](https://github.com/formulahendry/vscode-code-runner/issues/57): Add support for Clojure 
 * Fix output color due to changed VS Code 1.9

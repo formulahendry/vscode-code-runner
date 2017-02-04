@@ -2,7 +2,7 @@
   "name": "code-runner",
   "displayName": "Code Runner",
   "description": "Run code snippet/file for C, C++, Java, JS, PHP, Python, Perl, Ruby, Go, Lua, Groovy, PowerShell, BAT/CMD, BASH/SH, F#, C#, VBScript, TypeScript, CoffeeScript, Scala, Swift, Julia, Crystal, OCaml, R, AppleScript, Elixir, VB.NET, Clojure, Haxe",
-  "version": "0.6.7",
+  "version": "0.6.8",
   "publisher": "formulahendry",
   "icon": "images/logo.png",
   "engines": {
@@ -132,7 +132,8 @@
             ".jl": "julia",
             ".cr": "crystal",
             ".ml": "ocaml",
-            ".exs": "elixir"
+            ".exs": "elixir",
+            ".hx": "haxe --cwd $dirWithoutTrailingSlash --run $fileNameWithoutExt"
           },
           "description": "Set the executor of each file extension."
         },
