@@ -1,3 +1,6 @@
+### 0.6.9
+* Change executor if the Integrated Terminal is PowerShell on Windows
+
 ### 0.6.8
 * Add support for Haxe
 

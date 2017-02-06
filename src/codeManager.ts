@@ -281,11 +281,28 @@ export class CodeManager {
         return (cmd != executor ? cmd : executor + (appendFile ? ' ' + this.quoteFileName(this._codeFile) : ''));
     }
 
+    private changeExecutorFromCmdToPs(executor: string): string {
+        if (os.platform() === 'win32') {
+            let windowsShell = vscode.workspace.getConfiguration('terminal').get<string>('integrated.shell.windows');
+            if (windowsShell && windowsShell.toLowerCase().indexOf('powershell') > -1 && executor.indexOf(' && ') > -1) {
+                let replacement = '; if ($?) {';
+                executor = executor.replace('&&', replacement);
+                replacement = '} ' + replacement;
+                executor = executor.replace(/&&/g, replacement);
+                executor = executor.replace(/\$dir\$fileNameWithoutExt/g, '.\\$fileNameWithoutExt');
+                return executor + ' }';
+            }
+        }
+        return executor;
+    }
+
     private executeCommandInTerminal(executor: string, appendFile: boolean = true) {
         if (this._terminal === null) {
             this._terminal = vscode.window.createTerminal('Code');
         }
         this._terminal.show(true);
+        executor = this.changeExecutorFromCmdToPs(executor);
+        this._appInsightsClient.sendEvent(executor);
         let command = this.getFinalCommandToRunCodeFile(executor, appendFile);
         this._terminal.sendText(command);
     }

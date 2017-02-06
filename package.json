@@ -2,7 +2,7 @@
   "name": "code-runner",
   "displayName": "Code Runner",
   "description": "Run code snippet/file for C, C++, Java, JS, PHP, Python, Perl, Ruby, Go, Lua, Groovy, PowerShell, BAT/CMD, BASH/SH, F#, C#, VBScript, TypeScript, CoffeeScript, Scala, Swift, Julia, Crystal, OCaml, R, AppleScript, Elixir, VB.NET, Clojure, Haxe",
-  "version": "0.6.8",
+  "version": "0.6.9",
   "publisher": "formulahendry",
   "icon": "images/logo.png",
   "engines": {
@@ -104,7 +104,7 @@
             "lua": "lua",
             "groovy": "groovy",
             "powershell": "powershell -ExecutionPolicy ByPass -File",
-            "bat": "",
+            "bat": "cmd /c",
             "shellscript": "bash",
             "fsharp": "fsi",
             "csharp": "scriptcs",
@@ -126,7 +126,7 @@
         "code-runner.executorMapByFileExtension": {
           "type": "object",
           "default": {
-            ".vb": "cd $dir && vbc /nologo $fileName && $fileNameWithoutExt",
+            ".vb": "cd $dir && vbc /nologo $fileName && $dir$fileNameWithoutExt",
             ".vbs": "cscript //Nologo",
             ".scala": "scala",
             ".jl": "julia",
