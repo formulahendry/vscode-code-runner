@@ -2,7 +2,7 @@
 import * as vscode from 'vscode';
 
 const appInsights = require("applicationinsights");
-const compilers = ['gcc', 'g++', 'javac'];
+const compilers = ['gcc -framework Cocoa', 'gcc', 'g++', 'javac'];
 
 export class AppInsightsClient {
     private _client;

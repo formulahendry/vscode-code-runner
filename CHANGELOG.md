@@ -1,3 +1,6 @@
+### 0.6.10
+* Resolve [GitHub issue#77](https://github.com/formulahendry/vscode-code-runner/issues/77): Add support for Objective-C
+
 ### 0.6.9
 * Change executor if the Integrated Terminal is PowerShell on Windows
 
