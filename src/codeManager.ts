@@ -99,7 +99,8 @@ export class CodeManager {
         if (this._cwd) {
             return;
         }
-        if (this._config.get<boolean>('fileDirectoryAsCwd') && editor && !editor.document.isUntitled) {
+        if ((this._config.get<boolean>('fileDirectoryAsCwd') || !vscode.workspace.rootPath)
+            && editor && !editor.document.isUntitled) {
             this._cwd = dirname(editor.document.fileName);
         } else {
             this._cwd = vscode.workspace.rootPath;

@@ -1,3 +1,7 @@
+### 0.6.11
+* Add support for Rust
+* Set cwd as the directory of the code file if no folder has been opened
+
 ### 0.6.10
 * Resolve [GitHub issue#77](https://github.com/formulahendry/vscode-code-runner/issues/77): Add support for Objective-C
 
