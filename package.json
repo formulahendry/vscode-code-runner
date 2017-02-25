@@ -1,8 +1,8 @@
 {
   "name": "code-runner",
   "displayName": "Code Runner",
-  "description": "Run code snippet/file for C, C++, Java, JS, PHP, Python, Perl, Ruby, Go, Lua, Groovy, PowerShell, BAT/CMD, BASH/SH, F#, C#, VBScript, TypeScript, CoffeeScript, Scala, Swift, Julia, Crystal, OCaml, R, AppleScript, Elixir, VB.NET, Clojure, Haxe, Objective-C, Rust",
-  "version": "0.6.11",
+  "description": "Run code snippet/file for C, C++, Java, JS, PHP, Python, Perl, Ruby, Go, Lua, Groovy, PowerShell, BAT/CMD, BASH/SH, F#, C#, VBScript, TypeScript, CoffeeScript, Scala, Swift, Julia, Crystal, OCaml, R, AppleScript, Elixir, VB.NET, Clojure, Haxe, Objective-C, Rust, Racket",
+  "version": "0.6.12",
   "publisher": "formulahendry",
   "icon": "images/logo.png",
   "engines": {
@@ -121,7 +121,8 @@
             "applescript": "osascript",
             "clojure": "lein exec",
             "haxe": "haxe --cwd $dirWithoutTrailingSlash --run $fileNameWithoutExt",
-            "rust": "cd $dir && rustc $fileName && $dir$fileNameWithoutExt"
+            "rust": "cd $dir && rustc $fileName && $dir$fileNameWithoutExt",
+            "racket": "racket"
           },
           "description": "Set the executor of each language."
         },
@@ -135,7 +136,8 @@
             ".cr": "crystal",
             ".ml": "ocaml",
             ".exs": "elixir",
-            ".hx": "haxe --cwd $dirWithoutTrailingSlash --run $fileNameWithoutExt"
+            ".hx": "haxe --cwd $dirWithoutTrailingSlash --run $fileNameWithoutExt",
+            ".rkt": "racket"
           },
           "description": "Set the executor of each file extension."
         },
