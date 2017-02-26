@@ -1,7 +1,7 @@
 {
   "name": "code-runner",
   "displayName": "Code Runner",
-  "description": "Run code snippet/file for C, C++, Java, JS, PHP, Python, Perl, Ruby, Go, Lua, Groovy, PowerShell, BAT/CMD, BASH/SH, F#, C#, VBScript, TypeScript, CoffeeScript, Scala, Swift, Julia, Crystal, OCaml, R, AppleScript, Elixir, VB.NET, Clojure, Haxe, Objective-C, Rust, Racket",
+  "description": "Run code snippet/file for C, C++, Java, JS, PHP, Python, Perl, Ruby, Go, Lua, Groovy, PowerShell, BAT/CMD, BASH/SH, F#, C#, VBScript, TypeScript, CoffeeScript, Scala, Swift, Julia, Crystal, OCaml, R, AppleScript, Elixir, VB.NET, Clojure, Haxe, Objective-C, Rust, Racket, AutoHotKey",
   "version": "0.6.12",
   "publisher": "formulahendry",
   "icon": "images/logo.png",
@@ -122,7 +122,8 @@
             "clojure": "lein exec",
             "haxe": "haxe --cwd $dirWithoutTrailingSlash --run $fileNameWithoutExt",
             "rust": "cd $dir && rustc $fileName && $dir$fileNameWithoutExt",
-            "racket": "racket"
+            "racket": "racket",
+            "autohotkey": "autohotkey"
           },
           "description": "Set the executor of each language."
         },
@@ -137,7 +138,8 @@
             ".ml": "ocaml",
             ".exs": "elixir",
             ".hx": "haxe --cwd $dirWithoutTrailingSlash --run $fileNameWithoutExt",
-            ".rkt": "racket"
+            ".rkt": "racket",
+            ".ahk": "autohotkey"
           },
           "description": "Set the executor of each file extension."
         },
