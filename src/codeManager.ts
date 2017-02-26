@@ -29,7 +29,7 @@ export class CodeManager {
         this._terminal = null;
     }
 
-    public run(languageId: string = null): void {
+    public async run(languageId: string = null) {
         if (this._isRunning) {
             vscode.window.showInformationMessage('Code is already running!');
             return;
@@ -45,6 +45,11 @@ export class CodeManager {
 
         let fileExtension = this.getFileExtension(editor);
         let executor = this.getExecutor(languageId, fileExtension);
+
+        //multiple commands per executor
+        if (typeof executor === "object" ) {
+            executor = await this.getSubExecutor(executor);
+        }
         // undefined or null
         if (executor == null) {
             vscode.window.showInformationMessage('Code language not supported or defined.');
@@ -162,7 +167,15 @@ export class CodeManager {
         fs.writeFileSync(this._codeFile, content);
     }
 
-    private getExecutor(languageId: string, fileExtension: string): string {
+    private async getSubExecutor(executor: any): Promise<string> {
+        let subExecutorId = await vscode.window.showQuickPick(Object.keys(executor), { placeHolder: "Type or select command to run" });
+        if (subExecutorId !== undefined) {
+            executor = executor[subExecutorId];
+        }
+        return executor;
+    }
+
+    private getExecutor(languageId: string, fileExtension: string): any {
         this._languageId = languageId === null ? vscode.window.activeTextEditor.document.languageId : languageId;
         let executorMap = this._config.get<any>('executorMap');
         let executor = executorMap[this._languageId];
@@ -248,10 +261,10 @@ export class CodeManager {
      * This executor command may include a variable $1 to indicate the place where
      * the source code file name have to be included.
      * If no such a variable is present in the executor command,
-     * the file name is appended to the end of the executor command.   
+     * the file name is appended to the end of the executor command.
      *
      * @param executor The command used to run a source code file
-     * @return the complete command to run the file, that includes the file name   
+     * @return the complete command to run the file, that includes the file name
      */
     private getFinalCommandToRunCodeFile(executor: string, appendFile: boolean = true): string {
         var cmd = executor
