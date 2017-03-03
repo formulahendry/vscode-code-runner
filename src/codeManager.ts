@@ -46,10 +46,11 @@ export class CodeManager {
         let fileExtension = this.getFileExtension(editor);
         let executor = this.getExecutor(languageId, fileExtension);
 
-        //multiple commands per executor
+        // multiple commands per executor
         if (typeof executor === "object" ) {
             executor = await this.getSubExecutor(executor);
         }
+
         // undefined or null
         if (executor == null) {
             vscode.window.showInformationMessage('Code language not supported or defined.');
@@ -171,6 +172,8 @@ export class CodeManager {
         let subExecutorId = await vscode.window.showQuickPick(Object.keys(executor), { placeHolder: "Type or select command to run" });
         if (subExecutorId !== undefined) {
             executor = executor[subExecutorId];
+        } else {
+            executor = null;
         }
         return executor;
     }
