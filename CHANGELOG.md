@@ -1,3 +1,6 @@
+### 0.6.13 (2017-03-05)
+* Add support for AutoHotkey
+
 ### 0.6.12
 * Add support for Racket
 
