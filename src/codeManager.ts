@@ -301,7 +301,7 @@ export class CodeManager {
         if (this._terminal === null) {
             this._terminal = vscode.window.createTerminal('Code');
         }
-        this._terminal.show(true);
+        this._terminal.show(this._config.get<boolean>('preserveFocus'));
         executor = this.changeExecutorFromCmdToPs(executor);
         this._appInsightsClient.sendEvent(executor);
         let command = this.getFinalCommandToRunCodeFile(executor, appendFile);
@@ -315,7 +315,7 @@ export class CodeManager {
             this._outputChannel.clear();
         }
         let showExecutionMessage = this._config.get<boolean>('showExecutionMessage');
-        this._outputChannel.show(true);
+        this._outputChannel.show(this._config.get<boolean>('preserveFocus'));
         let exec = require('child_process').exec;
         let command = this.getFinalCommandToRunCodeFile(executor, appendFile);
         if (showExecutionMessage) {

@@ -125,6 +125,13 @@ To set whether to show extra execution message like [Running] ... and [Done] ...
 }
 ```
 
+To set whether to preserve focus on code editor after code run is triggered (default is true, the code editor will keep focus; when it is false, Terminal or Output Channel will take focus):
+```json
+{
+    "code-runner.preserveFocus": true
+}
+```
+
 ## About CWD Setting (current working directory)
 1. By default, use the `code-runner.cwd` setting
 2. If `code-runner.cwd` is not set and `code-runner.fileDirectoryAsCwd` is `true`, use the directory of the file to be executed

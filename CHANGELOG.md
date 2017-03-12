@@ -1,3 +1,6 @@
+### 0.6.14 (2017-03-12)
+* Resolve [GitHub issue#93](https://github.com/formulahendry/vscode-code-runner/issues/93): Add config entry to set whether to preserve focus on code editor after code run is triggered
+
 ### 0.6.13 (2017-03-05)
 * Add support for AutoHotkey
 
@@ -68,7 +71,7 @@
 * Add support to run code in Integrated Terminal
 
 ### 0.3.4
-* Resolve [GitHub issue#24](https://github.com/formulahendry/vscode-code-runner/issues/24): Add config entry to set whether to Whether to show extra execution message
+* Resolve [GitHub issue#24](https://github.com/formulahendry/vscode-code-runner/issues/24): Add config entry to set whether to show extra execution message
 
 ### 0.3.3
 * Add support to run by language from a suggestion list
