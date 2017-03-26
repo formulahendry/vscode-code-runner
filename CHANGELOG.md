@@ -1,3 +1,6 @@
+### 0.6.15 (2017-03-26)
+* Add support for AutoIt
+
 ### 0.6.14 (2017-03-12)
 * Resolve [GitHub issue#93](https://github.com/formulahendry/vscode-code-runner/issues/93): Add config entry to set whether to preserve focus on code editor after code run is triggered
 
