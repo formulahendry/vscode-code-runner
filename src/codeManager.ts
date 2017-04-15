@@ -113,8 +113,9 @@ export class CodeManager {
 
     private getCodeFileAndExecute(editor: vscode.TextEditor, fileExtension: string, executor: string, appendFile: boolean = true): any {
         let selection = editor.selection;
+        let ignoreSelection = this._config.get<boolean>('ignoreSelection');
 
-        if (selection.isEmpty && !editor.document.isUntitled) {
+        if ((selection.isEmpty || ignoreSelection) && !editor.document.isUntitled) {
             this._isTmpFile = false;
             this._codeFile = editor.document.fileName;
 
@@ -124,7 +125,7 @@ export class CodeManager {
                 });
             }
         } else {
-            let text = selection.isEmpty ? editor.document.getText() : editor.document.getText(selection);
+            let text = (selection.isEmpty || ignoreSelection) ? editor.document.getText() : editor.document.getText(selection);
 
             if (this._languageId === "php") {
                 text = text.trim();

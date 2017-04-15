@@ -1,3 +1,6 @@
+### 0.6.16 (2017-04-15)
+* Resolve [GitHub issue#102](https://github.com/formulahendry/vscode-code-runner/issues/102): Add config entry to set whether to ignore selection to always run entire file
+
 ### 0.6.15 (2017-03-26)
 * Add support for AutoIt
 
