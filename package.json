@@ -1,8 +1,8 @@
 {
   "name": "code-runner",
   "displayName": "Code Runner",
-  "description": "Run code snippet/file for C, C++, Java, JS, PHP, Python, Perl, Ruby, Go, Lua, Groovy, PowerShell, BAT/CMD, BASH/SH, F#, C#, VBScript, TypeScript, CoffeeScript, Scala, Swift, Julia, Crystal, OCaml, R, AppleScript, Elixir, VB.NET, Clojure, Haxe, Objective-C, Rust, Racket, AutoHotkey, AutoIt",
-  "version": "0.6.16",
+  "description": "Run code snippet/file for C, C++, Java, JS, PHP, Python, Perl, Ruby, Go, Lua, Groovy, PowerShell, BAT/CMD, BASH/SH, F#, C#, VBScript, TypeScript, CoffeeScript, Scala, Swift, Julia, Crystal, OCaml, R, AppleScript, Elixir, VB.NET, Clojure, Haxe, Objective-C, Rust, Racket, AutoHotkey, AutoIt, Kotlin",
+  "version": "0.6.17",
   "publisher": "formulahendry",
   "icon": "images/logo.png",
   "engines": {
@@ -124,7 +124,8 @@
             "rust": "cd $dir && rustc $fileName && $dir$fileNameWithoutExt",
             "racket": "racket",
             "ahk": "autohotkey",
-            "autoit": "autoit3"
+            "autoit": "autoit3",
+            "kotlin": "cd $dir && kotlinc $fileName -include-runtime -d $fileNameWithoutExt.jar && java -jar $fileNameWithoutExt.jar"
           },
           "description": "Set the executor of each language."
         },
@@ -141,7 +142,8 @@
             ".hx": "haxe --cwd $dirWithoutTrailingSlash --run $fileNameWithoutExt",
             ".rkt": "racket",
             ".ahk": "autohotkey",
-            ".au3": "autoit3"
+            ".au3": "autoit3",
+            ".kt": "cd $dir && kotlinc $fileName -include-runtime -d $fileNameWithoutExt.jar && java -jar $fileNameWithoutExt.jar"
           },
           "description": "Set the executor of each file extension."
         },

@@ -1,3 +1,6 @@
+### 0.6.17 (2017-05-20)
+* Resolve [GitHub issue#113](https://github.com/formulahendry/vscode-code-runner/issues/113): Add support for Kotlin
+
 ### 0.6.16 (2017-04-15)
 * Resolve [GitHub issue#102](https://github.com/formulahendry/vscode-code-runner/issues/102): Add config entry to set whether to ignore selection to always run entire file
 
