@@ -1,3 +1,6 @@
+### 0.6.18 (2017-06-02)
+* Add support for Kotlin script (.kts) 
+
 ### 0.6.17 (2017-05-20)
 * Resolve [GitHub issue#113](https://github.com/formulahendry/vscode-code-runner/issues/113): Add support for Kotlin
 
