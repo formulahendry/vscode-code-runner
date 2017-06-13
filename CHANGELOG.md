@@ -1,3 +1,6 @@
+### 0.6.19 (2017-06-13)
+* Add support for Dart
+
 ### 0.6.18 (2017-06-02)
 * Add support for Kotlin script (.kts) 
 
