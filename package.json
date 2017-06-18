@@ -1,8 +1,8 @@
 {
   "name": "code-runner",
   "displayName": "Code Runner",
-  "description": "Run code snippet/file for C, C++, Java, JS, PHP, Python, Perl, Ruby, Go, Lua, Groovy, PowerShell, BAT/CMD, BASH/SH, F#, C#, VBScript, TypeScript, CoffeeScript, Scala, Swift, Julia, Crystal, OCaml, R, AppleScript, Elixir, VB.NET, Clojure, Haxe, Objective-C, Rust, Racket, AutoHotkey, AutoIt, Kotlin",
-  "version": "0.6.18",
+  "description": "Run code for C, C++, Java, JS, PHP, Python, Perl, Ruby, Go, Lua, Groovy, PowerShell, CMD, BASH, F#, C#, VBScript, TypeScript, CoffeeScript, Scala, Swift, Julia, Crystal, OCaml, R, AppleScript, Elixir, VB.NET, Clojure, Haxe, Objective-C, Rust, Racket, AutoHotkey, AutoIt, Kotlin, Dart, Pascal",
+  "version": "0.6.20",
   "publisher": "formulahendry",
   "icon": "images/logo.png",
   "engines": {
@@ -126,7 +126,9 @@
             "ahk": "autohotkey",
             "autoit": "autoit3",
             "kotlin": "cd $dir && kotlinc $fileName -include-runtime -d $fileNameWithoutExt.jar && java -jar $fileNameWithoutExt.jar",
-            "d": "cd $dir && dmd $fileName && $dir$fileNameWithoutExt"
+            "d": "cd $dir && dmd $fileName && $dir$fileNameWithoutExt",
+            "dart": "dart",
+            "pascal": "cd $dir && fpc $fileName && $dir$fileNameWithoutExt"
           },
           "description": "Set the executor of each language."
         },
@@ -145,7 +147,10 @@
             ".ahk": "autohotkey",
             ".au3": "autoit3",
             ".kt": "cd $dir && kotlinc $fileName -include-runtime -d $fileNameWithoutExt.jar && java -jar $fileNameWithoutExt.jar",
-            ".kts": "kotlinc -script"
+            ".kts": "kotlinc -script",
+            ".dart": "dart",
+            ".pas": "cd $dir && fpc $fileName && $dir$fileNameWithoutExt",
+            ".pp": "cd $dir && fpc $fileName && $dir$fileNameWithoutExt"
           },
           "description": "Set the executor of each file extension."
         },

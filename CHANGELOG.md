@@ -1,3 +1,9 @@
+### 0.6.20 (2017-06-14)
+* Resolve [GitHub issue#126](https://github.com/formulahendry/vscode-code-runner/issues/126): Add support for Free Pascal
+
+### 0.6.19 (2017-06-13)
+* Add support for Dart
+
 ### 0.6.18 (2017-06-02)
 * Add support for Kotlin script (.kts) 
 
