@@ -1,3 +1,6 @@
+### 0.6.21 (2017-06-18)
+* Add support for D
+
 ### 0.6.20 (2017-06-14)
 * Resolve [GitHub issue#126](https://github.com/formulahendry/vscode-code-runner/issues/126): Add support for Free Pascal
 
