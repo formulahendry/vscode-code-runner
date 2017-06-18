@@ -158,7 +158,7 @@ export class CodeManager {
                 fileType = '.' + this._languageId;
             }
         }
-        let tmpFileName = 'temp-' + this.rndName() + fileType;
+        let tmpFileName = 'temp' + this.rndName() + fileType;
         this._codeFile = join(folder, tmpFileName);
         fs.writeFileSync(this._codeFile, content);
     }
