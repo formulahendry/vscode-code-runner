@@ -125,7 +125,8 @@
             "racket": "racket",
             "ahk": "autohotkey",
             "autoit": "autoit3",
-            "kotlin": "cd $dir && kotlinc $fileName -include-runtime -d $fileNameWithoutExt.jar && java -jar $fileNameWithoutExt.jar"
+            "kotlin": "cd $dir && kotlinc $fileName -include-runtime -d $fileNameWithoutExt.jar && java -jar $fileNameWithoutExt.jar",
+            "d": "cd $dir && dmd $fileName && $dir$fileNameWithoutExt"
           },
           "description": "Set the executor of each language."
         },
@@ -160,6 +161,13 @@
             "powershell": ".ps1"
           },
           "description": "Set the mapping of languageId to file extension."
+        },
+        "code-runner.languageIdToTempFilenameDelimiterMap": {
+          "type": "object",
+          "default": {
+            "d": "_"
+          },
+          "description": "Some languages are sensitive to module names"
         },
         "code-runner.defaultLanguage": {
           "type": "string",

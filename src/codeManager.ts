@@ -158,7 +158,15 @@ export class CodeManager {
                 fileType = '.' + this._languageId;
             }
         }
-        let tmpFileName = 'temp-' + this.rndName() + fileType;
+        
+        let delimiter = "-";
+        let languageIdToTempFilenameDelimiterMap = this._config.get<any>('languageIdToTempFilenameDelimiterMap');
+        if (this._languageId && languageIdToTempFilenameDelimiterMap[this._languageId]) {
+            delimiter = languageIdToTempFilenameDelimiterMap[this._languageId];
+        }
+        
+
+        let tmpFileName = 'temp' + delimiter + this.rndName() + fileType;
         this._codeFile = join(folder, tmpFileName);
         fs.writeFileSync(this._codeFile, content);
     }
