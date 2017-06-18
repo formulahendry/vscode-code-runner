@@ -127,7 +127,8 @@
             "autoit": "autoit3",
             "kotlin": "cd $dir && kotlinc $fileName -include-runtime -d $fileNameWithoutExt.jar && java -jar $fileNameWithoutExt.jar",
             "dart": "dart",
-            "pascal": "cd $dir && fpc $fileName && $dir$fileNameWithoutExt"
+            "pascal": "cd $dir && fpc $fileName && $dir$fileNameWithoutExt",
+            "d": "cd $dir && dmd $fileName && $dir$fileNameWithoutExt"
           },
           "description": "Set the executor of each language."
         },
@@ -149,7 +150,8 @@
             ".kts": "kotlinc -script",
             ".dart": "dart",
             ".pas": "cd $dir && fpc $fileName && $dir$fileNameWithoutExt",
-            ".pp": "cd $dir && fpc $fileName && $dir$fileNameWithoutExt"
+            ".pp": "cd $dir && fpc $fileName && $dir$fileNameWithoutExt",
+            ".d": "cd $dir && dmd $fileName && $dir$fileNameWithoutExt"
           },
           "description": "Set the executor of each file extension."
         },
