@@ -1,3 +1,6 @@
+### 0.6.22 (2017-06-20)
+* [#128](https://github.com/formulahendry/vscode-code-runner/issues/128): Add 'Run Code' buuton in editor title menu
+
 ### 0.6.21 (2017-06-18)
 * Add support for D
 

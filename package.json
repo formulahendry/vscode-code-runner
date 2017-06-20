@@ -2,7 +2,7 @@
   "name": "code-runner",
   "displayName": "Code Runner",
   "description": "Run code for C, C++, Java, JS, PHP, Python, Perl, Ruby, Go, Lua, Groovy, PowerShell, CMD, BASH, F#, C#, VBScript, TypeScript, CoffeeScript, Scala, Swift, Julia, Crystal, OCaml, R, AppleScript, Elixir, VB.NET, Clojure, Haxe, Objective-C, Rust, Racket, AutoHotkey, AutoIt, Kotlin, Dart, Pascal, D",
-  "version": "0.6.21",
+  "version": "0.6.22",
   "publisher": "formulahendry",
   "icon": "images/logo.png",
   "engines": {
@@ -38,7 +38,8 @@
     "commands": [
       {
         "command": "code-runner.run",
-        "title": "Run Code"
+        "title": "Run Code",
+        "icon": "./images/run.png"
       },
       {
         "command": "code-runner.runCustomCommand",
@@ -82,6 +83,12 @@
           "when": "inOutput",
           "command": "code-runner.stop",
           "group": "stop-code-run"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "code-runner.run",
+          "group": "navigation"
         }
       ]
     },
