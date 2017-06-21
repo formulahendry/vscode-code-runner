@@ -161,7 +161,7 @@
             ".pas": "cd $dir && fpc $fileName && $dir$fileNameWithoutExt",
             ".pp": "cd $dir && fpc $fileName && $dir$fileNameWithoutExt",
             ".d": "cd $dir && dmd $fileName && $dir$fileNameWithoutExt",
-            ".hs": "haskell"
+            ".hs": "runhaskell"
           },
           "description": "Set the executor of each file extension."
         },
