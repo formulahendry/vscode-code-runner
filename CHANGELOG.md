@@ -1,3 +1,7 @@
+### 0.6.23 (2017-06-21)
+* [#131](https://github.com/formulahendry/vscode-code-runner/issues/131): Option to hide 'Run Code' button
+* Refine 'Run Code' button
+
 ### 0.6.22 (2017-06-20)
 * [#128](https://github.com/formulahendry/vscode-code-runner/issues/128): Add 'Run Code' buuton in editor title menu
 
