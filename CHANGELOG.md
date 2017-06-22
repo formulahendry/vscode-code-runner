@@ -1,3 +1,6 @@
+### 0.6.24 (2017-06-22)
+* Add support for Haskell
+
 ### 0.6.23 (2017-06-21)
 * [#131](https://github.com/formulahendry/vscode-code-runner/issues/131): Option to hide 'Run Code' button
 * Refine 'Run Code' button
