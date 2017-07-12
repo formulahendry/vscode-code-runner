@@ -1,3 +1,6 @@
+### 0.6.25 (2017-07-12)
+* [#130](https://github.com/formulahendry/vscode-code-runner/issues/130): Add option to save all files before running
+
 ### 0.6.24 (2017-06-22)
 * Add support for Haskell
 

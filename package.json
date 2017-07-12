@@ -2,7 +2,7 @@
   "name": "code-runner",
   "displayName": "Code Runner",
   "description": "Run code for C, C++, Java, JS, PHP, Python, Perl, Ruby, Go, Lua, Groovy, PowerShell, CMD, BASH, F#, C#, VBScript, TypeScript, CoffeeScript, Scala, Swift, Julia, Crystal, OCaml, R, AppleScript, Elixir, VB.NET, Clojure, Haxe, Objective-C, Rust, Racket, AutoHotkey, AutoIt, Kotlin, Dart, Pascal, Haskell, D",
-  "version": "0.6.24",
+  "version": "0.6.25",
   "publisher": "formulahendry",
   "icon": "images/logo.png",
   "engines": {
@@ -198,10 +198,15 @@
           "default": false,
           "description": "Whether to clear previous output before each run."
         },
+        "code-runner.saveAllFilesBeforeRun": {
+          "type": "boolean",
+          "default": false,
+          "description": "Whether to save all files before running."
+        },
         "code-runner.saveFileBeforeRun": {
           "type": "boolean",
           "default": false,
-          "description": "Whether to save the file before running."
+          "description": "Whether to save the current file before running."
         },
         "code-runner.enableAppInsights": {
           "type": "boolean",

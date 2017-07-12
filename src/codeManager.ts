@@ -119,6 +119,12 @@ export class CodeManager {
             this._isTmpFile = false;
             this._codeFile = editor.document.fileName;
 
+            if (this._config.get<boolean>('saveAllFilesBeforeRun')) {
+                return vscode.workspace.saveAll().then(() => {
+                    this.executeCommand(executor, appendFile);
+                });
+            }
+
             if (this._config.get<boolean>('saveFileBeforeRun')) {
                 return editor.document.save().then(() => {
                     this.executeCommand(executor, appendFile);

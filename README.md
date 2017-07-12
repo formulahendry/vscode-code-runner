@@ -104,7 +104,14 @@ To set whether to clear previous output before each run (default is false):
 }
 ```
 
-To set whether to save the file before running (default is false):
+To set whether to save all files before running (default is false):
+```json
+{
+    "code-runner.saveAllFilesBeforeRun": false
+}
+```
+
+To set whether to save the current file before running (default is false):
 ```json
 {
     "code-runner.saveFileBeforeRun": false
