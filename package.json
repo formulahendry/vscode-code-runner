@@ -1,7 +1,7 @@
 {
   "name": "code-runner",
   "displayName": "Code Runner",
-  "description": "Run code for C, C++, Java, JS, PHP, Python, Perl, Ruby, Go, Lua, Groovy, PowerShell, CMD, BASH, F#, C#, VBScript, TypeScript, CoffeeScript, Scala, Swift, Julia, Crystal, OCaml, R, AppleScript, Elixir, VB.NET, Clojure, Haxe, Objective-C, Rust, Racket, AutoHotkey, AutoIt, Kotlin, Dart, Pascal, Haskell, D",
+  "description": "Run code for C, C++, Java, JS, PHP, Python, Perl, Ruby, Go, Lua, Groovy, PowerShell, CMD, BASH, F#, C#, VBScript, TypeScript, CoffeeScript, Scala, Swift, Julia, Crystal, OCaml, R, AppleScript, Elixir, VB.NET, Clojure, Haxe, Objective-C, Rust, Racket, AutoHotkey, AutoIt, Kotlin, Dart, Pascal, Haskell, D, Nim",
   "version": "0.6.25",
   "publisher": "formulahendry",
   "icon": "images/logo.png",
@@ -137,7 +137,8 @@
             "dart": "dart",
             "pascal": "cd $dir && fpc $fileName && $dir$fileNameWithoutExt",
             "d": "cd $dir && dmd $fileName && $dir$fileNameWithoutExt",
-            "haskell": "runhaskell"
+            "haskell": "runhaskell",
+            "nim": "nim compile --verbosity:0 --hints:off --run"
           },
           "description": "Set the executor of each language."
         },
@@ -161,7 +162,8 @@
             ".pas": "cd $dir && fpc $fileName && $dir$fileNameWithoutExt",
             ".pp": "cd $dir && fpc $fileName && $dir$fileNameWithoutExt",
             ".d": "cd $dir && dmd $fileName && $dir$fileNameWithoutExt",
-            ".hs": "runhaskell"
+            ".hs": "runhaskell",
+            ".nim": "nim compile --verbosity:0 --hints:off --run"
           },
           "description": "Set the executor of each file extension."
         },
