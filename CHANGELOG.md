@@ -1,3 +1,6 @@
+### 0.6.26 (2017-07-13)
+* [#140](https://github.com/formulahendry/vscode-code-runner/issues/140): Add support for Nim
+
 ### 0.6.25 (2017-07-12)
 * [#130](https://github.com/formulahendry/vscode-code-runner/issues/130): Add option to save all files before running
 
