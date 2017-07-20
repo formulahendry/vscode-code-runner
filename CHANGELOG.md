@@ -1,3 +1,6 @@
+### 0.6.27 (2017-07-20)
+* [#106](https://github.com/formulahendry/vscode-code-runner/issues/106): Handle file path for Bash on Windows
+
 ### 0.6.26 (2017-07-13)
 * [#140](https://github.com/formulahendry/vscode-code-runner/issues/140): Add support for Nim
 

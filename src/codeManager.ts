@@ -304,6 +304,20 @@ export class CodeManager {
         return executor;
     }
 
+    private changeCommandForBashOnWindows(command: string): string {
+        if (os.platform() === 'win32') {
+            let windowsShell = vscode.workspace.getConfiguration('terminal').get<string>('integrated.shell.windows');
+            if (windowsShell && windowsShell.indexOf('bash') > -1 && windowsShell.indexOf('Windows') > -1) {
+                command = command.replace(/([A-Za-z]):\\/, this.replacer).replace(/\\/g, '/');
+            }
+        }
+        return command;
+    }
+
+    private replacer(match: string, p1: string): string {
+        return `/mnt/${p1.toLowerCase()}/`;
+    }
+
     private executeCommandInTerminal(executor: string, appendFile: boolean = true) {
         if (this._terminal === null) {
             this._terminal = vscode.window.createTerminal('Code');
@@ -312,6 +326,7 @@ export class CodeManager {
         executor = this.changeExecutorFromCmdToPs(executor);
         this._appInsightsClient.sendEvent(executor);
         let command = this.getFinalCommandToRunCodeFile(executor, appendFile);
+        command = this.changeCommandForBashOnWindows(command);
         this._terminal.sendText(command);
     }
 
