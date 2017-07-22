@@ -307,8 +307,8 @@ export class CodeManager {
     private changeCommandForBashOnWindows(command: string): string {
         if (os.platform() === 'win32') {
             let windowsShell = vscode.workspace.getConfiguration('terminal').get<string>('integrated.shell.windows');
-            if (windowsShell && windowsShell.indexOf('bash') > -1 && windowsShell.indexOf('Windows') > -1) {
-                command = command.replace(/([A-Za-z]):\\/, this.replacer).replace(/\\/g, '/');
+            if (windowsShell && windowsShell.toLowerCase().indexOf('bash') > -1 && windowsShell.toLowerCase().indexOf('windows') > -1) {
+                command = command.replace(/([A-Za-z]):\\/g, this.replacer).replace(/\\/g, '/');
             }
         }
         return command;
