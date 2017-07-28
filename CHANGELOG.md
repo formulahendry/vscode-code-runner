@@ -1,3 +1,6 @@
+### 0.6.29 (2017-07-28)
+* [#132](https://github.com/formulahendry/vscode-code-runner/issues/132): Refine 'Run Code' button
+
 ### 0.6.28 (2017-07-22)
 * [#106](https://github.com/formulahendry/vscode-code-runner/issues/106): [Continuous Fix for Bash on Windows] Handle multiple file path and case-insensitive bash path  
 
