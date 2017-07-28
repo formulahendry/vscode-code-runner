@@ -39,7 +39,10 @@
       {
         "command": "code-runner.run",
         "title": "Run Code",
-        "icon": "./images/run.png"
+        "icon": {
+        	"light": "./images/run-light.png",
+        	"dark": "./images/run-dark.png"
+        }
       },
       {
         "command": "code-runner.runCustomCommand",
