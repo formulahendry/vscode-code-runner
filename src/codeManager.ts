@@ -327,6 +327,9 @@ export class CodeManager {
         this._appInsightsClient.sendEvent(executor);
         let command = this.getFinalCommandToRunCodeFile(executor, appendFile);
         command = this.changeCommandForBashOnWindows(command);
+        if (this._config.get<boolean>('clearPreviousOutput')) {
+            this._terminal.sendText('clear');
+        }
         this._terminal.sendText(command);
     }
 
