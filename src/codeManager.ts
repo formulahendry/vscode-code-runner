@@ -328,9 +328,13 @@ export class CodeManager {
         let command = this.getFinalCommandToRunCodeFile(executor, appendFile);
         command = this.changeCommandForBashOnWindows(command);
         if (this._config.get<boolean>('clearPreviousOutput')) {
-            this._terminal.sendText('clear');
+            vscode.commands.executeCommand('workbench.action.terminal.clear').then(() => {
+                this._terminal.sendText(command);
+            });
         }
-        this._terminal.sendText(command);
+        else {
+            this._terminal.sendText(command);
+        }
     }
 
     private executeCommandInOutputChannel(executor: string, appendFile: boolean = true) {
