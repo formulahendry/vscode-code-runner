@@ -318,23 +318,21 @@ export class CodeManager {
         return `/mnt/${p1.toLowerCase()}/`;
     }
 
-    private executeCommandInTerminal(executor: string, appendFile: boolean = true) {
+    private async executeCommandInTerminal(executor: string, appendFile: boolean = true) {
+        let isNewTerminal = false;
         if (this._terminal === null) {
             this._terminal = vscode.window.createTerminal('Code');
+            isNewTerminal = true;
         }
         this._terminal.show(this._config.get<boolean>('preserveFocus'));
         executor = this.changeExecutorFromCmdToPs(executor);
         this._appInsightsClient.sendEvent(executor);
         let command = this.getFinalCommandToRunCodeFile(executor, appendFile);
         command = this.changeCommandForBashOnWindows(command);
-        if (this._config.get<boolean>('clearPreviousOutput')) {
-            vscode.commands.executeCommand('workbench.action.terminal.clear').then(() => {
-                this._terminal.sendText(command);
-            });
+        if (this._config.get<boolean>('clearPreviousOutput') && !isNewTerminal) {
+            await vscode.commands.executeCommand('workbench.action.terminal.clear');
         }
-        else {
-            this._terminal.sendText(command);
-        }
+        this._terminal.sendText(command);
     }
 
     private executeCommandInOutputChannel(executor: string, appendFile: boolean = true) {
