@@ -327,7 +327,14 @@ export class CodeManager {
         this._appInsightsClient.sendEvent(executor);
         let command = this.getFinalCommandToRunCodeFile(executor, appendFile);
         command = this.changeCommandForBashOnWindows(command);
-        this._terminal.sendText(command);
+        if (this._config.get<boolean>('clearPreviousOutput')) {
+            vscode.commands.executeCommand('workbench.action.terminal.clear').then(() => {
+                this._terminal.sendText(command);
+            });
+        }
+        else {
+            this._terminal.sendText(command);
+        }
     }
 
     private executeCommandInOutputChannel(executor: string, appendFile: boolean = true) {
