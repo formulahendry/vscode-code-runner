@@ -1,30 +1,28 @@
-'use strict';
-import * as vscode from 'vscode';
-import { CodeManager } from './codeManager';
+"use strict";
+import * as vscode from "vscode";
+import { CodeManager } from "./codeManager";
 
 export function activate(context: vscode.ExtensionContext) {
 
-    console.log('Congratulations, your extension "code-runner" is now active!');
-
-    let codeManager = new CodeManager();
+    const codeManager = new CodeManager();
 
     vscode.window.onDidCloseTerminal(() => {
         codeManager.onDidCloseTerminal();
     });
 
-    let run = vscode.commands.registerCommand('code-runner.run', () => {
+    const run = vscode.commands.registerCommand("code-runner.run", () => {
         codeManager.run();
     });
 
-    let runCustomCommand = vscode.commands.registerCommand('code-runner.runCustomCommand', () => {
+    const runCustomCommand = vscode.commands.registerCommand("code-runner.runCustomCommand", () => {
         codeManager.runCustomCommand();
-    });    
+    });
 
-    let runByLanguage = vscode.commands.registerCommand('code-runner.runByLanguage', () => {
+    const runByLanguage = vscode.commands.registerCommand("code-runner.runByLanguage", () => {
         codeManager.runByLanguage();
     });
 
-    let stop = vscode.commands.registerCommand('code-runner.stop', () => {
+    const stop = vscode.commands.registerCommand("code-runner.stop", () => {
         codeManager.stop();
     });
 

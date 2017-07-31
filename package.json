@@ -40,8 +40,8 @@
         "command": "code-runner.run",
         "title": "Run Code",
         "icon": {
-        	"light": "./images/run-light.png",
-        	"dark": "./images/run-dark.png"
+          "light": "./images/run-light.png",
+          "dark": "./images/run-dark.png"
         }
       },
       {
@@ -264,17 +264,19 @@
   "scripts": {
     "vscode:prepublish": "tsc -p ./",
     "compile": "tsc -watch -p ./",
-    "postinstall": "node ./node_modules/vscode/bin/install"
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "tslint": "tslint -t verbose src/**/*.ts"
   },
   "dependencies": {
     "applicationinsights": "^0.19.0",
     "tree-kill": "^1.1.0"
   },
   "devDependencies": {
-    "typescript": "^2.0.3",
-    "vscode": "^1.0.0",
-    "mocha": "^2.3.3",
+    "@types/mocha": "^2.2.32",
     "@types/node": "^6.0.40",
-    "@types/mocha": "^2.2.32"
+    "mocha": "^2.3.3",
+    "tslint": "^5.5.0",
+    "typescript": "^2.0.3",
+    "vscode": "^1.0.0"
   }
 }

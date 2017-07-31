@@ -1,9 +1,9 @@
-'use strict';
-import * as vscode from 'vscode';
-import { join, dirname } from 'path';
-import * as os from 'os';
-import * as fs from 'fs';
-import { AppInsightsClient } from './appInsightsClient';
+"use strict";
+import * as fs from "fs";
+import * as os from "os";
+import { dirname, join } from "path";
+import * as vscode from "vscode";
+import { AppInsightsClient } from "./appInsightsClient";
 
 const TmpDir = os.tmpdir();
 
@@ -20,7 +20,7 @@ export class CodeManager {
     private _appInsightsClient: AppInsightsClient;
 
     constructor() {
-        this._outputChannel = vscode.window.createOutputChannel('Code');
+        this._outputChannel = vscode.window.createOutputChannel("Code");
         this._terminal = null;
         this._appInsightsClient = new AppInsightsClient();
     }
@@ -31,23 +31,23 @@ export class CodeManager {
 
     public run(languageId: string = null): void {
         if (this._isRunning) {
-            vscode.window.showInformationMessage('Code is already running!');
+            vscode.window.showInformationMessage("Code is already running!");
             return;
         }
 
-        let editor = vscode.window.activeTextEditor;
+        const editor = vscode.window.activeTextEditor;
         if (!editor) {
-            vscode.window.showInformationMessage('No code found or selected.');
+            vscode.window.showInformationMessage("No code found or selected.");
             return;
         }
 
         this.initialize(editor);
 
-        let fileExtension = this.getFileExtension(editor);
-        let executor = this.getExecutor(languageId, fileExtension);
+        const fileExtension = this.getFileExtension(editor);
+        const executor = this.getExecutor(languageId, fileExtension);
         // undefined or null
         if (executor == null) {
-            vscode.window.showInformationMessage('Code language not supported or defined.');
+            vscode.window.showInformationMessage("Code language not supported or defined.");
             return;
         }
 
@@ -56,17 +56,17 @@ export class CodeManager {
 
     public runCustomCommand(): void {
         if (this._isRunning) {
-            vscode.window.showInformationMessage('Code is already running!');
+            vscode.window.showInformationMessage("Code is already running!");
             return;
         }
 
-        let editor = vscode.window.activeTextEditor;
+        const editor = vscode.window.activeTextEditor;
         this.initialize(editor);
 
-        let executor = this._config.get<string>('customCommand');
+        const executor = this._config.get<string>("customCommand");
 
         if (editor) {
-            let fileExtension = this.getFileExtension(editor);
+            const fileExtension = this.getFileExtension(editor);
             this.getCodeFileAndExecute(editor, fileExtension, executor, false);
         } else {
             this.executeCommand(executor, false);
@@ -74,9 +74,9 @@ export class CodeManager {
     }
 
     public runByLanguage(): void {
-        this._appInsightsClient.sendEvent('runByLanguage');
-        let config = vscode.workspace.getConfiguration('code-runner');
-        var executorMap = config.get<any>('executorMap');
+        this._appInsightsClient.sendEvent("runByLanguage");
+        const config = vscode.workspace.getConfiguration("code-runner");
+        const executorMap = config.get<any>("executorMap");
         vscode.window.showQuickPick(Object.keys(executorMap), { placeHolder: "Type or select language to run" }).then((languageId) => {
             if (languageId !== undefined) {
                 this.run(languageId);
@@ -85,21 +85,21 @@ export class CodeManager {
     }
 
     public stop(): void {
-        this._appInsightsClient.sendEvent('stop');
+        this._appInsightsClient.sendEvent("stop");
         if (this._isRunning) {
             this._isRunning = false;
-            let kill = require('tree-kill');
+            const kill = require("tree-kill");
             kill(this._process.pid);
         }
     }
 
     private initialize(editor: vscode.TextEditor): void {
-        this._config = vscode.workspace.getConfiguration('code-runner');
-        this._cwd = this._config.get<string>('cwd');
+        this._config = vscode.workspace.getConfiguration("code-runner");
+        this._cwd = this._config.get<string>("cwd");
         if (this._cwd) {
             return;
         }
-        if ((this._config.get<boolean>('fileDirectoryAsCwd') || !vscode.workspace.rootPath)
+        if ((this._config.get<boolean>("fileDirectoryAsCwd") || !vscode.workspace.rootPath)
             && editor && !editor.document.isUntitled) {
             this._cwd = dirname(editor.document.fileName);
         } else {
@@ -112,20 +112,20 @@ export class CodeManager {
     }
 
     private getCodeFileAndExecute(editor: vscode.TextEditor, fileExtension: string, executor: string, appendFile: boolean = true): any {
-        let selection = editor.selection;
-        let ignoreSelection = this._config.get<boolean>('ignoreSelection');
+        const selection = editor.selection;
+        const ignoreSelection = this._config.get<boolean>("ignoreSelection");
 
         if ((selection.isEmpty || ignoreSelection) && !editor.document.isUntitled) {
             this._isTmpFile = false;
             this._codeFile = editor.document.fileName;
 
-            if (this._config.get<boolean>('saveAllFilesBeforeRun')) {
+            if (this._config.get<boolean>("saveAllFilesBeforeRun")) {
                 return vscode.workspace.saveAll().then(() => {
                     this.executeCommand(executor, appendFile);
                 });
             }
 
-            if (this._config.get<boolean>('saveFileBeforeRun')) {
+            if (this._config.get<boolean>("saveFileBeforeRun")) {
                 return editor.document.save().then(() => {
                     this.executeCommand(executor, appendFile);
                 });
@@ -141,7 +141,7 @@ export class CodeManager {
             }
 
             this._isTmpFile = true;
-            let folder = editor.document.isUntitled ? this._cwd : dirname(editor.document.fileName);
+            const folder = editor.document.isUntitled ? this._cwd : dirname(editor.document.fileName);
             this.createRandomFile(text, folder, fileExtension);
         }
 
@@ -149,40 +149,40 @@ export class CodeManager {
     }
 
     private rndName(): string {
-        return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 10);
+        return Math.random().toString(36).replace(/[^a-z]+/g, "").substr(0, 10);
     }
 
     private createRandomFile(content: string, folder: string, fileExtension: string) {
         let fileType = "";
-        let languageIdToFileExtensionMap = this._config.get<any>('languageIdToFileExtensionMap');
+        const languageIdToFileExtensionMap = this._config.get<any>("languageIdToFileExtensionMap");
         if (this._languageId && languageIdToFileExtensionMap[this._languageId]) {
             fileType = languageIdToFileExtensionMap[this._languageId];
         } else {
             if (fileExtension) {
                 fileType = fileExtension;
             } else {
-                fileType = '.' + this._languageId;
+                fileType = "." + this._languageId;
             }
         }
-        let tmpFileName = 'temp' + this.rndName() + fileType;
+        const tmpFileName = "temp" + this.rndName() + fileType;
         this._codeFile = join(folder, tmpFileName);
         fs.writeFileSync(this._codeFile, content);
     }
 
     private getExecutor(languageId: string, fileExtension: string): string {
         this._languageId = languageId === null ? vscode.window.activeTextEditor.document.languageId : languageId;
-        let executorMap = this._config.get<any>('executorMap');
+        const executorMap = this._config.get<any>("executorMap");
         let executor = executorMap[this._languageId];
         // executor is undefined or null
         if (executor == null && fileExtension) {
-            let executorMapByFileExtension = this._config.get<any>('executorMapByFileExtension');
+            const executorMapByFileExtension = this._config.get<any>("executorMapByFileExtension");
             executor = executorMapByFileExtension[fileExtension];
             if (executor != null) {
                 this._languageId = fileExtension;
             }
         }
         if (executor == null) {
-            this._languageId = this._config.get<string>('defaultLanguage');
+            this._languageId = this._config.get<string>("defaultLanguage");
             executor = executorMap[this._languageId];
         }
 
@@ -190,8 +190,8 @@ export class CodeManager {
     }
 
     private getFileExtension(editor: vscode.TextEditor): string {
-        let fileName = editor.document.fileName;
-        let index = fileName.lastIndexOf(".");
+        const fileName = editor.document.fileName;
+        const index = fileName.lastIndexOf(".");
         if (index !== -1) {
             return fileName.substr(index);
         } else {
@@ -200,7 +200,7 @@ export class CodeManager {
     }
 
     private executeCommand(executor: string, appendFile: boolean = true) {
-        if (this._config.get<boolean>('runInTerminal') && !this._isTmpFile) {
+        if (this._config.get<boolean>("runInTerminal") && !this._isTmpFile) {
             this.executeCommandInTerminal(executor, appendFile);
         } else {
             this.executeCommandInOutputChannel(executor, appendFile);
@@ -215,38 +215,38 @@ export class CodeManager {
      * Gets the base name of the code file, that is without its directory.
      */
     private getCodeBaseFile(): string {
-        let regexMatch = this._codeFile.match(/.*[\/\\](.*)/)
-        return regexMatch.length ? regexMatch[1] : this._codeFile
+        const regexMatch = this._codeFile.match(/.*[\/\\](.*)/);
+        return regexMatch.length ? regexMatch[1] : this._codeFile;
     }
 
     /**
      * Gets the code file name without its directory and extension.
      */
     private getCodeFileWithoutDirAndExt(): string {
-        let regexMatch = this._codeFile.match(/.*[\/\\](.*(?=\..*))/)
-        return regexMatch.length ? regexMatch[1] : this._codeFile
+        const regexMatch = this._codeFile.match(/.*[\/\\](.*(?=\..*))/);
+        return regexMatch.length ? regexMatch[1] : this._codeFile;
     }
 
     /**
      * Gets the directory of the code file.
      */
     private getCodeFileDir(): string {
-        let regexMatch = this._codeFile.match(/(.*[\/\\]).*/)
-        return regexMatch.length ? regexMatch[1] : this._codeFile
+        const regexMatch = this._codeFile.match(/(.*[\/\\]).*/);
+        return regexMatch.length ? regexMatch[1] : this._codeFile;
     }
 
     /**
      * Gets the directory of the code file without a trailing slash.
      */
     private getCodeFileDirWithoutTrailingSlash(): string {
-        return this.getCodeFileDir().replace(/[\/\\]$/, "")
+        return this.getCodeFileDir().replace(/[\/\\]$/, "");
     }
 
     /**
      * Includes double quotes around a given file name.
      */
     private quoteFileName(fileName: string): string {
-        return '\"' + fileName + '\"'
+        return '\"' + fileName + '\"';
     }
 
     /**
@@ -255,60 +255,60 @@ export class CodeManager {
      * This executor command may include a variable $1 to indicate the place where
      * the source code file name have to be included.
      * If no such a variable is present in the executor command,
-     * the file name is appended to the end of the executor command.   
+     * the file name is appended to the end of the executor command.
      *
      * @param executor The command used to run a source code file
-     * @return the complete command to run the file, that includes the file name   
+     * @return the complete command to run the file, that includes the file name
      */
     private getFinalCommandToRunCodeFile(executor: string, appendFile: boolean = true): string {
-        var cmd = executor
+        let cmd = executor;
 
         if (this._codeFile) {
-            let codeFileDir = this.getCodeFileDir();
-            let placeholders: { regex: RegExp, replaceValue: string }[] = [
-                //A placeholder that has to be replaced by the path of the folder opened in VS Code
-                //If no folder is opened, replace with the directory of the code file
-                { "regex": /\$workspaceRoot/g, "replaceValue": this.getWorkspaceRoot(codeFileDir) },
-                //A placeholder that has to be replaced by the code file name without its extension
-                { "regex": /\$fileNameWithoutExt/g, "replaceValue": this.getCodeFileWithoutDirAndExt() },
-                //A placeholder that has to be replaced by the full code file name
-                { "regex": /\$fullFileName/g, "replaceValue": this.quoteFileName(this._codeFile) },
-                //A placeholder that has to be replaced by the code file name without the directory
-                { "regex": /\$fileName/g, "replaceValue": this.getCodeBaseFile() },
-                //A placeholder that has to be replaced by the directory of the code file without a trailing slash
-                { "regex": /\$dirWithoutTrailingSlash/g, "replaceValue": this.quoteFileName(this.getCodeFileDirWithoutTrailingSlash()) },
-                //A placeholder that has to be replaced by the directory of the code file
-                { "regex": /\$dir/g, "replaceValue": this.quoteFileName(codeFileDir) }
+            const codeFileDir = this.getCodeFileDir();
+            const placeholders: Array<{ regex: RegExp, replaceValue: string }> = [
+                // A placeholder that has to be replaced by the path of the folder opened in VS Code
+                // If no folder is opened, replace with the directory of the code file
+                { regex: /\$workspaceRoot/g, replaceValue: this.getWorkspaceRoot(codeFileDir) },
+                // A placeholder that has to be replaced by the code file name without its extension
+                { regex: /\$fileNameWithoutExt/g, replaceValue: this.getCodeFileWithoutDirAndExt() },
+                // A placeholder that has to be replaced by the full code file name
+                { regex: /\$fullFileName/g, replaceValue: this.quoteFileName(this._codeFile) },
+                // A placeholder that has to be replaced by the code file name without the directory
+                { regex: /\$fileName/g, replaceValue: this.getCodeBaseFile() },
+                // A placeholder that has to be replaced by the directory of the code file without a trailing slash
+                { regex: /\$dirWithoutTrailingSlash/g, replaceValue: this.quoteFileName(this.getCodeFileDirWithoutTrailingSlash()) },
+                // A placeholder that has to be replaced by the directory of the code file
+                { regex: /\$dir/g, replaceValue: this.quoteFileName(codeFileDir) },
             ];
 
-            placeholders.forEach(placeholder => {
-                cmd = cmd.replace(placeholder.regex, placeholder.replaceValue)
+            placeholders.forEach((placeholder) => {
+                cmd = cmd.replace(placeholder.regex, placeholder.replaceValue);
             });
         }
 
-        return (cmd != executor ? cmd : executor + (appendFile ? ' ' + this.quoteFileName(this._codeFile) : ''));
+        return (cmd !== executor ? cmd : executor + (appendFile ? " " + this.quoteFileName(this._codeFile) : ""));
     }
 
     private changeExecutorFromCmdToPs(executor: string): string {
-        if (os.platform() === 'win32') {
-            let windowsShell = vscode.workspace.getConfiguration('terminal').get<string>('integrated.shell.windows');
-            if (windowsShell && windowsShell.toLowerCase().indexOf('powershell') > -1 && executor.indexOf(' && ') > -1) {
-                let replacement = '; if ($?) {';
-                executor = executor.replace('&&', replacement);
-                replacement = '} ' + replacement;
+        if (os.platform() === "win32") {
+            const windowsShell = vscode.workspace.getConfiguration("terminal").get<string>("integrated.shell.windows");
+            if (windowsShell && windowsShell.toLowerCase().indexOf("powershell") > -1 && executor.indexOf(" && ") > -1) {
+                let replacement = "; if ($?) {";
+                executor = executor.replace("&&", replacement);
+                replacement = "} " + replacement;
                 executor = executor.replace(/&&/g, replacement);
-                executor = executor.replace(/\$dir\$fileNameWithoutExt/g, '.\\$fileNameWithoutExt');
-                return executor + ' }';
+                executor = executor.replace(/\$dir\$fileNameWithoutExt/g, ".\$fileNameWithoutExt");
+                return executor + " }";
             }
         }
         return executor;
     }
 
     private changeCommandForBashOnWindows(command: string): string {
-        if (os.platform() === 'win32') {
-            let windowsShell = vscode.workspace.getConfiguration('terminal').get<string>('integrated.shell.windows');
-            if (windowsShell && windowsShell.toLowerCase().indexOf('bash') > -1 && windowsShell.toLowerCase().indexOf('windows') > -1) {
-                command = command.replace(/([A-Za-z]):\\/g, this.replacer).replace(/\\/g, '/');
+        if (os.platform() === "win32") {
+            const windowsShell = vscode.workspace.getConfiguration("terminal").get<string>("integrated.shell.windows");
+            if (windowsShell && windowsShell.toLowerCase().indexOf("bash") > -1 && windowsShell.toLowerCase().indexOf("windows") > -1) {
+                command = command.replace(/([A-Za-z]):\\/g, this.replacer).replace(/\\/g, "/");
             }
         }
         return command;
@@ -321,53 +321,53 @@ export class CodeManager {
     private async executeCommandInTerminal(executor: string, appendFile: boolean = true) {
         let isNewTerminal = false;
         if (this._terminal === null) {
-            this._terminal = vscode.window.createTerminal('Code');
+            this._terminal = vscode.window.createTerminal("Code");
             isNewTerminal = true;
         }
-        this._terminal.show(this._config.get<boolean>('preserveFocus'));
+        this._terminal.show(this._config.get<boolean>("preserveFocus"));
         executor = this.changeExecutorFromCmdToPs(executor);
         this._appInsightsClient.sendEvent(executor);
         let command = this.getFinalCommandToRunCodeFile(executor, appendFile);
         command = this.changeCommandForBashOnWindows(command);
-        if (this._config.get<boolean>('clearPreviousOutput') && !isNewTerminal) {
-            await vscode.commands.executeCommand('workbench.action.terminal.clear');
+        if (this._config.get<boolean>("clearPreviousOutput") && !isNewTerminal) {
+            await vscode.commands.executeCommand("workbench.action.terminal.clear");
         }
         this._terminal.sendText(command);
     }
 
     private executeCommandInOutputChannel(executor: string, appendFile: boolean = true) {
         this._isRunning = true;
-        let clearPreviousOutput = this._config.get<boolean>('clearPreviousOutput');
+        const clearPreviousOutput = this._config.get<boolean>("clearPreviousOutput");
         if (clearPreviousOutput) {
             this._outputChannel.clear();
         }
-        let showExecutionMessage = this._config.get<boolean>('showExecutionMessage');
-        this._outputChannel.show(this._config.get<boolean>('preserveFocus'));
-        let exec = require('child_process').exec;
-        let command = this.getFinalCommandToRunCodeFile(executor, appendFile);
+        const showExecutionMessage = this._config.get<boolean>("showExecutionMessage");
+        this._outputChannel.show(this._config.get<boolean>("preserveFocus"));
+        const exec = require("child_process").exec;
+        const command = this.getFinalCommandToRunCodeFile(executor, appendFile);
         if (showExecutionMessage) {
-            this._outputChannel.appendLine('[Running] ' + command);
+            this._outputChannel.appendLine("[Running] " + command);
         }
         this._appInsightsClient.sendEvent(executor);
-        let startTime = new Date();
+        const startTime = new Date();
         this._process = exec(command, { cwd: this._cwd });
 
-        this._process.stdout.on('data', (data) => {
+        this._process.stdout.on("data", (data) => {
             this._outputChannel.append(data);
         });
 
-        this._process.stderr.on('data', (data) => {
+        this._process.stderr.on("data", (data) => {
             this._outputChannel.append(data);
         });
 
-        this._process.on('close', (code) => {
+        this._process.on("close", (code) => {
             this._isRunning = false;
-            let endTime = new Date();
-            let elapsedTime = (endTime.getTime() - startTime.getTime()) / 1000;
-            this._outputChannel.appendLine('');
+            const endTime = new Date();
+            const elapsedTime = (endTime.getTime() - startTime.getTime()) / 1000;
+            this._outputChannel.appendLine("");
             if (showExecutionMessage) {
-                this._outputChannel.appendLine('[Done] exited with code=' + code + ' in ' + elapsedTime + ' seconds');
-                this._outputChannel.appendLine('');
+                this._outputChannel.appendLine("[Done] exited with code=" + code + " in " + elapsedTime + " seconds");
+                this._outputChannel.appendLine("");
             }
             if (this._isTmpFile) {
                 fs.unlink(this._codeFile);
