@@ -1,3 +1,6 @@
+### 0.6.30 (2017-08-01)
+* [#152](https://github.com/formulahendry/vscode-code-runner/issues/152): Clear previous output when running in terminal
+
 ### 0.6.29 (2017-07-28)
 * [#132](https://github.com/formulahendry/vscode-code-runner/issues/132): Refine 'Run Code' button
 
