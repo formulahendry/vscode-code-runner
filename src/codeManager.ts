@@ -297,7 +297,7 @@ export class CodeManager {
                 executor = executor.replace("&&", replacement);
                 replacement = "} " + replacement;
                 executor = executor.replace(/&&/g, replacement);
-                executor = executor.replace(/\$dir\$fileNameWithoutExt/g, ".\$fileNameWithoutExt");
+                executor = executor.replace(/\$dir\$fileNameWithoutExt/g, ".\\$fileNameWithoutExt");
                 return executor + " }";
             }
         }

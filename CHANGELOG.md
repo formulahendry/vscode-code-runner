@@ -1,3 +1,6 @@
+### 0.6.31 (2017-08-03)
+* Fix code running in PowerShell
+
 ### 0.6.30 (2017-08-01)
 * [#152](https://github.com/formulahendry/vscode-code-runner/issues/152): Clear previous output when running in terminal
 
