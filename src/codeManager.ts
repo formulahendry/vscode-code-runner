@@ -304,7 +304,7 @@ export class CodeManager {
         return executor;
     }
 
-    private changeCommandForBashOnWindows(command: string): string {
+    private changeFilePathForBashOnWindows(command: string): string {
         if (os.platform() === "win32") {
             const windowsShell = vscode.workspace.getConfiguration("terminal").get<string>("integrated.shell.windows");
             if (windowsShell && windowsShell.toLowerCase().indexOf("bash") > -1 && windowsShell.toLowerCase().indexOf("windows") > -1) {
@@ -328,9 +328,13 @@ export class CodeManager {
         executor = this.changeExecutorFromCmdToPs(executor);
         this._appInsightsClient.sendEvent(executor);
         let command = this.getFinalCommandToRunCodeFile(executor, appendFile);
-        command = this.changeCommandForBashOnWindows(command);
+        command = this.changeFilePathForBashOnWindows(command);
         if (this._config.get<boolean>("clearPreviousOutput") && !isNewTerminal) {
             await vscode.commands.executeCommand("workbench.action.terminal.clear");
+        }
+        if (this._config.get<boolean>("fileDirectoryAsCwd")) {
+            const cwd = this.changeFilePathForBashOnWindows(this._cwd);
+            this._terminal.sendText(`cd "${cwd}"`);
         }
         this._terminal.sendText(command);
     }

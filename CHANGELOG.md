@@ -1,3 +1,6 @@
+### 0.6.32 (2017-08-05)
+* [#146](https://github.com/formulahendry/vscode-code-runner/issues/146): Enable fileDirectoryAsCwd in Terminal
+
 ### 0.6.31 (2017-08-03)
 * Fix code running in PowerShell
 
