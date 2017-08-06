@@ -231,7 +231,7 @@
         "code-runner.terminalRoot": {
           "type": "string",
           "default": "",
-          "description": "For Windows system, replaces the Windows style drive letter in the command with a Unix style root when using a custom shell as the terminal, like Bash or Cgywin. Exanple: Setting this to '/mnt/' will replace 'C:\\path' with '/mnt/c/path'"
+          "description": "For Windows system, replaces the Windows style drive letter in the command with a Unix style root when using a custom shell as the terminal, like Bash or Cgywin. Example: Setting this to '/mnt/' will replace 'C:\\path' with '/mnt/c/path'"
         },
         "code-runner.preserveFocus": {
           "type": "boolean",
