@@ -228,6 +228,11 @@
           "default": false,
           "description": "Whether to run code in Integrated Terminal."
         },
+        "code-runner.terminalRoot": {
+          "type": "string",
+          "default": "",
+          "description": "Replace the drive letter X: with `${terminalRoot}x/` for custom terminals."
+        },
         "code-runner.preserveFocus": {
           "type": "boolean",
           "default": true,
