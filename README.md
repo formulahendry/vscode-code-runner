@@ -140,7 +140,10 @@ To set whether to preserve focus on code editor after code run is triggered (def
 ```
 
 `code-runner.ignoreSelection`: Whether to ignore selection to always run entire file. (Default is **false**)
+
 `code-runner.showRunIconInEditorTitleMenu`: Whether to show 'Run Code' icon in editor title menu. (Default is **true**)
+
+`code-runner.terminalRoot`: For Windows system, replaces the Windows style drive letter in the command with a Unix style root when using a custom shell as the terminal, like Bash or Cgywin. Example: Setting this to `/mnt/` will replace `C:\path` with `/mnt/c/path` (Default is **""**)
 
 ## About CWD Setting (current working directory)
 1. By default, use the `code-runner.cwd` setting

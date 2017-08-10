@@ -1,3 +1,6 @@
+### 0.6.33 (2017-08-10)
+* [#149](https://github.com/formulahendry/vscode-code-runner/issues/149): Set custom terminal root path for Linux Shell on Windows
+
 ### 0.6.32 (2017-08-05)
 * [#146](https://github.com/formulahendry/vscode-code-runner/issues/146): Enable fileDirectoryAsCwd in Terminal
 
