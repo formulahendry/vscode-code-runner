@@ -1,6 +1,6 @@
 "use strict";
-import * as vscode from "vscode";
 import appInsights = require("applicationinsights");
+import * as vscode from "vscode";
 
 const compilers = ["gcc -framework Cocoa", "gcc", "g++", "javac"];
 
