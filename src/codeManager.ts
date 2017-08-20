@@ -164,7 +164,9 @@ export class CodeManager {
                 fileType = "." + this._languageId;
             }
         }
-        const tmpFileName = "temp" + this.rndName() + fileType;
+        const temporaryFileName = this._config.get<string>("temporaryFileName");
+        const tmpFileNameWithoutExt = temporaryFileName ? temporaryFileName : "temp" + this.rndName();
+        const tmpFileName = tmpFileNameWithoutExt + fileType;
         this._codeFile = join(folder, tmpFileName);
         fs.writeFileSync(this._codeFile, content);
     }
@@ -200,7 +202,7 @@ export class CodeManager {
     }
 
     private executeCommand(executor: string, appendFile: boolean = true) {
-        if (this._config.get<boolean>("runInTerminal") && !this._isTmpFile) {
+        if (this._config.get<boolean>("runInTerminal")) {
             this.executeCommandInTerminal(executor, appendFile);
         } else {
             this.executeCommandInOutputChannel(executor, appendFile);

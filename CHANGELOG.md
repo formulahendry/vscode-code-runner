@@ -1,3 +1,7 @@
+### 0.7.0 (2017-08-20)
+* [#164](https://github.com/formulahendry/vscode-code-runner/issues/164): Make temporary file name not random by default
+* Support running code snippet in terminal
+
 ### 0.6.33 (2017-08-10)
 * [#149](https://github.com/formulahendry/vscode-code-runner/issues/149): Set custom terminal root path for Linux Shell on Windows
 
