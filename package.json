@@ -179,7 +179,8 @@
           "type": "object",
           "default": {
             "bat": ".bat",
-            "powershell": ".ps1"
+            "powershell": ".ps1",
+            "typescript": ".ts"
           },
           "description": "Set the mapping of languageId to file extension."
         },
