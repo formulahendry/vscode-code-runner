@@ -1,3 +1,6 @@
+### 0.7.1 (2017-08-24)
+* [#98](https://github.com/formulahendry/vscode-code-runner/issues/98): Add .ts extension mapping for typescript
+
 ### 0.7.0 (2017-08-20)
 * [#164](https://github.com/formulahendry/vscode-code-runner/issues/164): Make temporary file name not random by default
 * Support running code snippet in terminal
