@@ -238,6 +238,14 @@ export class CodeManager {
     }
 
     /**
+     * Gets the drive letter of the code file.
+     */
+    private getDriveLetter(): string {
+        const regexMatch = this._codeFile.match(/^([A-Za-z]:).*/);
+        return regexMatch ? regexMatch[1] : "$driveLetter";
+    }
+
+    /**
      * Gets the directory of the code file without a trailing slash.
      */
     private getCodeFileDirWithoutTrailingSlash(): string {
@@ -277,6 +285,8 @@ export class CodeManager {
                 { regex: /\$fullFileName/g, replaceValue: this.quoteFileName(this._codeFile) },
                 // A placeholder that has to be replaced by the code file name without the directory
                 { regex: /\$fileName/g, replaceValue: this.getCodeBaseFile() },
+                // A placeholder that has to be replaced by the drive letter of the code file (Windows only)
+                { regex: /\$driveLetter/g, replaceValue: this.getDriveLetter() },
                 // A placeholder that has to be replaced by the directory of the code file without a trailing slash
                 { regex: /\$dirWithoutTrailingSlash/g, replaceValue: this.quoteFileName(this.getCodeFileDirWithoutTrailingSlash()) },
                 // A placeholder that has to be replaced by the directory of the code file
