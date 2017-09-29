@@ -61,6 +61,7 @@ e.g. To set the executor PATH for ruby, php and html:
   * $fullFileName: The full name of the code file being run
   * $fileName: The base name of the code file being run, that is the file without the directory
   * $fileNameWithoutExt: The base name of the code file being run without its extension
+  * $driveLetter: The drive letter of the code file being run (Windows only)
 
 **Please take care of the back slash and the space in file path of the executor**
   * Back slash: please use `\\`

@@ -1,3 +1,6 @@
+### 0.7.2 (2017-09-29)
+* [#182](https://github.com/formulahendry/vscode-code-runner/issues/182): Add $driveLetter customized parameter
+
 ### 0.7.1 (2017-08-24)
 * [#98](https://github.com/formulahendry/vscode-code-runner/issues/98): Add .ts extension mapping for typescript
 
