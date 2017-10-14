@@ -76,7 +76,7 @@ export class CodeManager {
 
     public runByLanguage(): void {
         this._appInsightsClient.sendEvent("runByLanguage");
-        const config = vscode.workspace.getConfiguration("code-runner");
+        const config = this.getConfiguration();
         const executorMap = config.get<any>("executorMap");
         vscode.window.showQuickPick(Object.keys(executorMap), { placeHolder: "Type or select language to run" }).then((languageId) => {
             if (languageId !== undefined) {
@@ -95,7 +95,7 @@ export class CodeManager {
     }
 
     private initialize(editor: vscode.TextEditor): void {
-        this._config = vscode.workspace.getConfiguration("code-runner");
+        this._config = this.getConfiguration();
         this._cwd = this._config.get<string>("cwd");
         if (this._cwd) {
             return;
@@ -111,6 +111,15 @@ export class CodeManager {
             return;
         }
         this._cwd = TmpDir;
+    }
+
+    private getConfiguration(): vscode.WorkspaceConfiguration {
+        const editor = vscode.window.activeTextEditor;
+        if (editor && editor.document) {
+            return vscode.workspace.getConfiguration("code-runner", editor.document.uri);
+        } else {
+            return vscode.workspace.getConfiguration("code-runner");
+        }
     }
 
     private getWorkspaceFolder(editor: vscode.TextEditor): string {
