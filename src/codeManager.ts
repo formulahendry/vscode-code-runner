@@ -16,6 +16,7 @@ export class CodeManager {
     private _isTmpFile: boolean;
     private _languageId: string;
     private _cwd: string;
+    private _workspaceFolder: string;
     private _config: vscode.WorkspaceConfiguration;
     private _appInsightsClient: AppInsightsClient;
 
@@ -99,16 +100,31 @@ export class CodeManager {
         if (this._cwd) {
             return;
         }
-        if ((this._config.get<boolean>("fileDirectoryAsCwd") || !vscode.workspace.rootPath)
+        this._workspaceFolder = this.getWorkspaceFolder(editor);
+        if ((this._config.get<boolean>("fileDirectoryAsCwd") || !this._workspaceFolder)
             && editor && !editor.document.isUntitled) {
             this._cwd = dirname(editor.document.fileName);
         } else {
-            this._cwd = vscode.workspace.rootPath;
+            this._cwd = this._workspaceFolder;
         }
         if (this._cwd) {
             return;
         }
         this._cwd = TmpDir;
+    }
+
+    private getWorkspaceFolder(editor: vscode.TextEditor): string {
+        if (vscode.workspace.workspaceFolders) {
+            if (editor && editor.document) {
+                const workspaceFolder = vscode.workspace.getWorkspaceFolder(editor.document.uri);
+                if (workspaceFolder) {
+                    return workspaceFolder.uri.fsPath;
+                }
+            }
+            return vscode.workspace.workspaceFolders[0].uri.fsPath;
+        } else {
+            return undefined;
+        }
     }
 
     private getCodeFileAndExecute(editor: vscode.TextEditor, fileExtension: string, executor: string, appendFile: boolean = true): any {
@@ -210,7 +226,7 @@ export class CodeManager {
     }
 
     private getWorkspaceRoot(codeFileDir: string): string {
-        return vscode.workspace.rootPath ? vscode.workspace.rootPath : codeFileDir;
+        return this._workspaceFolder ? this._workspaceFolder : codeFileDir;
     }
 
     /**

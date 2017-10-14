@@ -1,3 +1,6 @@
+### 0.7.3 (2017-10-14)
+* Add support for Multi Root Workspaces
+
 ### 0.7.2 (2017-09-29)
 * [#182](https://github.com/formulahendry/vscode-code-runner/issues/182): Add $driveLetter customized parameter
 
