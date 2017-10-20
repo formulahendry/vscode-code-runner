@@ -1,3 +1,6 @@
+### 0.7.4 (2017-10-20)
+* [#191](https://github.com/formulahendry/vscode-code-runner/issues/191): Stop running code when VS Code is closed
+
 ### 0.7.3 (2017-10-14)
 * Add support for Multi Root Workspaces
 

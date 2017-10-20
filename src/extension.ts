@@ -30,6 +30,7 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(runCustomCommand);
     context.subscriptions.push(runByLanguage);
     context.subscriptions.push(stop);
+    context.subscriptions.push(codeManager);
 }
 
 export function deactivate() {

@@ -7,7 +7,7 @@ import { AppInsightsClient } from "./appInsightsClient";
 
 const TmpDir = os.tmpdir();
 
-export class CodeManager {
+export class CodeManager implements vscode.Disposable {
     private _outputChannel: vscode.OutputChannel;
     private _terminal: vscode.Terminal;
     private _isRunning: boolean;
@@ -87,6 +87,14 @@ export class CodeManager {
 
     public stop(): void {
         this._appInsightsClient.sendEvent("stop");
+        this.stopRunning();
+    }
+
+    public dispose() {
+        this.stopRunning();
+    }
+
+    private stopRunning() {
         if (this._isRunning) {
             this._isRunning = false;
             const kill = require("tree-kill");
