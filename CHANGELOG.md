@@ -1,3 +1,6 @@
+### 0.8.2 (2017-10-26)
+* [#196](https://github.com/formulahendry/vscode-code-runner/issues/196): Fix 'run code' hotkey not working
+
 ### 0.8.1 (2017-10-26)
 * Distinguish whether it is running from file explorer
 

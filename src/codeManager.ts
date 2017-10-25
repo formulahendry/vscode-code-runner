@@ -110,7 +110,7 @@ export class CodeManager implements vscode.Disposable {
 
     private checkIsRunFromExplorer(fileUri: vscode.Uri): boolean {
         const editor = vscode.window.activeTextEditor;
-        if (!fileUri) {
+        if (!fileUri || !fileUri.fsPath) {
             return false;
         }
         if (!editor) {
