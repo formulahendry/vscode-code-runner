@@ -14,7 +14,7 @@ export class AppInsightsClient {
         this._enableAppInsights = config.get<boolean>("enableAppInsights");
     }
 
-    public sendEvent(eventName: string): void {
+    public sendEvent(eventName: string, properties?: { [key: string]: string; }): void {
         if (this._enableAppInsights) {
             for (const i in compilers) {
                 if (eventName.indexOf(compilers[i] + " ") >= 0) {
@@ -22,7 +22,7 @@ export class AppInsightsClient {
                     break;
                 }
             }
-            this._client.trackEvent(eventName === "" ? "bat" : eventName);
+            this._client.trackEvent(eventName === "" ? "bat" : eventName, properties);
         }
     }
 }

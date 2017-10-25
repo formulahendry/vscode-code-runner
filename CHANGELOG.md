@@ -1,3 +1,6 @@
+### 0.8.0 (2017-10-25)
+* [#88](https://github.com/formulahendry/vscode-code-runner/issues/88): Run file through context menu of file explorer
+
 ### 0.7.4 (2017-10-20)
 * [#191](https://github.com/formulahendry/vscode-code-runner/issues/191): Stop running code when VS Code is closed
 

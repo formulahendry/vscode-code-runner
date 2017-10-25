@@ -13,6 +13,7 @@ If you like this extension, you could donate via **[PayPal](https://www.paypal.m
 ## Features
 
 * Run code file of current active Text Editor
+* Run code file through context menu of file explorer
 * Run selected code snippet in Text Editor
 * Run custom command
 * Stop code running
@@ -23,8 +24,16 @@ If you like this extension, you could donate via **[PayPal](https://www.paypal.m
 
 ## Usages
 
-* Open code file or select code snippet in Text Editor, then use shortcut `Ctrl+Alt+N`, or press `F1` and then select/type `Run Code`, or right click the Text Editor and then click `Run Code` in editor context menu, or click `Run Code` button in editor title menu, the code will run and the output will be shown in the Output Window.
-* To stop the running code, use shortcut `Ctrl+Alt+M`, or press `F1` and then select/type `Stop Code Run`, or right click the Output Channel and then click `Stop Code Run` in context menu
+* To run code:
+  * use shortcut `Ctrl+Alt+N`
+  * or press `F1` and then select/type `Run Code`, 
+  * or right click the Text Editor and then click `Run Code` in editor context menu
+  * or click `Run Code` button in editor title menu
+  * or click `Run Code` button in context menu of file explorer
+* To stop the running code:
+  * use shortcut `Ctrl+Alt+M`
+  * or press `F1` and then select/type `Stop Code Run`
+  * or right click the Output Channel and then click `Stop Code Run` in context menu
 
 ![Usage](images/usage.gif)
 

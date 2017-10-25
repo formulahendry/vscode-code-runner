@@ -1,7 +1,7 @@
 "use strict";
 import * as fs from "fs";
 import * as os from "os";
-import { dirname, join } from "path";
+import { dirname, extname, join } from "path";
 import * as vscode from "vscode";
 import { AppInsightsClient } from "./appInsightsClient";
 
@@ -16,6 +16,8 @@ export class CodeManager implements vscode.Disposable {
     private _isTmpFile: boolean;
     private _languageId: string;
     private _cwd: string;
+    private _runFromExplorer: boolean;
+    private _document: vscode.TextDocument;
     private _workspaceFolder: string;
     private _config: vscode.WorkspaceConfiguration;
     private _appInsightsClient: AppInsightsClient;
@@ -30,21 +32,28 @@ export class CodeManager implements vscode.Disposable {
         this._terminal = null;
     }
 
-    public run(languageId: string = null): void {
+    public async run(languageId: string = null, fileUri: vscode.Uri = null) {
         if (this._isRunning) {
             vscode.window.showInformationMessage("Code is already running!");
             return;
         }
 
-        const editor = vscode.window.activeTextEditor;
-        if (!editor) {
-            vscode.window.showInformationMessage("No code found or selected.");
-            return;
+        if (fileUri) {
+            this._runFromExplorer = true;
+            this._document = await vscode.workspace.openTextDocument(fileUri);
+        } else {
+            const editor = vscode.window.activeTextEditor;
+            if (editor) {
+                this._document = editor.document;
+            } else {
+                vscode.window.showInformationMessage("No code found or selected.");
+                return;
+            }
         }
 
-        this.initialize(editor);
+        this.initialize();
 
-        const fileExtension = this.getFileExtension(editor);
+        const fileExtension = extname(this._document.fileName);
         const executor = this.getExecutor(languageId, fileExtension);
         // undefined or null
         if (executor == null) {
@@ -52,7 +61,7 @@ export class CodeManager implements vscode.Disposable {
             return;
         }
 
-        this.getCodeFileAndExecute(editor, fileExtension, executor);
+        this.getCodeFileAndExecute(fileExtension, executor);
     }
 
     public runCustomCommand(): void {
@@ -62,13 +71,17 @@ export class CodeManager implements vscode.Disposable {
         }
 
         const editor = vscode.window.activeTextEditor;
-        this.initialize(editor);
+        if (editor) {
+            this._document = editor.document;
+        }
+
+        this.initialize();
 
         const executor = this._config.get<string>("customCommand");
 
-        if (editor) {
-            const fileExtension = this.getFileExtension(editor);
-            this.getCodeFileAndExecute(editor, fileExtension, executor, false);
+        if (this._document) {
+            const fileExtension = extname(this._document.fileName);
+            this.getCodeFileAndExecute(fileExtension, executor, false);
         } else {
             this.executeCommand(executor, false);
         }
@@ -102,16 +115,16 @@ export class CodeManager implements vscode.Disposable {
         }
     }
 
-    private initialize(editor: vscode.TextEditor): void {
+    private initialize(): void {
         this._config = this.getConfiguration();
         this._cwd = this._config.get<string>("cwd");
         if (this._cwd) {
             return;
         }
-        this._workspaceFolder = this.getWorkspaceFolder(editor);
+        this._workspaceFolder = this.getWorkspaceFolder();
         if ((this._config.get<boolean>("fileDirectoryAsCwd") || !this._workspaceFolder)
-            && editor && !editor.document.isUntitled) {
-            this._cwd = dirname(editor.document.fileName);
+            && this._document && !this._document.isUntitled) {
+            this._cwd = dirname(this._document.fileName);
         } else {
             this._cwd = this._workspaceFolder;
         }
@@ -122,18 +135,17 @@ export class CodeManager implements vscode.Disposable {
     }
 
     private getConfiguration(): vscode.WorkspaceConfiguration {
-        const editor = vscode.window.activeTextEditor;
-        if (editor && editor.document) {
-            return vscode.workspace.getConfiguration("code-runner", editor.document.uri);
+        if (this._document) {
+            return vscode.workspace.getConfiguration("code-runner", this._document.uri);
         } else {
             return vscode.workspace.getConfiguration("code-runner");
         }
     }
 
-    private getWorkspaceFolder(editor: vscode.TextEditor): string {
+    private getWorkspaceFolder(): string {
         if (vscode.workspace.workspaceFolders) {
-            if (editor && editor.document) {
-                const workspaceFolder = vscode.workspace.getWorkspaceFolder(editor.document.uri);
+            if (this._document) {
+                const workspaceFolder = vscode.workspace.getWorkspaceFolder(this._document.uri);
                 if (workspaceFolder) {
                     return workspaceFolder.uri.fsPath;
                 }
@@ -144,13 +156,17 @@ export class CodeManager implements vscode.Disposable {
         }
     }
 
-    private getCodeFileAndExecute(editor: vscode.TextEditor, fileExtension: string, executor: string, appendFile: boolean = true): any {
-        const selection = editor.selection;
+    private getCodeFileAndExecute(fileExtension: string, executor: string, appendFile: boolean = true): any {
+        let selection;
+        const activeTextEditor = vscode.window.activeTextEditor;
+        if (activeTextEditor) {
+            selection = activeTextEditor.selection;
+        }
         const ignoreSelection = this._config.get<boolean>("ignoreSelection");
 
-        if ((selection.isEmpty || ignoreSelection) && !editor.document.isUntitled) {
+        if ((this._runFromExplorer || !selection || selection.isEmpty || ignoreSelection) && !this._document.isUntitled) {
             this._isTmpFile = false;
-            this._codeFile = editor.document.fileName;
+            this._codeFile = this._document.fileName;
 
             if (this._config.get<boolean>("saveAllFilesBeforeRun")) {
                 return vscode.workspace.saveAll().then(() => {
@@ -159,12 +175,13 @@ export class CodeManager implements vscode.Disposable {
             }
 
             if (this._config.get<boolean>("saveFileBeforeRun")) {
-                return editor.document.save().then(() => {
+                return this._document.save().then(() => {
                     this.executeCommand(executor, appendFile);
                 });
             }
         } else {
-            let text = (selection.isEmpty || ignoreSelection) ? editor.document.getText() : editor.document.getText(selection);
+            let text = (this._runFromExplorer || !selection || selection.isEmpty || ignoreSelection) ?
+                this._document.getText() : this._document.getText(selection);
 
             if (this._languageId === "php") {
                 text = text.trim();
@@ -174,7 +191,7 @@ export class CodeManager implements vscode.Disposable {
             }
 
             this._isTmpFile = true;
-            const folder = editor.document.isUntitled ? this._cwd : dirname(editor.document.fileName);
+            const folder = this._document.isUntitled ? this._cwd : dirname(this._document.fileName);
             this.createRandomFile(text, folder, fileExtension);
         }
 
@@ -205,7 +222,7 @@ export class CodeManager implements vscode.Disposable {
     }
 
     private getExecutor(languageId: string, fileExtension: string): string {
-        this._languageId = languageId === null ? vscode.window.activeTextEditor.document.languageId : languageId;
+        this._languageId = languageId === null ? this._document.languageId : languageId;
         const executorMap = this._config.get<any>("executorMap");
         let executor = executorMap[this._languageId];
         // executor is undefined or null
@@ -222,16 +239,6 @@ export class CodeManager implements vscode.Disposable {
         }
 
         return executor;
-    }
-
-    private getFileExtension(editor: vscode.TextEditor): string {
-        const fileName = editor.document.fileName;
-        const index = fileName.lastIndexOf(".");
-        if (index !== -1) {
-            return fileName.substr(index);
-        } else {
-            return "";
-        }
     }
 
     private executeCommand(executor: string, appendFile: boolean = true) {
@@ -376,7 +383,7 @@ export class CodeManager implements vscode.Disposable {
         }
         this._terminal.show(this._config.get<boolean>("preserveFocus"));
         executor = this.changeExecutorFromCmdToPs(executor);
-        this._appInsightsClient.sendEvent(executor);
+        this.sendRunEvent(executor, true);
         let command = this.getFinalCommandToRunCodeFile(executor, appendFile);
         command = this.changeFilePathForBashOnWindows(command);
         if (this._config.get<boolean>("clearPreviousOutput") && !isNewTerminal) {
@@ -402,7 +409,7 @@ export class CodeManager implements vscode.Disposable {
         if (showExecutionMessage) {
             this._outputChannel.appendLine("[Running] " + command);
         }
-        this._appInsightsClient.sendEvent(executor);
+        this.sendRunEvent(executor, false);
         const startTime = new Date();
         this._process = exec(command, { cwd: this._cwd });
 
@@ -427,5 +434,14 @@ export class CodeManager implements vscode.Disposable {
                 fs.unlink(this._codeFile);
             }
         });
+    }
+
+    private sendRunEvent(executor: string, runFromTerminal: boolean) {
+        const properties = {
+            runFromTerminal: runFromTerminal.toString(),
+            runFromExplorer: this._runFromExplorer.toString(),
+            isTmpFile: this._isTmpFile.toString(),
+        };
+        this._appInsightsClient.sendEvent(executor, properties);
     }
 }
