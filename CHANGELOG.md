@@ -1,3 +1,6 @@
+### 0.8.1 (2017-10-26)
+* Distinguish whether it is running from file explorer
+
 ### 0.8.0 (2017-10-25)
 * [#88](https://github.com/formulahendry/vscode-code-runner/issues/88): Run file through context menu of file explorer
 

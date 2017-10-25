@@ -38,8 +38,8 @@ export class CodeManager implements vscode.Disposable {
             return;
         }
 
-        if (fileUri) {
-            this._runFromExplorer = true;
+        this._runFromExplorer = this.checkIsRunFromExplorer(fileUri);
+        if (this._runFromExplorer) {
             this._document = await vscode.workspace.openTextDocument(fileUri);
         } else {
             const editor = vscode.window.activeTextEditor;
@@ -70,6 +70,7 @@ export class CodeManager implements vscode.Disposable {
             return;
         }
 
+        this._runFromExplorer = false;
         const editor = vscode.window.activeTextEditor;
         if (editor) {
             this._document = editor.document;
@@ -105,6 +106,20 @@ export class CodeManager implements vscode.Disposable {
 
     public dispose() {
         this.stopRunning();
+    }
+
+    private checkIsRunFromExplorer(fileUri: vscode.Uri): boolean {
+        const editor = vscode.window.activeTextEditor;
+        if (!fileUri) {
+            return false;
+        }
+        if (!editor) {
+            return true;
+        }
+        if (fileUri.fsPath === editor.document.uri.fsPath) {
+            return false;
+        }
+        return true;
     }
 
     private stopRunning() {
