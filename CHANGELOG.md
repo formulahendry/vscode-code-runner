@@ -1,3 +1,6 @@
+### 0.8.3 (2017-11-04)
+* Add support for C# (.NET Core)
+
 ### 0.8.2 (2017-10-26)
 * [#196](https://github.com/formulahendry/vscode-code-runner/issues/196): Fix 'run code' hotkey not working
 

@@ -2,7 +2,7 @@
   "name": "code-runner",
   "displayName": "Code Runner",
   "description": "Run C, C++, Java, JS, PHP, Python, Perl, Ruby, Go, Lua, Groovy, PowerShell, CMD, BASH, F#, C#, VBScript, TypeScript, CoffeeScript, Scala, Swift, Julia, Crystal, OCaml, R, AppleScript, Elixir, VB.NET, Clojure, Haxe, Objective-C, Rust, Racket, AutoHotkey, AutoIt, Kotlin, Dart, Pascal, Haskell, Nim, D",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "publisher": "formulahendry",
   "icon": "images/logo.png",
   "engines": {
@@ -17,7 +17,8 @@
     "php",
     "python",
     "perl",
-    "ruby"
+    "ruby",
+    "multi-root ready"
   ],
   "bugs": {
     "url": "https://github.com/formulahendry/vscode-code-runner/issues",
@@ -174,7 +175,8 @@
             ".pp": "cd $dir && fpc $fileName && $dir$fileNameWithoutExt",
             ".d": "cd $dir && dmd $fileName && $dir$fileNameWithoutExt",
             ".hs": "runhaskell",
-            ".nim": "nim compile --verbosity:0 --hints:off --run"
+            ".nim": "nim compile --verbosity:0 --hints:off --run",
+            ".csproj": "dotnet run --project"
           },
           "description": "Set the executor of each file extension.",
           "scope": "resource"
