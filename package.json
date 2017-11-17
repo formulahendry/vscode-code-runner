@@ -2,7 +2,7 @@
   "name": "code-runner",
   "displayName": "Code Runner",
   "description": "Run C, C++, Java, JS, PHP, Python, Perl, Ruby, Go, Lua, Groovy, PowerShell, CMD, BASH, F#, C#, VBScript, TypeScript, CoffeeScript, Scala, Swift, Julia, Crystal, OCaml, R, AppleScript, Elixir, VB.NET, Clojure, Haxe, Objective-C, Rust, Racket, AutoHotkey, AutoIt, Kotlin, Dart, Pascal, Haskell, Nim, D",
-  "version": "0.8.3",
+  "version": "0.8.4",
   "publisher": "formulahendry",
   "icon": "images/logo.png",
   "engines": {
@@ -79,7 +79,7 @@
     "menus": {
       "editor/context": [
         {
-          "when": "!inOutput",
+          "when": "!inOutput && config.code-runner.showRunCommandInEditorContextMenu",
           "command": "code-runner.run",
           "group": "navigation"
         },
@@ -273,6 +273,12 @@
           "type": "boolean",
           "default": true,
           "description": "Whether to show 'Run Code' icon in editor title menu.",
+          "scope": "resource"
+        },
+        "code-runner.showRunCommandInEditorContextMenu": {
+          "type": "boolean",
+          "default": true,
+          "description": "Whether to show 'Run Code' command in editor context menu.",
           "scope": "resource"
         },
         "code-runner.temporaryFileName": {
