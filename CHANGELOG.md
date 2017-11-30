@@ -1,3 +1,6 @@
+### 0.8.5 (2017-11-30)
+* Add support for F# (.NET Core)
+
 ### 0.8.4 (2017-11-17)
 * [#207](https://github.com/formulahendry/vscode-code-runner/issues/207): Add option to hide "Run Code" from editor context menu
 
