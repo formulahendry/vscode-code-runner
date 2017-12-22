@@ -1,3 +1,6 @@
+### 0.8.6 (2017-12-22)
+* Fix kotlin script execution
+
 ### 0.8.5 (2017-11-30)
 * Add support for F# (.NET Core)
 
