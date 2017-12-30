@@ -162,6 +162,7 @@
             ".vbs": "cscript //Nologo",
             ".scala": "scala",
             ".jl": "julia",
+            ".p6": "perl6",
             ".cr": "crystal",
             ".ml": "ocaml",
             ".exs": "elixir",
