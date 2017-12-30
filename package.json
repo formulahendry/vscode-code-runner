@@ -1,7 +1,7 @@
 {
   "name": "code-runner",
   "displayName": "Code Runner",
-  "description": "Run C, C++, Java, JS, PHP, Python, Perl, Ruby, Go, Lua, Groovy, PowerShell, CMD, BASH, F#, C#, VBScript, TypeScript, CoffeeScript, Scala, Swift, Julia, Crystal, OCaml, R, AppleScript, Elixir, VB.NET, Clojure, Haxe, Objective-C, Rust, Racket, AutoHotkey, AutoIt, Kotlin, Dart, Pascal, Haskell, Nim, D",
+  "description": "Run C, C++, Java, JS, PHP, Python, Perl, Perl 6, Ruby, Go, Lua, Groovy, PowerShell, CMD, BASH, F#, C#, VBScript, TypeScript, CoffeeScript, Scala, Swift, Julia, Crystal, OCaml, R, AppleScript, Elixir, VB.NET, Clojure, Haxe, Objective-C, Rust, Racket, AutoHotkey, AutoIt, Kotlin, Dart, Pascal, Haskell, Nim, D",
   "version": "0.8.6",
   "publisher": "formulahendry",
   "icon": "images/logo.png",
@@ -17,6 +17,7 @@
     "php",
     "python",
     "perl",
+    "perl6",
     "ruby",
     "multi-root ready"
   ],
@@ -119,6 +120,7 @@
             "php": "php",
             "python": "python",
             "perl": "perl",
+            "perl6": "perl6",
             "ruby": "ruby",
             "go": "go run",
             "lua": "lua",
@@ -160,6 +162,7 @@
             ".vbs": "cscript //Nologo",
             ".scala": "scala",
             ".jl": "julia",
+            ".p6": "perl6",
             ".cr": "crystal",
             ".ml": "ocaml",
             ".exs": "elixir",
