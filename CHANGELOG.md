@@ -1,3 +1,6 @@
+### 0.8.7 (2017-12-30)
+* Add support for Perl 6
+
 ### 0.8.6 (2017-12-22)
 * Fix kotlin script execution
 
