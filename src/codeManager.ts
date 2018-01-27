@@ -1,5 +1,6 @@
 "use strict";
 import * as fs from "fs";
+import * as iconv from "iconv-lite";
 import * as os from "os";
 import { dirname, extname, join } from "path";
 import * as vscode from "vscode";
@@ -425,15 +426,21 @@ export class CodeManager implements vscode.Disposable {
             this._outputChannel.appendLine("[Running] " + command);
         }
         this.sendRunEvent(executor, false);
-        const startTime = new Date();
-        this._process = exec(command, { cwd: this._cwd });
 
-        this._process.stdout.on("data", (data) => {
-            this._outputChannel.append(data);
+        let encoding = this._config.get<string>("outputEncoding");
+        encoding = iconv.encodingExists(encoding) ? encoding : "utf8";
+
+        const startTime = new Date();
+        this._process = exec(command, { cwd: this._cwd, encoding: "Buffer" });
+
+        this._process.stdout.on("data", (buffer) => {
+            const text = iconv.decode(buffer, encoding);
+            this._outputChannel.append(text);
         });
 
-        this._process.stderr.on("data", (data) => {
-            this._outputChannel.append(data);
+        this._process.stderr.on("data", (buffer) => {
+            const text = iconv.decode(buffer, encoding);
+            this._outputChannel.append(text);
         });
 
         this._process.on("close", (code) => {

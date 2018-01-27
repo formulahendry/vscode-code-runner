@@ -287,6 +287,12 @@
           "default": "tempCodeRunnerFile",
           "description": "Temporary file name used in running selected code snippet. When it is set as empty, the file name will be random.",
           "scope": "resource"
+        },
+        "code-runner.outputEncoding": {
+          "type": "string",
+          "default": "utf8",
+          "description": "output encoding from shell.",
+          "scope": "resource"
         }
       }
     },
@@ -314,9 +320,11 @@
   },
   "dependencies": {
     "applicationinsights": "^0.19.0",
+    "iconv-lite": "^0.4.19",
     "tree-kill": "^1.1.0"
   },
   "devDependencies": {
+    "@types/iconv-lite": "0.0.1",
     "@types/mocha": "^2.2.32",
     "@types/node": "^6.0.40",
     "mocha": "^2.3.3",
