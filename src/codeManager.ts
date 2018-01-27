@@ -426,11 +426,12 @@ export class CodeManager implements vscode.Disposable {
             this._outputChannel.appendLine("[Running] " + command);
         }
         this.sendRunEvent(executor, false);
-        const startTime = new Date();
-        this._process = exec(command, { cwd: this._cwd, encoding: "Buffer" });
 
         let encoding = this._config.get<string>("outputEncoding");
         encoding = iconv.encodingExists(encoding) ? encoding : "utf8";
+
+        const startTime = new Date();
+        this._process = exec(command, { cwd: this._cwd, encoding: "Buffer" });
 
         this._process.stdout.on("data", (buffer) => {
             const text = iconv.decode(buffer, encoding);
