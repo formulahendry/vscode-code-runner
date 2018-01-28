@@ -409,6 +409,7 @@ export class CodeManager implements vscode.Disposable {
             this._terminal.sendText(`cd "${cwd}"`);
         }
         this._terminal.sendText(command);
+        await vscode.commands.executeCommand("workbench.action.terminal.focus");
     }
 
     private executeCommandInOutputChannel(executor: string, appendFile: boolean = true) {
