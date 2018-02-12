@@ -57,7 +57,7 @@ export class CodeManager implements vscode.Disposable {
         let executor = null;
 
         const firstLineInFile = this._document.lineAt(0).text;
-        if (firstLineInFile.startsWith('#!')) {
+        if (firstLineInFile.startsWith("#!")) {
             executor = firstLineInFile.substr(2);
         } else {
             executor = this.getExecutor(languageId, fileExtension);
@@ -104,7 +104,7 @@ export class CodeManager implements vscode.Disposable {
         let languages = Object.keys(executorMap);
 
         const firstLineInFile = vscode.window.activeTextEditor.document.lineAt(0).text;
-        if (firstLineInFile.startsWith('#!')) {
+        if (firstLineInFile.startsWith("#!")) {
             languages = [firstLineInFile.substr(2)].concat(languages);
         }
 
