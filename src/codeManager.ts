@@ -62,7 +62,7 @@ export class CodeManager implements vscode.Disposable {
         } else {
             executor = this.getExecutor(languageId, fileExtension);
         }
-        
+
         // undefined or null
         if (executor == null) {
             vscode.window.showInformationMessage("Code language not supported or defined.");
