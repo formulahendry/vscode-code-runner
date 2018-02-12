@@ -54,7 +54,15 @@ export class CodeManager implements vscode.Disposable {
         this.initialize();
 
         const fileExtension = extname(this._document.fileName);
-        const executor = this.getExecutor(languageId, fileExtension);
+        let executor = null;
+
+        const firstLineInFile = this._document.lineAt(0).text;
+        if (firstLineInFile.startsWith('#!')) {
+            executor = firstLineInFile.substr(2);
+        } else {
+            executor = this.getExecutor(languageId, fileExtension);
+        }
+        
         // undefined or null
         if (executor == null) {
             vscode.window.showInformationMessage("Code language not supported or defined.");
@@ -92,7 +100,15 @@ export class CodeManager implements vscode.Disposable {
         this._appInsightsClient.sendEvent("runByLanguage");
         const config = this.getConfiguration();
         const executorMap = config.get<any>("executorMap");
-        vscode.window.showQuickPick(Object.keys(executorMap), { placeHolder: "Type or select language to run" }).then((languageId) => {
+
+        let languages = Object.keys(executorMap);
+
+        const firstLineInFile = vscode.window.activeTextEditor.document.lineAt(0).text;
+        if (firstLineInFile.startsWith('#!')) {
+            languages = [firstLineInFile.substr(2)].concat(languages);
+        }
+
+        vscode.window.showQuickPick(languages, { placeHolder: "Type or select language to run" }).then((languageId) => {
             if (languageId !== undefined) {
                 this.run(languageId);
             }
