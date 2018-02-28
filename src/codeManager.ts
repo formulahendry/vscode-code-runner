@@ -95,12 +95,6 @@ export class CodeManager implements vscode.Disposable {
         const executorMap = config.get<any>("executorMap");
 
         let languages = Object.keys(executorMap);
-
-        const firstLineInFile = vscode.window.activeTextEditor.document.lineAt(0).text;
-        if (firstLineInFile.startsWith("#!")) {
-            languages = [firstLineInFile.substr(2)].concat(languages);
-        }
-
         vscode.window.showQuickPick(languages, { placeHolder: "Type or select language to run" }).then((languageId) => {
             if (languageId !== undefined) {
                 this.run(languageId);
