@@ -93,9 +93,7 @@ export class CodeManager implements vscode.Disposable {
         this._appInsightsClient.sendEvent("runByLanguage");
         const config = this.getConfiguration();
         const executorMap = config.get<any>("executorMap");
-
-        let languages = Object.keys(executorMap);
-        vscode.window.showQuickPick(languages, { placeHolder: "Type or select language to run" }).then((languageId) => {
+        vscode.window.showQuickPick(Object.keys(executorMap), { placeHolder: "Type or select language to run" }).then((languageId) => {
             if (languageId !== undefined) {
                 this.run(languageId);
             }
