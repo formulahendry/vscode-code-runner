@@ -238,8 +238,23 @@ export class CodeManager implements vscode.Disposable {
 
     private getExecutor(languageId: string, fileExtension: string): string {
         this._languageId = languageId === null ? this._document.languageId : languageId;
+
+        let executor = null;
+
+        // Check if file contains hash-bang
+        if (languageId == null) {
+            const firstLineInFile = this._document.lineAt(0).text;
+            if (firstLineInFile.startsWith("#!")) {
+                executor = firstLineInFile.substr(2);
+            }
+        }
+
         const executorMap = this._config.get<any>("executorMap");
-        let executor = executorMap[this._languageId];
+
+        if (executor == null) {
+            executor = executorMap[this._languageId];
+        }
+
         // executor is undefined or null
         if (executor == null && fileExtension) {
             const executorMapByFileExtension = this._config.get<any>("executorMapByFileExtension");
