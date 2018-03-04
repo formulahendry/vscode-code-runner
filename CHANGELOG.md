@@ -1,3 +1,6 @@
+### 0.9.0 (2018-03-04)
+* Add support for Shebang
+
 ### 0.8.7 (2017-12-30)
 * Add support for Perl 6
 

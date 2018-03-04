@@ -15,6 +15,7 @@ If you like this extension, you could donate via **[PayPal](https://www.paypal.m
 * Run code file of current active Text Editor
 * Run code file through context menu of file explorer
 * Run selected code snippet in Text Editor
+* Run code per Shebang
 * Run custom command
 * Stop code running
 * View output in Output Window
