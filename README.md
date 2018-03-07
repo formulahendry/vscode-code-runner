@@ -6,7 +6,7 @@ Run code snippet or code file for multiple languages: **C, C++, Java, JavaScript
 
 ## Donation
 
-If you like this extension, you could donate via **[PayPal](https://www.paypal.me/junhanme)**, or scan below QR code to donate via **Alipay**. Any amount is welcome. It will encourage me to make this extension better and better!
+If you like this extension, you could become a backer or sponsor via **[Patreon](https://www.patreon.com/junhan)**, donate via **[PayPal](https://www.paypal.me/junhanme)**, or scan below QR code to donate via **Alipay**. Any amount is welcome. It will encourage me to make this extension better and better!
 
 ![Alipay](images/alipay.png)
 
