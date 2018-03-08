@@ -160,6 +160,8 @@ To set whether to preserve focus on code editor after code run is triggered (def
 
 `code-runner.temporaryFileName`: Temporary file name used in running selected code snippet. When it is set as empty, the file name will be random. (Default is **"tempCodeRunnerFile"**)
 
+`code-runner.respectShebang`: Whether to respect Shebang to run code. (Default is **true**)
+
 ## About CWD Setting (current working directory)
 1. By default, use the `code-runner.cwd` setting
 2. If `code-runner.cwd` is not set and `code-runner.fileDirectoryAsCwd` is `true`, use the directory of the file to be executed

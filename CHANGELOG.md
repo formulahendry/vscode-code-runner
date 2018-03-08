@@ -1,3 +1,6 @@
+### 0.9.1 (2018-03-08)
+* Add option to respect Shebang or not
+
 ### 0.9.0 (2018-03-04)
 * Add support for Shebang
 

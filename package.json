@@ -2,7 +2,7 @@
   "name": "code-runner",
   "displayName": "Code Runner",
   "description": "Run C, C++, Java, JS, PHP, Python, Perl, Ruby, Go, Lua, Groovy, PowerShell, CMD, BASH, F#, C#, VBScript, TypeScript, CoffeeScript, Scala, Swift, Julia, Crystal, OCaml, R, AppleScript, Elixir, VB.NET, Clojure, Haxe, Objective-C, Rust, Racket, AutoHotkey, AutoIt, Kotlin, Dart, Pascal, Haskell, Nim, D",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "publisher": "formulahendry",
   "icon": "images/logo.png",
   "engines": {
@@ -286,6 +286,12 @@
           "type": "string",
           "default": "tempCodeRunnerFile",
           "description": "Temporary file name used in running selected code snippet. When it is set as empty, the file name will be random.",
+          "scope": "resource"
+        },
+        "code-runner.respectShebang": {
+          "type": "boolean",
+          "default": true,
+          "description": "Whether to respect Shebang to run code.",
           "scope": "resource"
         }
       }

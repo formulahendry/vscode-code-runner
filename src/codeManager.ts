@@ -242,7 +242,7 @@ export class CodeManager implements vscode.Disposable {
         let executor = null;
 
         // Check if file contains hash-bang
-        if (languageId == null) {
+        if (languageId == null && this._config.get<boolean>("respectShebang")) {
             const firstLineInFile = this._document.lineAt(0).text;
             if (firstLineInFile.startsWith("#!")) {
                 executor = firstLineInFile.substr(2);
