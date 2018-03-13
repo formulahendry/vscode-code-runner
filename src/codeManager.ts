@@ -345,8 +345,8 @@ export class CodeManager implements vscode.Disposable {
 
         if (this._codeFile) {
             const codeFileDir = this.getCodeFileDir();
-            const config = vscode.workspace.getConfiguration();
-            const ppath = config.get('python.pythonPath');
+            const config = this.getConfiguration();
+            const pythonPath = config.get<string>('python.pythonPath');
             const placeholders: Array<{ regex: RegExp, replaceValue: string }> = [
                 // A placeholder that has to be replaced by the path of the folder opened in VS Code
                 // If no folder is opened, replace with the directory of the code file
@@ -364,7 +364,7 @@ export class CodeManager implements vscode.Disposable {
                 // A placeholder that has to be replaced by the directory of the code file
                 { regex: /\$dir/g, replaceValue: this.quoteFileName(codeFileDir) },
                 // A placeholder that has to be replaced by the Python executable in path
-                { regex: /\$pythonPath/g, replaceValue: ppath },
+                { regex: /\$pythonPath/g, replaceValue: pythonPath },
             ];
 
             placeholders.forEach((placeholder) => {
