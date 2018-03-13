@@ -1,3 +1,6 @@
+### 0.9.2 (2018-03-13)
+* Add $pythonPath customized parameter to respect `python.pythonPath` setting
+
 ### 0.9.1 (2018-03-08)
 * Add option to respect Shebang or not
 

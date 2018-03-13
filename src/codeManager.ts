@@ -90,7 +90,7 @@ export class CodeManager implements vscode.Disposable {
 
     public runByLanguage(): void {
         this._appInsightsClient.sendEvent("runByLanguage");
-        const config = this.getConfiguration();
+        const config = this.getConfiguration("code-runner");
         const executorMap = config.get<any>("executorMap");
         vscode.window.showQuickPick(Object.keys(executorMap), { placeHolder: "Type or select language to run" }).then((languageId) => {
             if (languageId !== undefined) {
@@ -131,7 +131,7 @@ export class CodeManager implements vscode.Disposable {
     }
 
     private initialize(): void {
-        this._config = this.getConfiguration();
+        this._config = this.getConfiguration("code-runner");
         this._cwd = this._config.get<string>("cwd");
         if (this._cwd) {
             return;
@@ -149,11 +149,11 @@ export class CodeManager implements vscode.Disposable {
         this._cwd = TmpDir;
     }
 
-    private getConfiguration(): vscode.WorkspaceConfiguration {
+    private getConfiguration(section?: string): vscode.WorkspaceConfiguration {
         if (this._document) {
-            return vscode.workspace.getConfiguration("code-runner", this._document.uri);
+            return vscode.workspace.getConfiguration(section, this._document.uri);
         } else {
-            return vscode.workspace.getConfiguration("code-runner");
+            return vscode.workspace.getConfiguration(section);
         }
     }
 
@@ -345,8 +345,7 @@ export class CodeManager implements vscode.Disposable {
 
         if (this._codeFile) {
             const codeFileDir = this.getCodeFileDir();
-            const config = this.getConfiguration();
-            const pythonPath = config.get<string>("python.pythonPath");
+            const pythonPath = this.getConfiguration("python").get<string>("pythonPath");
             const placeholders: Array<{ regex: RegExp, replaceValue: string }> = [
                 // A placeholder that has to be replaced by the path of the folder opened in VS Code
                 // If no folder is opened, replace with the directory of the code file
@@ -363,7 +362,7 @@ export class CodeManager implements vscode.Disposable {
                 { regex: /\$dirWithoutTrailingSlash/g, replaceValue: this.quoteFileName(this.getCodeFileDirWithoutTrailingSlash()) },
                 // A placeholder that has to be replaced by the directory of the code file
                 { regex: /\$dir/g, replaceValue: this.quoteFileName(codeFileDir) },
-                // A placeholder that has to be replaced by the Python executable in path
+                // A placeholder that has to be replaced by the path of Python interpreter
                 { regex: /\$pythonPath/g, replaceValue: pythonPath },
             ];
 
