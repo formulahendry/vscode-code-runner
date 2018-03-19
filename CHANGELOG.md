@@ -1,3 +1,6 @@
+### 0.9.3 (2018-03-19)
+* [#273](https://github.com/formulahendry/vscode-code-runner/issues/273): Could not run file without extension
+
 ### 0.9.2 (2018-03-13)
 * Add $pythonPath customized parameter to respect `python.pythonPath` setting
 

@@ -288,7 +288,7 @@ export class CodeManager implements vscode.Disposable {
      */
     private getCodeBaseFile(): string {
         const regexMatch = this._codeFile.match(/.*[\/\\](.*)/);
-        return regexMatch.length ? regexMatch[1] : this._codeFile;
+        return regexMatch ? regexMatch[1] : this._codeFile;
     }
 
     /**
@@ -296,7 +296,7 @@ export class CodeManager implements vscode.Disposable {
      */
     private getCodeFileWithoutDirAndExt(): string {
         const regexMatch = this._codeFile.match(/.*[\/\\](.*(?=\..*))/);
-        return regexMatch.length ? regexMatch[1] : this._codeFile;
+        return regexMatch ? regexMatch[1] : this._codeFile;
     }
 
     /**
@@ -304,7 +304,7 @@ export class CodeManager implements vscode.Disposable {
      */
     private getCodeFileDir(): string {
         const regexMatch = this._codeFile.match(/(.*[\/\\]).*/);
-        return regexMatch.length ? regexMatch[1] : this._codeFile;
+        return regexMatch ? regexMatch[1] : this._codeFile;
     }
 
     /**
