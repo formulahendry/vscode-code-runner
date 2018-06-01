@@ -323,6 +323,13 @@ export class CodeManager implements vscode.Disposable {
     }
 
     /**
+     * Gets the directory of the code file.
+     */
+    private getRelativeFileName(codeFileDir: string): string {
+        return this._codeFile.replace(this.getWorkspaceRoot(codeFileDir),'').replace(/\\/g,'/').replace(/^\//,'');
+    }
+
+    /**
      * Includes double quotes around a given file name.
      */
     private quoteFileName(fileName: string): string {
@@ -354,6 +361,8 @@ export class CodeManager implements vscode.Disposable {
                 { regex: /\$fileNameWithoutExt/g, replaceValue: this.getCodeFileWithoutDirAndExt() },
                 // A placeholder that has to be replaced by the full code file name
                 { regex: /\$fullFileName/g, replaceValue: this.quoteFileName(this._codeFile) },
+                // A placeholder that has to be replaced by the relative code file name
+                { regex: /\$relativeFileName/g, replaceValue: this.getRelativeFileName(codeFileDir) },
                 // A placeholder that has to be replaced by the code file name without the directory
                 { regex: /\$fileName/g, replaceValue: this.getCodeBaseFile() },
                 // A placeholder that has to be replaced by the drive letter of the code file (Windows only)
