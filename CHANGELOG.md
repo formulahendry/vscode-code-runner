@@ -1,3 +1,6 @@
+### 0.9.4 (2018-08-03)
+* [#70](https://github.com/formulahendry/vscode-code-runner/issues/70): Use `-u` flag for Python to force stdin, stdout and stderr to be totally unbuffered.
+
 ### 0.9.3 (2018-03-19)
 * [#273](https://github.com/formulahendry/vscode-code-runner/issues/273): Could not run file without extension
 

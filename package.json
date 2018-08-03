@@ -2,14 +2,14 @@
   "name": "code-runner",
   "displayName": "Code Runner",
   "description": "Run C, C++, Java, JS, PHP, Python, Perl, Ruby, Go, Lua, Groovy, PowerShell, CMD, BASH, F#, C#, VBScript, TypeScript, CoffeeScript, Scala, Swift, Julia, Crystal, OCaml, R, AppleScript, Elixir, VB.NET, Clojure, Haxe, Objective-C, Rust, Racket, AutoHotkey, AutoIt, Kotlin, Dart, Pascal, Haskell, Nim, D",
-  "version": "0.9.3",
+  "version": "0.9.4",
   "publisher": "formulahendry",
   "icon": "images/logo.png",
   "engines": {
     "vscode": "^1.17.0"
   },
   "categories": [
-    "Languages",
+    "Programming Languages",
     "Other"
   ],
   "keywords": [
@@ -117,7 +117,7 @@
             "cpp": "cd $dir && g++ $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
             "objective-c": "cd $dir && gcc -framework Cocoa $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
             "php": "php",
-            "python": "python",
+            "python": "python -u",
             "perl": "perl",
             "perl6": "perl6",
             "ruby": "ruby",
