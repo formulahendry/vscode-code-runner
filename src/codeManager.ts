@@ -1,7 +1,7 @@
 "use strict";
 import * as fs from "fs";
 import * as os from "os";
-import { dirname, extname, join } from "path";
+import { dirname, join } from "path";
 import * as vscode from "vscode";
 import { AppInsightsClient } from "./appInsightsClient";
 
@@ -53,7 +53,7 @@ export class CodeManager implements vscode.Disposable {
 
         this.initialize();
 
-        const fileExtension = extname(this._document.fileName);
+        const fileExtension = this.getExtension(this._document.fileName);
         const executor = this.getExecutor(languageId, fileExtension);
         // undefined or null
         if (executor == null) {
@@ -81,7 +81,7 @@ export class CodeManager implements vscode.Disposable {
         const executor = this._config.get<string>("customCommand");
 
         if (this._document) {
-            const fileExtension = extname(this._document.fileName);
+            const fileExtension = this.getExtension(this._document.fileName);
             this.getCodeFileAndExecute(fileExtension, executor, false);
         } else {
             this.executeCommand(executor, false);
@@ -211,6 +211,13 @@ export class CodeManager implements vscode.Disposable {
         }
 
         this.executeCommand(executor, appendFile);
+    }
+
+    private getExtension(fileName: string): string {
+        if (fileName.indexOf(".") === -1) {
+            return null;
+        }
+        return fileName.substring(fileName.indexOf("."));
     }
 
     private rndName(): string {
