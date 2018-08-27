@@ -359,7 +359,7 @@ export class CodeManager implements vscode.Disposable {
                 { regex: /\$fileName/g, replaceValue: this.getCodeBaseFile() },
                 // A placeholder replaced by the code file name relative to workspace, dot-separated, without its extension (useful for python -m)
                 {
-                    regex: /\$moduleName/g,
+                    regex: /\$pythonModuleName/g,
                     replaceValue: this._codeFile.slice(workspaceRoot.length + 1).replace(/\.\w+$/, "").replace(/\/\/?/g, "."),
                 },
                 // A placeholder that has to be replaced by the drive letter of the code file (Windows only)
