@@ -8,7 +8,7 @@ Run code snippet or code file for multiple languages: **C, C++, Java, JavaScript
 
 [![CodeStream](images/CodeStream.png)](https://codestream.com/?utm_source=vscmarket&utm_medium=banner&utm_campaign=coderunner)
 
-Use Slack inside VS Code and save your technical discussions where they belong - with your codebase. Try [CodeStream](https://codestream.com/?utm_source=vscmarket&utm_medium=banner&utm_campaign=coderunner).
+Use Slack inside VS Code and save your technical discussions where they belong - with your codebase. [Try CodeStream](https://codestream.com/?utm_source=vscmarket&utm_medium=banner&utm_campaign=coderunner).
 
 ## Donation
 
