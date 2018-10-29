@@ -4,6 +4,12 @@
 
 Run code snippet or code file for multiple languages: **C, C++, Java, JavaScript, PHP, Python, Perl, Perl 6, Ruby, Go, Lua, Groovy, PowerShell, BAT/CMD, BASH/SH, F# Script, F# (.NET Core), C# Script, C# (.NET Core), VBScript, TypeScript, CoffeeScript, Scala, Swift, Julia, Crystal, OCaml Script, R, AppleScript, Elixir, Visual Basic .NET, Clojure, Haxe, Objective-C, Rust, Racket, AutoHotkey, AutoIt, Kotlin, Dart, Free Pascal, Haskell, Nim, D**, and custom command
 
+## Sponsor
+
+[![CodeStream](images/CodeStream.png)](https://codestream.com/?utm_source=vscmarket&utm_medium=banner&utm_campaign=coderunner)
+
+Use Slack inside VS Code and save your technical discussions where they belong - with your codebase. [Try CodeStream](https://codestream.com/?utm_source=vscmarket&utm_medium=banner&utm_campaign=coderunner).
+
 ## Donation
 
 If you like this extension, you could become a backer or sponsor via **[Patreon](https://www.patreon.com/junhan)**, donate via **[PayPal](https://www.paypal.me/junhanme)**, or scan below QR code to donate via **Alipay**. Any amount is welcome. It will encourage me to make this extension better and better!
