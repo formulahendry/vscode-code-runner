@@ -1,3 +1,6 @@
+### 0.9.5 (2018-10-29)
+* We have our first sponsor now: [CodeStream](https://codestream.com/?utm_source=vscmarket&utm_medium=banner&utm_campaign=coderunner)
+
 ### 0.9.4 (2018-08-03)
 * [#70](https://github.com/formulahendry/vscode-code-runner/issues/70): Use `-u` flag for Python to force stdin, stdout and stderr to be totally unbuffered.
 
