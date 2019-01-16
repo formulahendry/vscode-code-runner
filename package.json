@@ -149,7 +149,8 @@
             "pascal": "cd $dir && fpc $fileName && $dir$fileNameWithoutExt",
             "d": "cd $dir && dmd $fileName && $dir$fileNameWithoutExt",
             "haskell": "runhaskell",
-            "nim": "nim compile --verbosity:0 --hints:off --run"
+            "nim": "nim compile --verbosity:0 --hints:off --run",
+            "lisp": "cd $dir && clisp -disable-readline $dir$fileName"
           },
           "description": "Set the executor of each language.",
           "scope": "resource"
