@@ -415,8 +415,8 @@ export class CodeManager implements vscode.Disposable {
             isNewTerminal = true;
         }
         this._terminal.show(this._config.get<boolean>("preserveFocus"));
-        executor = this.changeExecutorFromCmdToPs(executor);
         this.sendRunEvent(executor, true);
+        executor = this.changeExecutorFromCmdToPs(executor);
         let command = this.getFinalCommandToRunCodeFile(executor, appendFile);
         command = this.changeFilePathForBashOnWindows(command);
         if (this._config.get<boolean>("clearPreviousOutput") && !isNewTerminal) {

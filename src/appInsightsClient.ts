@@ -2,8 +2,6 @@
 import appInsights = require("applicationinsights");
 import * as vscode from "vscode";
 
-const compilers = ["gcc -framework Cocoa", "gcc", "g++", "javac"];
-
 export class AppInsightsClient {
     private _client;
     private _enableAppInsights;
@@ -16,12 +14,6 @@ export class AppInsightsClient {
 
     public sendEvent(eventName: string, properties?: { [key: string]: string; }): void {
         if (this._enableAppInsights) {
-            for (const i in compilers) {
-                if (eventName.indexOf(compilers[i] + " ") >= 0) {
-                    eventName = compilers[i];
-                    break;
-                }
-            }
             this._client.trackEvent(eventName === "" ? "bat" : eventName, properties);
         }
     }

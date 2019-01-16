@@ -1,3 +1,6 @@
+### 0.9.6 (2019-01-16)
+* Add support for Lisp
+
 ### 0.9.5 (2018-10-29)
 * We have our first sponsor now: [CodeStream](https://codestream.com/?utm_source=vscmarket&utm_medium=banner&utm_campaign=coderunner)
 
