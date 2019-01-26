@@ -6,7 +6,7 @@ Run code snippet or code file for multiple languages: **C, C++, Java, JavaScript
 
 ## Sponsors
 
-[![CodeStream](images/CodeStream.png)](https://codestream.com/?utm_source=vscmarket&utm_medium=banner&utm_campaign=coderunner)
+[![CodeStream](https://alt-images.codestream.com/codestream_logo_coderunner.png)](https://codestream.com/?utm_source=vscmarket&utm_medium=banner&utm_campaign=coderunner)
 
 Discuss, review, and share code with your team in VS Code. Links discussions about code to your code. Integrates w/ Slack, Jira, Trello, and Live Share. [Try it free](https://codestream.com/?utm_source=vscmarket&utm_medium=banner&utm_campaign=coderunner).
 
