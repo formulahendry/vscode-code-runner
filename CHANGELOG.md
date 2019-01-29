@@ -1,3 +1,8 @@
+### 0.9.7 (2019-01-29)
+* Add config entry to set the executor per filename glob
+* Support Maven project (pom.xml)
+* Add [CODING](https://e.coding.net/?utm_source=hendry-code-runner&utm_medium=cpc&utm_campaign=hendry-code-runner) as our second sponsor
+
 ### 0.9.6 (2019-01-16)
 * Add support for Lisp
 

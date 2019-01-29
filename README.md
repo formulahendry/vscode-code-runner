@@ -26,6 +26,7 @@ If you like this extension, you could become a backer or sponsor via **[Patreon]
 * Run code file through context menu of file explorer
 * Run selected code snippet in Text Editor
 * Run code per Shebang
+* Run code per filename glob
 * Run custom command
 * Stop code running
 * View output in Output Window
@@ -87,6 +88,17 @@ e.g. To set the executor PATH for ruby, php and html:
 **Please take care of the back slash and the space in file path of the executor**
   * Back slash: please use `\\`
   * If there ares spaces in file path, please use `\"` to surround your file path
+
+You could set the executor per filename [glob](https://en.wikipedia.org/wiki/Glob_(programming)):
+```json
+{
+    "code-runner.executorMapByGlob": {
+        "pom.xml": "cd $dir && mvn clean package",
+        "*.test.js": "tap",
+        "*.js": "node"
+    }
+}
+```
 
 Besides, you could set the default language to run:
 ```json
