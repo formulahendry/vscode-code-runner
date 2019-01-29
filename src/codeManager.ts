@@ -1,7 +1,8 @@
 "use strict";
 import * as fs from "fs";
+import * as micromatch from "micromatch";
 import * as os from "os";
-import { dirname, extname, join } from "path";
+import { basename, dirname, extname, join } from "path";
 import * as vscode from "vscode";
 import { AppInsightsClient } from "./appInsightsClient";
 
@@ -246,6 +247,19 @@ export class CodeManager implements vscode.Disposable {
             const firstLineInFile = this._document.lineAt(0).text;
             if (firstLineInFile.startsWith("#!")) {
                 executor = firstLineInFile.substr(2);
+            }
+        }
+
+        if (executor == null) {
+            const executorMapByGlob = this._config.get<any>("executorMapByGlob");
+            if (executorMapByGlob) {
+                const fileBasename = basename(this._document.fileName);
+                for (const glob of Object.keys(executorMapByGlob)) {
+                    if (micromatch.isMatch(fileBasename, glob)) {
+                        executor = executorMapByGlob[glob];
+                        break;
+                    }
+                }
             }
         }
 
