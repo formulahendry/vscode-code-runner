@@ -10,6 +10,10 @@ Run code snippet or code file for multiple languages: **C, C++, Java, JavaScript
 
 Discuss, review, and share code with your team in VS Code. Links discussions about code to your code. Integrates w/ Slack, Jira, Trello, and Live Share. [Try it free](https://codestream.com/?utm_source=vscmarket&utm_medium=banner&utm_campaign=coderunner).
 
+[![Coding](images/Coding.jpg)](https://e.coding.net/?utm_source=hendry-code-runner&utm_medium=cpc&utm_campaign=hendry-code-runner)
+
+[CODING](https://e.coding.net/?utm_source=hendry-code-runner&utm_medium=cpc&utm_campaign=hendry-code-runner) 提供 DevOps 全流程应用，从需求到实现，一站式开发体验。 CODING is a one-stop platform for entire software development lifecycle, from requirement to development.
+
 ## Donation
 
 If you like this extension, you could become a backer or sponsor via **[Patreon](https://www.patreon.com/junhan)**, donate via **[PayPal](https://www.paypal.me/junhanme)**, or scan below QR code to donate via **Alipay**. Any amount is welcome. It will encourage me to make this extension better and better!
