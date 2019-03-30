@@ -172,6 +172,7 @@
             ".vbs": "cscript //Nologo",
             ".scala": "scala",
             ".jl": "julia",
+            ".asm": "nasm -f elf64 $fileName && ld -s -o $fileNameWithoutExt $fileNameWithoutExt.o && ./$fileNameWithoutExt",
             ".cr": "crystal",
             ".ml": "ocaml",
             ".exs": "elixir",
