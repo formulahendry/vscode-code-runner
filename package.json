@@ -111,7 +111,8 @@
         "code-runner.executorMapByGlob": {
           "type": "object",
           "default": {
-            "pom.xml": "cd $dir && mvn clean package"
+            "pom.xml": "cd $dir && mvn clean package",
+            "*.asm": "nasm -f elf64 $fileName && ld -s -o $fileNameWithoutExt $fileNameWithoutExt.o && ./$fileNameWithoutExt",
           },
           "description": "Set the executor by glob.",
           "scope": "resource"
