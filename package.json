@@ -158,7 +158,8 @@
             "d": "cd $dir && dmd $fileName && $dir$fileNameWithoutExt",
             "haskell": "runhaskell",
             "nim": "nim compile --verbosity:0 --hints:off --run",
-            "lisp": "sbcl --script"
+            "lisp": "sbcl --script",
+            "kit": "kitc --run"
           },
           "description": "Set the executor of each language.",
           "scope": "resource"
@@ -187,7 +188,8 @@
             ".nim": "nim compile --verbosity:0 --hints:off --run",
             ".csproj": "dotnet run --project",
             ".fsproj": "dotnet run --project",
-            ".lisp": "sbcl --script"
+            ".lisp": "sbcl --script",
+            ".kit": "kitc --run"
           },
           "description": "Set the executor of each file extension.",
           "scope": "resource"
