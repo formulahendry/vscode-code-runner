@@ -84,7 +84,7 @@
           "group": "navigation"
         },
         {
-          "when": "inOutput",
+          "when": "inOutput && !config.code-runner.runInTerminal",
           "command": "code-runner.stop",
           "group": "stop-code-run"
         }
@@ -98,7 +98,7 @@
       ],
       "explorer/context": [
         {
-          "when": "!explorerResourceIsFolder",
+          "when": "!explorerResourceIsFolder && code-runner.showRunCommandInExplorerMenu",
           "command": "code-runner.run",
           "group": "navigation"
         }
@@ -293,6 +293,12 @@
           "default": true,
           "description": "Whether to show 'Run Code' command in editor context menu.",
           "scope": "resource"
+        },
+        "code-runner.showRunCommandInExplorerMenu": {
+            "type": "boolean",
+            "default": true,
+            "description": "Whether to show 'Run Code' command in explorer context menu.",
+            "scope": "resource"
         },
         "code-runner.temporaryFileName": {
           "type": "string",
