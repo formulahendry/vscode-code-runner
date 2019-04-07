@@ -478,7 +478,7 @@ export class CodeManager implements vscode.Disposable {
                 this._outputChannel.appendLine("");
             }
             if (this._isTmpFile) {
-                fs.unlink(this._codeFile);
+                fs.unlinkSync(this._codeFile);
             }
         });
     }
