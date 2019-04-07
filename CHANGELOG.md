@@ -1,3 +1,6 @@
+### 0.9.8 (2019-04-07)
+* Add support for [Kit](https://www.kitlang.org/)
+
 ### 0.9.7 (2019-01-29)
 * Add config entry to set the executor per filename glob
 * Support Maven project (pom.xml)
