@@ -98,7 +98,7 @@
       ],
       "explorer/context": [
         {
-          "when": "!explorerResourceIsFolder && code-runner.showRunCommandInExplorerMenu",
+          "when": "!explorerResourceIsFolder && config.code-runner.showRunCommandInExplorerMenu",
           "command": "code-runner.run",
           "group": "navigation"
         }
