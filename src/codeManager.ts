@@ -374,6 +374,10 @@ export class CodeManager implements vscode.Disposable {
                 { regex: /\$driveLetter/g, replaceValue: this.getDriveLetter() },
                 // A placeholder that has to be replaced by the directory of the code file without a trailing slash
                 { regex: /\$dirWithoutTrailingSlash/g, replaceValue: this.quoteFileName(this.getCodeFileDirWithoutTrailingSlash()) },
+                // A placeholder that has to be replaced by the directory of the code file without double quotes and trailing slash
+                { regex: /\$dirWithoutQuoteAndTrailingSlash/g, replaceValue: this.getCodeFileDirWithoutTrailingSlash() },
+                // A placeholder that has to be replaced by the directory of the code file without double quotes
+                { regex: /\$dirWithoutQuote/g, replaceValue: codeFileDir },
                 // A placeholder that has to be replaced by the directory of the code file
                 { regex: /\$dir/g, replaceValue: this.quoteFileName(codeFileDir) },
                 // A placeholder that has to be replaced by the path of Python interpreter

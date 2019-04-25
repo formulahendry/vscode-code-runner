@@ -120,10 +120,10 @@
           "type": "object",
           "default": {
             "javascript": "node",
-            "java": "cd $dir && javac $fileName && java $fileNameWithoutExt",
-            "c": "cd $dir && gcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
-            "cpp": "cd $dir && g++ $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
-            "objective-c": "cd $dir && gcc -framework Cocoa $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+            "java": "cd $dirWithoutTrailingSlash && javac $fileName && java $fileNameWithoutExt",
+            "c": "cd $dirWithoutTrailingSlash && gcc $fileName -o $fileNameWithoutExt && \"$dirWithoutQuote$fileNameWithoutExt\"",
+            "cpp": "cd $dirWithoutTrailingSlash && g++ $fileName -o $fileNameWithoutExt && \"$dirWithoutQuote$fileNameWithoutExt\"",
+            "objective-c": "cd $dirWithoutTrailingSlash && gcc -framework Cocoa $fileName -o $fileNameWithoutExt && \"$dirWithoutQuote$fileNameWithoutExt\"",
             "php": "php",
             "python": "python -u",
             "perl": "perl",
@@ -149,13 +149,13 @@
             "applescript": "osascript",
             "clojure": "lein exec",
             "haxe": "haxe --cwd $dirWithoutTrailingSlash --run $fileNameWithoutExt",
-            "rust": "cd $dir && rustc $fileName && $dir$fileNameWithoutExt",
+            "rust": "cd $dirWithoutTrailingSlash && rustc $fileName && \"$dirWithoutQuote$fileNameWithoutExt\"",
             "racket": "racket",
             "ahk": "autohotkey",
             "autoit": "autoit3",
             "dart": "dart",
-            "pascal": "cd $dir && fpc $fileName && $dir$fileNameWithoutExt",
-            "d": "cd $dir && dmd $fileName && $dir$fileNameWithoutExt",
+            "pascal": "cd $dirWithoutTrailingSlash && fpc $fileName && \"$dirWithoutQuote$fileNameWithoutExt\"",
+            "d": "cd $dirWithoutTrailingSlash && dmd $fileName && \"$dirWithoutQuote$fileNameWithoutExt\"",
             "haskell": "runhaskell",
             "nim": "nim compile --verbosity:0 --hints:off --run",
             "lisp": "sbcl --script",
@@ -167,7 +167,7 @@
         "code-runner.executorMapByFileExtension": {
           "type": "object",
           "default": {
-            ".vb": "cd $dir && vbc /nologo $fileName && $dir$fileNameWithoutExt",
+            ".vb": "cd $dir && vbc /nologo $fileName && \"$dirWithoutQuote$fileNameWithoutExt\"",
             ".vbs": "cscript //Nologo",
             ".scala": "scala",
             ".jl": "julia",
@@ -181,9 +181,9 @@
             ".kt": "cd $dir && kotlinc $fileName -include-runtime -d $fileNameWithoutExt.jar && java -jar $fileNameWithoutExt.jar",
             ".kts": "kotlinc -script",
             ".dart": "dart",
-            ".pas": "cd $dir && fpc $fileName && $dir$fileNameWithoutExt",
-            ".pp": "cd $dir && fpc $fileName && $dir$fileNameWithoutExt",
-            ".d": "cd $dir && dmd $fileName && $dir$fileNameWithoutExt",
+            ".pas": "cd $dir && fpc $fileName && \"$dirWithoutQuote$fileNameWithoutExt\"",
+            ".pp": "cd $dir && fpc $fileName && \"$dirWithoutQuote$fileNameWithoutExt\"",
+            ".d": "cd $dir && dmd $fileName && \"$dirWithoutQuote$fileNameWithoutExt\"",
             ".hs": "runhaskell",
             ".nim": "nim compile --verbosity:0 --hints:off --run",
             ".csproj": "dotnet run --project",
@@ -332,16 +332,16 @@
   },
   "dependencies": {
     "applicationinsights": "^0.19.0",
-    "micromatch": "^3.1.10",
+    "micromatch": "^4.0.2",
     "tree-kill": "^1.1.0"
   },
   "devDependencies": {
     "@types/micromatch": "^3.1.0",
     "@types/mocha": "^2.2.32",
     "@types/node": "^6.0.40",
-    "mocha": "^2.3.3",
+    "mocha": "^6.1.4",
     "tslint": "^5.5.0",
     "typescript": "^2.0.3",
-    "vscode": "^1.0.0"
+    "vscode": "^1.1.33"
   }
 }
