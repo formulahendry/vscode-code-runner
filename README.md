@@ -10,9 +10,9 @@ Run code snippet or code file for multiple languages: **C, C++, Java, JavaScript
 
 Discuss, review, and share code with your team in VS Code. Links discussions about code to your code. Integrates w/ Slack, Jira, Trello, and Live Share. [Try it free](https://codestream.com/?utm_source=vscmarket&utm_medium=banner&utm_campaign=coderunner).
 
-[![Coding](images/Coding.jpg)](https://e.coding.net/?utm_source=hendry-code-runner&utm_medium=cpc&utm_campaign=hendry-code-runner)
+[![Coding](images/Coding.jpg)](https://coding.net/?utm_source=hendry-code-runner&utm_medium=cpc&utm_campaign=hendry-code-runner)
 
-[CODING](https://e.coding.net/?utm_source=hendry-code-runner&utm_medium=cpc&utm_campaign=hendry-code-runner) 提供 DevOps 全流程应用，从需求到实现，一站式开发体验。 CODING is a one-stop platform for entire software development lifecycle, from requirement to development.
+[CODING](https://coding.net/?utm_source=hendry-code-runner&utm_medium=cpc&utm_campaign=hendry-code-runner) 提供 DevOps 全流程应用，从需求到实现，一站式开发体验。 CODING is a one-stop platform for entire software development lifecycle, from requirement to development.
 
 ## Donation
 
@@ -178,6 +178,8 @@ To set whether to preserve focus on code editor after code run is triggered (def
 `code-runner.showRunIconInEditorTitleMenu`: Whether to show 'Run Code' icon in editor title menu. (Default is **true**)
 
 `code-runner.showRunCommandInEditorContextMenu`: Whether to show 'Run Code' command in editor context menu. (Default is **true**)
+
+`code-runner.showRunCommandInExplorerContextMenu`: Whether to show 'Run Code' command in explorer context menu. (Default is **true**)
 
 `code-runner.terminalRoot`: For Windows system, replaces the Windows style drive letter in the command with a Unix style root when using a custom shell as the terminal, like Bash or Cgywin. Example: Setting this to `/mnt/` will replace `C:\path` with `/mnt/c/path` (Default is **""**)
 

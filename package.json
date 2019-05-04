@@ -2,7 +2,7 @@
   "name": "code-runner",
   "displayName": "Code Runner",
   "description": "Run C, C++, Java, JS, PHP, Python, Perl, Ruby, Go, Lua, Groovy, PowerShell, CMD, BASH, F#, C#, VBScript, TypeScript, CoffeeScript, Scala, Swift, Julia, Crystal, OCaml, R, AppleScript, Elixir, VB.NET, Clojure, Haxe, Obj-C, Rust, Racket, AutoHotkey, AutoIt, Kotlin, Dart, Pascal, Haskell, Nim, D, Lisp, Kit",
-  "version": "0.9.8",
+  "version": "0.9.9",
   "publisher": "formulahendry",
   "icon": "images/logo.png",
   "engines": {
@@ -98,7 +98,7 @@
       ],
       "explorer/context": [
         {
-          "when": "!explorerResourceIsFolder && config.code-runner.showRunCommandInExplorerMenu",
+          "when": "!explorerResourceIsFolder && config.code-runner.showRunCommandInExplorerContextMenu",
           "command": "code-runner.run",
           "group": "navigation"
         }
@@ -294,11 +294,11 @@
           "description": "Whether to show 'Run Code' command in editor context menu.",
           "scope": "resource"
         },
-        "code-runner.showRunCommandInExplorerMenu": {
-            "type": "boolean",
-            "default": true,
-            "description": "Whether to show 'Run Code' command in explorer context menu.",
-            "scope": "resource"
+        "code-runner.showRunCommandInExplorerContextMenu": {
+          "type": "boolean",
+          "default": true,
+          "description": "Whether to show 'Run Code' command in explorer context menu.",
+          "scope": "resource"
         },
         "code-runner.temporaryFileName": {
           "type": "string",

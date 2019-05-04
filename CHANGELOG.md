@@ -1,3 +1,7 @@
+### 0.9.9 (2019-05-04)
+* Fix tempCodeRunnerFile not being deleted
+* Add option to hide "Run Code" from explorer context menu
+
 ### 0.9.8 (2019-04-07)
 * Add support for [Kit](https://www.kitlang.org/)
 
