@@ -245,8 +245,8 @@ export class CodeManager implements vscode.Disposable {
         // Check if file contains hash-bang
         if (languageId == null && this._config.get<boolean>("respectShebang")) {
             const firstLineInFile = this._document.lineAt(0).text;
-            if (firstLineInFile.startsWith("#!")) {
-                executor = firstLineInFile.substr(2);
+            if (/^#!(?!\[)/.test(firstLineInFile)) { // #![...] are used in rust https://doc.rust-lang.org/reference/attributes.html
+                executor = firstLineInFile.slice(2);
             }
         }
 
