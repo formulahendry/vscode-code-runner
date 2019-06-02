@@ -1,3 +1,6 @@
+### 0.9.10 (2019-06-02)
+* [#484](https://github.com/formulahendry/vscode-code-runner/pull/484): Fix Rust attributes considered as Shebang
+
 ### 0.9.9 (2019-05-04)
 * Fix tempCodeRunnerFile not being deleted
 * Add option to hide "Run Code" from explorer context menu
