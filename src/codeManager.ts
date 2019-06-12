@@ -22,6 +22,7 @@ export class CodeManager implements vscode.Disposable {
     private _workspaceFolder: string;
     private _config: vscode.WorkspaceConfiguration;
     private _appInsightsClient: AppInsightsClient;
+    private _TERMINAL_DEFAULT_SHELL_WINDOWS: string | null = null;
 
     constructor() {
         this._outputChannel = vscode.window.createOutputChannel("Code");
@@ -390,7 +391,10 @@ export class CodeManager implements vscode.Disposable {
 
     private changeExecutorFromCmdToPs(executor: string): string {
         if (os.platform() === "win32") {
-            const windowsShell = vscode.workspace.getConfiguration("terminal").get<string>("integrated.shell.windows");
+            let windowsShell = vscode.workspace.getConfiguration("terminal").get<string>("integrated.shell.windows");
+            if (windowsShell === null) {
+                windowsShell = this.getTerminalDefaultShellWindows();
+            }
             if (windowsShell && windowsShell.toLowerCase().indexOf("powershell") > -1 && executor.indexOf(" && ") > -1) {
                 let replacement = "; if ($?) {";
                 executor = executor.replace("&&", replacement);
@@ -401,6 +405,25 @@ export class CodeManager implements vscode.Disposable {
             }
         }
         return executor;
+    }
+
+    /*
+    Workaround for https://github.com/formulahendry/vscode-code-runner/issues/491
+    The following code is based on https://github.com/microsoft/vscode-maven/commit/7c1dea723fe91f665c4e624e3bf71a411ceafd93
+    This is only a fall back to identify the default shell used by VSC.
+    */
+    private getTerminalDefaultShellWindows(): string {
+        if (!this._TERMINAL_DEFAULT_SHELL_WINDOWS) {
+            const isAtLeastWindows10 = os.platform() === "win32" && parseFloat(os.release()) >= 10;
+            const is32ProcessOn64Windows = process.env.hasOwnProperty("PROCESSOR_ARCHITEW6432");
+            const powerShellPath =
+                `${process.env.windir}\\${is32ProcessOn64Windows ? "Sysnative" : "System32"}\\WindowsPowerShell\\v1.0\\powershell.exe`;
+            this._TERMINAL_DEFAULT_SHELL_WINDOWS = isAtLeastWindows10 ? powerShellPath : this.getWindowsShell();
+        }
+        return this._TERMINAL_DEFAULT_SHELL_WINDOWS;
+    }
+    private getWindowsShell(): string {
+        return process.env.comspec || "cmd.exe";
     }
 
     private changeFilePathForBashOnWindows(command: string): string {

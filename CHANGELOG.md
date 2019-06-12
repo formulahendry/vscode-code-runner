@@ -1,3 +1,6 @@
+### 0.9.11 (2019-06-12)
+* [#491](https://github.com/formulahendry/vscode-code-runner/issues/491): Fix terminal detection due to VS Code's change in 1.35
+
 ### 0.9.10 (2019-06-02)
 * [#484](https://github.com/formulahendry/vscode-code-runner/pull/484): Fix Rust attributes considered as Shebang
 
