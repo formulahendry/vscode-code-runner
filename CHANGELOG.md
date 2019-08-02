@@ -1,3 +1,6 @@
+### 0.9.12 (2019-08-02)
+* Add support for Scheme using [CHICKEN Scheme](https://www.call-cc.org/)
+
 ### 0.9.11 (2019-06-12)
 * [#491](https://github.com/formulahendry/vscode-code-runner/issues/491): Fix terminal detection due to VS Code's change in 1.35
 
