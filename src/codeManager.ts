@@ -460,15 +460,12 @@ export class CodeManager implements vscode.Disposable {
         const startTime = new Date();
         this._process = spawn(command, [], { cwd: this._cwd, shell: true });
 
-        const TextDecoder = require("util").TextDecoder;
-        const decoder = new TextDecoder();
-
         this._process.stdout.on("data", (data) => {
-            this._outputChannel.append(decoder.decode(data));
+            this._outputChannel.append(data.toString());
         });
 
         this._process.stderr.on("data", (data) => {
-            this._outputChannel.append(decoder.decode(data));
+            this._outputChannel.append(data.toString());
         });
 
         this._process.on("close", (code) => {
