@@ -1,3 +1,6 @@
+### 0.9.13 (2019-08-14)
+* [#428](https://github.com/formulahendry/vscode-code-runner/pull/428): Use spawn to avoid stdout buffer exceeded
+
 ### 0.9.12 (2019-08-02)
 * Add support for Scheme using [CHICKEN Scheme](https://www.call-cc.org/)
 
