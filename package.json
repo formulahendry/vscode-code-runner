@@ -41,8 +41,8 @@
         "command": "code-runner.run",
         "title": "Run Code",
         "icon": {
-          "light": "./images/run-light.png",
-          "dark": "./images/run-dark.png"
+          "light": "./images/run-light.svg",
+          "dark": "./images/run-dark.svg"
         }
       },
       {
