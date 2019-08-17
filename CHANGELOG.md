@@ -1,3 +1,6 @@
+### 0.9.14 (2019-08-17)
+* [#516](https://github.com/formulahendry/vscode-code-runner/pull/516): Update "Run" icon to match new icon style
+
 ### 0.9.13 (2019-08-14)
 * [#428](https://github.com/formulahendry/vscode-code-runner/pull/428): Use spawn to avoid stdout buffer exceeded
 
