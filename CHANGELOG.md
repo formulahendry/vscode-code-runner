@@ -1,3 +1,6 @@
+### 0.9.15 (2019-11-21)
+* Add support for [V Programming Language](https://vlang.io/)
+
 ### 0.9.14 (2019-08-17)
 * [#516](https://github.com/formulahendry/vscode-code-runner/pull/516): Update "Run" icon to match new icon style
 
