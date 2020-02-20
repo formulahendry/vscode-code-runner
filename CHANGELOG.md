@@ -1,3 +1,6 @@
+### 0.9.16 (2020-02-20)
+* Add support for SCSS and Sass
+
 ### 0.9.15 (2019-11-21)
 * Add support for [V Programming Language](https://vlang.io/)
 
