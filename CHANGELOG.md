@@ -1,3 +1,6 @@
+### 0.9.17 (2020-03-11)
+* Add support for CUDA
+
 ### 0.9.16 (2020-02-20)
 * Add support for SCSS and Sass
 
