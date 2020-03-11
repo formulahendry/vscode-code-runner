@@ -197,7 +197,8 @@
             ".kit": "kitc --run",
             ".v": "v run",
             ".vsh": "v run",
-            ".sass": "sass --style expanded"
+            ".sass": "sass --style expanded",
+            ".cu": "cd $dir && nvcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt"
           },
           "description": "Set the executor of each file extension.",
           "scope": "resource"
