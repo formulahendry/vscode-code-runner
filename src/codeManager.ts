@@ -361,16 +361,22 @@ export class CodeManager implements vscode.Disposable {
         if (this._codeFile) {
             const codeFileDir = this.getCodeFileDir();
             const pythonPath = this.getConfiguration("python").get<string>("pythonPath");
+            const workspaceRoot = this.getWorkspaceRoot(codeFileDir);
             const placeholders: Array<{ regex: RegExp, replaceValue: string }> = [
                 // A placeholder that has to be replaced by the path of the folder opened in VS Code
                 // If no folder is opened, replace with the directory of the code file
-                { regex: /\$workspaceRoot/g, replaceValue: this.getWorkspaceRoot(codeFileDir) },
+                { regex: /\$workspaceRoot/g, replaceValue: workspaceRoot },
                 // A placeholder that has to be replaced by the code file name without its extension
                 { regex: /\$fileNameWithoutExt/g, replaceValue: this.getCodeFileWithoutDirAndExt() },
                 // A placeholder that has to be replaced by the full code file name
                 { regex: /\$fullFileName/g, replaceValue: this.quoteFileName(this._codeFile) },
                 // A placeholder that has to be replaced by the code file name without the directory
                 { regex: /\$fileName/g, replaceValue: this.getCodeBaseFile() },
+                // A placeholder replaced by the code file name relative to workspace, dot-separated, without its extension (useful for python -m)
+                {
+                    regex: /\$pythonModuleName/g,
+                    replaceValue: this._codeFile.slice(workspaceRoot.length + 1).replace(/\.\w+$/, "").replace(/\/\/?/g, "."),
+                },
                 // A placeholder that has to be replaced by the drive letter of the code file (Windows only)
                 { regex: /\$driveLetter/g, replaceValue: this.getDriveLetter() },
                 // A placeholder that has to be replaced by the directory of the code file without a trailing slash
