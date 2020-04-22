@@ -300,7 +300,7 @@ export class CodeManager implements vscode.Disposable {
     
     private getWorkspaceName(workspaceRoot: string): string {
         const regexMatch = workspaceRoot.match(/([^\/\\]+)[\/\\]?$/);
-        return regexMatch ? regexMatch[1] : this._codeFile;
+        return regexMatch ? regexMatch[1] : this.getCodeFileDir();
     }
 
     /**
