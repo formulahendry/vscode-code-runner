@@ -5,8 +5,8 @@ import * as os from "os";
 import { basename, dirname, extname, join } from "path";
 import * as vscode from "vscode";
 import { AppInsightsClient } from "./appInsightsClient";
-import { utility } from "./utility";
-import { constants } from "./constants";
+import { Constants } from "./constants";
+import { Utility } from "./utility";
 
 const TmpDir = os.tmpdir();
 
@@ -154,7 +154,7 @@ export class CodeManager implements vscode.Disposable {
     }
 
     private getConfiguration(section?: string): vscode.WorkspaceConfiguration {
-        return utility.getConfiguration(section, this._document);
+        return Utility.getConfiguration(section, this._document);
     }
 
     private getWorkspaceFolder(): string {
@@ -358,7 +358,7 @@ export class CodeManager implements vscode.Disposable {
 
         if (this._codeFile) {
             const codeFileDir = this.getCodeFileDir();
-            const pythonPath = cmd.includes("$pythonPath") ? await utility.getPythonPath(this._document) : constants.python;
+            const pythonPath = cmd.includes("$pythonPath") ? await Utility.getPythonPath(this._document) : Constants.python;
             const placeholders: Array<{ regex: RegExp, replaceValue: string }> = [
                 // A placeholder that has to be replaced by the path of the folder opened in VS Code
                 // If no folder is opened, replace with the directory of the code file

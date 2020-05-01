@@ -1,5 +1,5 @@
 "use strict";
 
-export class constants {
+export class Constants {
     public static readonly python = "python";
 }
