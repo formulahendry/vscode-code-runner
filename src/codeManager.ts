@@ -5,6 +5,8 @@ import * as os from "os";
 import { basename, dirname, extname, join } from "path";
 import * as vscode from "vscode";
 import { AppInsightsClient } from "./appInsightsClient";
+import { utility } from "./utility";
+import { constants } from "./constants";
 
 const TmpDir = os.tmpdir();
 
@@ -152,11 +154,7 @@ export class CodeManager implements vscode.Disposable {
     }
 
     private getConfiguration(section?: string): vscode.WorkspaceConfiguration {
-        if (this._document) {
-            return vscode.workspace.getConfiguration(section, this._document.uri);
-        } else {
-            return vscode.workspace.getConfiguration(section);
-        }
+        return utility.getConfiguration(section, this._document);
     }
 
     private getWorkspaceFolder(): string {
@@ -355,12 +353,12 @@ export class CodeManager implements vscode.Disposable {
      * @param executor The command used to run a source code file
      * @return the complete command to run the file, that includes the file name
      */
-    private getFinalCommandToRunCodeFile(executor: string, appendFile: boolean = true): string {
+    private async getFinalCommandToRunCodeFile(executor: string, appendFile: boolean = true): Promise<string> {
         let cmd = executor;
 
         if (this._codeFile) {
             const codeFileDir = this.getCodeFileDir();
-            const pythonPath = this.getConfiguration("python").get<string>("pythonPath");
+            const pythonPath = cmd.includes("$pythonPath") ? await utility.getPythonPath(this._document) : constants.python;
             const placeholders: Array<{ regex: RegExp, replaceValue: string }> = [
                 // A placeholder that has to be replaced by the path of the folder opened in VS Code
                 // If no folder is opened, replace with the directory of the code file
@@ -454,7 +452,7 @@ export class CodeManager implements vscode.Disposable {
         this._terminal.show(this._config.get<boolean>("preserveFocus"));
         this.sendRunEvent(executor, true);
         executor = this.changeExecutorFromCmdToPs(executor);
-        let command = this.getFinalCommandToRunCodeFile(executor, appendFile);
+        let command = await this.getFinalCommandToRunCodeFile(executor, appendFile);
         command = this.changeFilePathForBashOnWindows(command);
         if (this._config.get<boolean>("clearPreviousOutput") && !isNewTerminal) {
             await vscode.commands.executeCommand("workbench.action.terminal.clear");
@@ -466,7 +464,7 @@ export class CodeManager implements vscode.Disposable {
         this._terminal.sendText(command);
     }
 
-    private executeCommandInOutputChannel(executor: string, appendFile: boolean = true) {
+    private async executeCommandInOutputChannel(executor: string, appendFile: boolean = true) {
         this._isRunning = true;
         const clearPreviousOutput = this._config.get<boolean>("clearPreviousOutput");
         if (clearPreviousOutput) {
@@ -475,7 +473,7 @@ export class CodeManager implements vscode.Disposable {
         const showExecutionMessage = this._config.get<boolean>("showExecutionMessage");
         this._outputChannel.show(this._config.get<boolean>("preserveFocus"));
         const spawn = require("child_process").spawn;
-        const command = this.getFinalCommandToRunCodeFile(executor, appendFile);
+        const command = await this.getFinalCommandToRunCodeFile(executor, appendFile);
         if (showExecutionMessage) {
             this._outputChannel.appendLine("[Running] " + command);
         }
