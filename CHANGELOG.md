@@ -1,3 +1,6 @@
+### 0.10.0 (2020-05-02)
+* Integrate with new Python Interpreter Path API of Python extension
+
 ### 0.9.17 (2020-03-11)
 * Add support for CUDA
 

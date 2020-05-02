@@ -17,7 +17,7 @@ export class Utility {
                 const pythonPath = extension.exports.settings.getExecutionCommand(document?.uri).join(" ");
                 return pythonPath;
             } else {
-                return this.getConfiguration("python").get<string>("pythonPath");
+                return this.getConfiguration("python", document).get<string>("pythonPath");
             }
         } catch (error) {
             return Constants.python;
