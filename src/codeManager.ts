@@ -25,6 +25,7 @@ export class CodeManager implements vscode.Disposable {
     private _config: vscode.WorkspaceConfiguration;
     private _appInsightsClient: AppInsightsClient;
     private _TERMINAL_DEFAULT_SHELL_WINDOWS: string | null = null;
+    private _isQuotedFileName: boolean;
 
     constructor() {
         this._outputChannel = vscode.window.createOutputChannel("Code");
@@ -151,6 +152,7 @@ export class CodeManager implements vscode.Disposable {
             return;
         }
         this._cwd = TmpDir;
+        this._isQuotedFileName= this._config.get<boolean>("quatedFileName");
     }
 
     private getConfiguration(section?: string): vscode.WorkspaceConfiguration {
@@ -339,7 +341,9 @@ export class CodeManager implements vscode.Disposable {
      * Includes double quotes around a given file name.
      */
     private quoteFileName(fileName: string): string {
-        return '\"' + fileName + '\"';
+        if(this._isQuotedFileName)
+            return '\"' + fileName + '\"';
+        return fileName;
     }
 
     /**
