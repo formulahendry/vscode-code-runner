@@ -346,12 +346,12 @@ export class CodeManager implements vscode.Disposable {
      * Gets the current line under cursor.
      */
     private getCurrentLine(): string {
-        let currentLine = '';
+        let currentLine = "";
         const activeTextEditor = vscode.window.activeTextEditor;
         if (activeTextEditor) {
-            let lineNumber = activeTextEditor.selection.active.line;
+            const lineNumber = activeTextEditor.selection.active.line;
             currentLine = activeTextEditor.document.lineAt(lineNumber).text;
-            this._outputChannel.appendLine('line = ' + currentLine);
+            this._outputChannel.appendLine("line = " + currentLine);
         }
         return currentLine;
     }
