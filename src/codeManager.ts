@@ -343,6 +343,20 @@ export class CodeManager implements vscode.Disposable {
     }
 
     /**
+     * Gets the current line under cursor.
+     */
+    private getCurrentLine(): string {
+        let currentLine = '';
+        const activeTextEditor = vscode.window.activeTextEditor;
+        if (activeTextEditor) {
+            let lineNumber = activeTextEditor.selection.active.line;
+            currentLine = activeTextEditor.document.lineAt(lineNumber).text;
+            this._outputChannel.appendLine('line = ' + currentLine);
+        }
+        return currentLine;
+    }
+
+    /**
      * Gets the executor to run a source code file
      * and generates the complete command that allow that file to be run.
      * This executor command may include a variable $1 to indicate the place where
@@ -377,6 +391,7 @@ export class CodeManager implements vscode.Disposable {
                 { regex: /\$dir/g, replaceValue: this.quoteFileName(codeFileDir) },
                 // A placeholder that has to be replaced by the path of Python interpreter
                 { regex: /\$pythonPath/g, replaceValue: pythonPath },
+                { regex: /\$currentLine/g, replaceValue: this.getCurrentLine() },
             ];
 
             placeholders.forEach((placeholder) => {
