@@ -14,8 +14,10 @@ export class Utility {
                 if (!extension.isActive) {
                     await extension.activate();
                 }
-                const pythonPath = extension.exports.settings.getExecutionCommand(document?.uri).join(" ");
-                return pythonPath;
+                const execCommand = extension.exports.settings.getExecutionDetails ?
+                    extension.exports.settings.getExecutionDetails(document?.uri).execCommand :
+                    extension.exports.settings.getExecutionCommand(document?.uri);
+                return execCommand ? execCommand.join(" ") : Constants.python;
             } else {
                 return this.getConfiguration("python", document).get<string>("pythonPath");
             }
