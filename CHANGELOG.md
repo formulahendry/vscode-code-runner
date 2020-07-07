@@ -1,3 +1,7 @@
+### 0.11.0 (2020-07-07)
+* Integrate with new Python Interpreter Path API V2 of Python extension
+* Add support for Less
+
 ### 0.10.0 (2020-05-02)
 * Integrate with new Python Interpreter Path API of Python extension
 
