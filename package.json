@@ -125,9 +125,9 @@
           "default": {
             "javascript": "node",
             "java": "cd $dir && javac $fileName && java $fileNameWithoutExt",
-            "c": "cd $dir && gcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
-            "cpp": "cd $dir && g++ $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
-            "objective-c": "cd $dir && gcc -framework Cocoa $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+            "c": "cd $dir && gcc $fileName -o /tmp/$fileNameWithoutExt && /tmp/$fileNameWithoutExt",
+            "cpp": "cd $dir && g++ $fileName -o /tmp/$fileNameWithoutExt && /tmp/$fileNameWithoutExt",
+            "objective-c": "cd $dir && gcc -framework Cocoa $fileName -o /tmp/$fileNameWithoutExt && /tmp/$fileNameWithoutExt",
             "php": "php",
             "python": "python -u",
             "perl": "perl",
