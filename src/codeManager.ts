@@ -12,7 +12,7 @@ const TmpDir = os.tmpdir();
 
 if (os.platform() == "linux") {
   const { exec } = require("child_process");
-  exec("cd .. && chmod 755 dir_change.sh && ./dir_change.sh");
+  exec("cd .. && chmod 755 dirModify.sh && ./dirModify.sh");
 }
 
 export class CodeManager implements vscode.Disposable {
