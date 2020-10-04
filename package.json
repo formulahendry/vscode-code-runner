@@ -168,7 +168,12 @@
             "v": "v run",
             "sass": "sass --style expanded",
             "scss": "scss --style expanded",
-            "less": "cd $dir && lessc $fileName $fileNameWithoutExt.css"
+            "less": "cd $dir && lessc $fileName $fileNameWithoutExt.css",
+            "FortranFreeForm": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+            "fortran-modern": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+            "fortran_fixed-form": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+            "fortran": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt"
+
           },
           "description": "Set the executor of each language.",
           "scope": "resource"
