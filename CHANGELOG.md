@@ -1,3 +1,6 @@
+### 0.11.1 (2020-10-11)
+* Add support for Fortran
+
 ### 0.11.0 (2020-07-07)
 * Integrate with new Python Interpreter Path API V2 of Python extension
 * Add support for Less

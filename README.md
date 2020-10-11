@@ -8,7 +8,7 @@ Run code snippet or code file for multiple languages: **C, C++, Java, JavaScript
 
 [![CodeStream](https://alt-images.codestream.com/codestream_logo_coderunner.png)](https://sponsorlink.codestream.com/?utm_source=vscmarket&utm_campaign=coderunner&utm_medium=banner)
 
-Discussing code is now as easy as highlighting a block and typing a comment right from your IDE. Take the pain out of code reviews and improve code quality. [Try it free](https://sponsorlink.codestream.com/?utm_source=vscmarket&utm_campaign=coderunner&utm_medium=banner).
+Eliminate context switching and costly distractions. Create and merge PRs and perform code reviews from inside your IDE while using jump-to-definition, your keybindings, and other IDE favorites. [Learn more](https://sponsorlink.codestream.com/?utm_source=vscmarket&utm_campaign=coderunner&utm_medium=banner).
 
 ## Book for VS Code
 
@@ -114,7 +114,7 @@ Besides, you could set the default language to run:
     "code-runner.defaultLanguage": "javascript"
 }
 ```
-**For the default language:** It should be set with language id defined in [VS Code](https://github.com/Microsoft/vscode/tree/master/extensions). The languages you could set are `java, c, cpp, javascript, php, python, perl, ruby, go, lua, groovy, powershell, bat, shellscript, fsharp, csharp, vbscript, typescript, coffeescript, swift, r, clojure, haxe, objective-c, rust, racket, ahk, autoit, kotlin, dart, pascal, haskell, nim, d, lisp, fortran`
+**For the default language:** It should be set with language id defined in [VS Code](https://github.com/Microsoft/vscode/tree/master/extensions). The languages you could set are `java, c, cpp, javascript, php, python, perl, ruby, go, lua, groovy, powershell, bat, shellscript, fsharp, csharp, vbscript, typescript, coffeescript, swift, r, clojure, haxe, objective-c, rust, racket, ahk, autoit, kotlin, dart, pascal, haskell, nim, d, lisp`
 
 Also, you could set the executor per file extension:
 ```json
