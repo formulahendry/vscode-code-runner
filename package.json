@@ -36,7 +36,14 @@
   "activationEvents": [
     "onCommand:code-runner.run",
     "onCommand:code-runner.runCustomCommand",
-    "onCommand:code-runner.runByLanguage"
+    "onCommand:code-runner.runByLanguage",
+    "onLanguage:C",
+    "onLanguage:C++",
+    "onLanguage:Java",
+    "onLanguage:JS",
+    "onLanguage:Python",
+    "onLanguage:R",
+    "onLanguage:PHP"
   ],
   "main": "./out/src/extension",
   "contributes": {
