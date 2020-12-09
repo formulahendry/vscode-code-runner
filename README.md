@@ -167,6 +167,13 @@ To set whether to show extra execution message like [Running] ... and [Done] ...
 }
 ```
 
+To set whether to show the execution message should include a timestamp (default is false):
+```json
+{
+    "code-runner.showExecutionTimestamp": true
+}
+```
+
 **[REPL support]** To set whether to run code in Integrated Terminal (only support to run whole file in Integrated Terminal, neither untitled file nor code snippet) (default is false):
 ```json
 {
