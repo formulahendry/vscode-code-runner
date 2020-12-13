@@ -115,7 +115,7 @@
         "code-runner.executorMapByGlob": {
           "type": "object",
           "default": {
-            "pom.xml": "cd $dir && mvn clean package"
+            "pom.xml": "cd \"$dir\" && mvn clean package"
           },
           "description": "Set the executor by glob.",
           "scope": "resource"
@@ -124,10 +124,10 @@
           "type": "object",
           "default": {
             "javascript": "node",
-            "java": "cd $dir && javac $fileName && java $fileNameWithoutExt",
-            "c": "cd $dir && gcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
-            "cpp": "cd $dir && g++ $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
-            "objective-c": "cd $dir && gcc -framework Cocoa $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+            "java": "cd \"$dir\" && javac \"$fileName\" && java \"$fileNameWithoutExt\"",
+            "c": "cd \"$dir\" && gcc \"$fileName\" -o \"$fileNameWithoutExt\" && \"$dir$fileNameWithoutExt\"",
+            "cpp": "cd \"$dir\" && g++ \"$fileName\" -o \"$fileNameWithoutExt\" && \"$dir$fileNameWithoutExt\"",
+            "objective-c": "cd \"$dir\" && gcc -framework Cocoa \"$fileName\" -o \"$fileNameWithoutExt\" && \"$dir$fileNameWithoutExt\"",
             "php": "php",
             "python": "python -u",
             "perl": "perl",
@@ -152,15 +152,15 @@
             "r": "Rscript",
             "applescript": "osascript",
             "clojure": "lein exec",
-            "haxe": "haxe --cwd $dirWithoutTrailingSlash --run $fileNameWithoutExt",
-            "rust": "cd $dir && rustc $fileName && $dir$fileNameWithoutExt",
+            "haxe": "haxe --cwd \"$dirWithoutTrailingSlash\" --run \"$fileNameWithoutExt\"",
+            "rust": "cd \"$dir\" && rustc \"$fileName\" && \"$dir$fileNameWithoutExt\"",
             "racket": "racket",
             "scheme": "csi -script",
             "ahk": "autohotkey",
             "autoit": "autoit3",
             "dart": "dart",
-            "pascal": "cd $dir && fpc $fileName && $dir$fileNameWithoutExt",
-            "d": "cd $dir && dmd $fileName && $dir$fileNameWithoutExt",
+            "pascal": "cd \"$dir\" && fpc \"$fileName\" && \"$dir$fileNameWithoutExt\"",
+            "d": "cd \"$dir\" && dmd \"$fileName\" && \"$dir$fileNameWithoutExt\"",
             "haskell": "runhaskell",
             "nim": "nim compile --verbosity:0 --hints:off --run",
             "lisp": "sbcl --script",
@@ -168,11 +168,11 @@
             "v": "v run",
             "sass": "sass --style expanded",
             "scss": "scss --style expanded",
-            "less": "cd $dir && lessc $fileName $fileNameWithoutExt.css",
-            "FortranFreeForm": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
-            "fortran-modern": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
-            "fortran_fixed-form": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
-            "fortran": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt"
+            "less": "cd \"$dir\" && lessc \"$fileName\" \"$fileNameWithoutExt.css\"",
+            "FortranFreeForm": "cd \"$dir\" && gfortran \"$fileName\" -o \"$fileNameWithoutExt\" && \"$dir$fileNameWithoutExt\"",
+            "fortran-modern": "cd \"$dir\" && gfortran \"$fileName\" -o \"$fileNameWithoutExt\" && \"$dir$fileNameWithoutExt\"",
+            "fortran_fixed-form": "cd \"$dir\" && gfortran \"$fileName\" -o \"$fileNameWithoutExt\" && \"$dir$fileNameWithoutExt\"",
+            "fortran": "cd \"$dir\" && gfortran \"$fileName\" -o \"$fileNameWithoutExt\" && \"$dir$fileNameWithoutExt\""
 
           },
           "description": "Set the executor of each language.",
@@ -181,24 +181,24 @@
         "code-runner.executorMapByFileExtension": {
           "type": "object",
           "default": {
-            ".vb": "cd $dir && vbc /nologo $fileName && $dir$fileNameWithoutExt",
+            ".vb": "cd \"$dir\" && vbc /nologo \"$fileName\" && \"$dir$fileNameWithoutExt\"",
             ".vbs": "cscript //Nologo",
             ".scala": "scala",
             ".jl": "julia",
             ".cr": "crystal",
             ".ml": "ocaml",
             ".exs": "elixir",
-            ".hx": "haxe --cwd $dirWithoutTrailingSlash --run $fileNameWithoutExt",
+            ".hx": "haxe --cwd \"$dirWithoutTrailingSlash\" --run \"$fileNameWithoutExt\"",
             ".rkt": "racket",
             ".scm": "csi -script",
             ".ahk": "autohotkey",
             ".au3": "autoit3",
-            ".kt": "cd $dir && kotlinc $fileName -include-runtime -d $fileNameWithoutExt.jar && java -jar $fileNameWithoutExt.jar",
+            ".kt": "cd \"$dir\" && kotlinc \"$fileName\" -include-runtime -d \"$fileNameWithoutExt.jar\" && java -jar \"$fileNameWithoutExt.jar\"",
             ".kts": "kotlinc -script",
             ".dart": "dart",
-            ".pas": "cd $dir && fpc $fileName && $dir$fileNameWithoutExt",
-            ".pp": "cd $dir && fpc $fileName && $dir$fileNameWithoutExt",
-            ".d": "cd $dir && dmd $fileName && $dir$fileNameWithoutExt",
+            ".pas": "cd \"$dir\" && fpc \"$fileName\" && \"$dir$fileNameWithoutExt\"",
+            ".pp": "cd \"$dir\" && fpc \"$fileName\" && \"$dir$fileNameWithoutExt\"",
+            ".d": "cd \"$dir\" && dmd \"$fileName\" && \"$dir$fileNameWithoutExt\"",
             ".hs": "runhaskell",
             ".nim": "nim compile --verbosity:0 --hints:off --run",
             ".csproj": "dotnet run --project",
@@ -208,7 +208,7 @@
             ".v": "v run",
             ".vsh": "v run",
             ".sass": "sass --style expanded",
-            ".cu": "cd $dir && nvcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt"
+            ".cu": "cd \"$dir\" && nvcc \"$fileName\" -o \"$fileNameWithoutExt\" && \"$dir$fileNameWithoutExt\""
           },
           "description": "Set the executor of each file extension.",
           "scope": "resource"
