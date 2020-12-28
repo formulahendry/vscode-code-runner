@@ -16,7 +16,7 @@ Eliminate context switching and costly distractions. Create and merge PRs and pe
 
 ![Book](https://s1.ax1x.com/2020/07/03/NjzLtA.jpg)
 
-## WeChat Public Account
+## WeChat Official Account
 
 VS Code 的热门文章、使用技巧、插件推荐、插件开发攻略等，请关注“**玩转VS Code**”公众号！
 
