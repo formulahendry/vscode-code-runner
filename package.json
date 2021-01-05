@@ -36,7 +36,8 @@
   "activationEvents": [
     "onCommand:code-runner.run",
     "onCommand:code-runner.runCustomCommand",
-    "onCommand:code-runner.runByLanguage"
+    "onCommand:code-runner.runByLanguage",
+    "onStartupFinished"
   ],
   "main": "./out/src/extension",
   "contributes": {
