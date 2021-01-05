@@ -1,3 +1,6 @@
+### 0.11.2 (2021-01-05)
+* Activate extension after VS Code starts up
+
 ### 0.11.1 (2020-10-11)
 * Add support for Fortran
 
