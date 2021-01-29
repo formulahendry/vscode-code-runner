@@ -111,7 +111,7 @@
     },
     "configuration": {
       "type": "object",
-      "title": "Run Code configuration",
+      "title": "Code Runner configuration",
       "properties": {
         "code-runner.executorMapByGlob": {
           "type": "object",
