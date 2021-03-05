@@ -10,7 +10,7 @@
   "publisher": "formulahendry",
   "icon": "images/logo.png",
   "engines": {
-    "vscode": "^1.35.0"
+    "vscode": "^1.54.0"
   },
   "categories": [
     "Programming Languages",
@@ -44,7 +44,7 @@
     "commands": [
       {
         "command": "code-runner.run",
-        "title": "Run Code",
+        "title": "Run with Code Runner",
         "icon": {
           "light": "./images/run-light.svg",
           "dark": "./images/run-dark.svg"
@@ -94,11 +94,11 @@
           "group": "stop-code-run"
         }
       ],
-      "editor/title": [
+      "editor/title/run": [
         {
           "when": "config.code-runner.showRunIconInEditorTitleMenu",
           "command": "code-runner.run",
-          "group": "navigation"
+          "group": "code-runner@10"
         }
       ],
       "explorer/context": [
@@ -352,7 +352,6 @@
   "scripts": {
     "vscode:prepublish": "tsc -p ./",
     "compile": "tsc -watch -p ./",
-    "postinstall": "node ./node_modules/vscode/bin/install",
     "tslint": "tslint -t verbose src/**/*.ts"
   },
   "dependencies": {
@@ -364,9 +363,9 @@
     "@types/micromatch": "^3.1.0",
     "@types/mocha": "^2.2.32",
     "@types/node": "^6.0.40",
+    "@types/vscode": "^1.54.0",
     "mocha": "^6.1.4",
     "tslint": "^5.5.0",
-    "typescript": "^3.8.3",
-    "vscode": "^1.1.34"
+    "typescript": "^3.8.3"
   }
 }
