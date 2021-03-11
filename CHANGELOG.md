@@ -1,3 +1,6 @@
+### 0.11.3 (2021-03-11)
+* Adopt 'run' menu in editor title
+
 ### 0.11.2 (2021-01-05)
 * Activate extension after VS Code starts up
 
