@@ -44,7 +44,7 @@
     "commands": [
       {
         "command": "code-runner.run",
-        "title": "Run with Code Runner",
+        "title": "Run Code",
         "icon": {
           "light": "./images/run-light.svg",
           "dark": "./images/run-dark.svg"
@@ -98,7 +98,7 @@
         {
           "when": "config.code-runner.showRunIconInEditorTitleMenu",
           "command": "code-runner.run",
-          "group": "code-runner@10"
+          "group": "navigation"
         }
       ],
       "explorer/context": [
