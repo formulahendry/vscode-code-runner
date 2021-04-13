@@ -1,3 +1,6 @@
+### 0.11.3 (2021-04-13)
+* Added the PlaceHolder to get Qualified Name for Java Files
+
 ### 0.11.3 (2021-03-11)
 * Adopt 'run' menu in editor title
 
