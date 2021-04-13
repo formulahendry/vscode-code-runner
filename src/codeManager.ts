@@ -341,6 +341,16 @@ export class CodeManager implements vscode.Disposable {
     private quoteFileName(fileName: string): string {
         return '\"' + fileName + '\"';
     }
+    
+    /**
+     * Gets the Qualified Name of file 
+     * Which is Code directory - workspace Root
+     */ 
+     private getQualifiedName():string{
+        let codeDir = this.getCodeFileDir();
+        let workspaceRoot = this.getWorkspaceRoot(codeDir);
+        return codeDir.substr(workspaceRoot.length+1).replace(/\\/g,".")+this.getCodeFileWithoutDirAndExt();
+    }
 
     /**
      * Gets the executor to run a source code file
@@ -369,6 +379,8 @@ export class CodeManager implements vscode.Disposable {
                 { regex: /\$fullFileName/g, replaceValue: this.quoteFileName(this._codeFile) },
                 // A placeholder that has to be replaced by the code file name without the directory
                 { regex: /\$fileName/g, replaceValue: this.getCodeBaseFile() },
+                // A placeholder that has to be replaced by the Qualified Code Name in Java only
+                { regex: /\$qualifiedName/g, replaceValue: this.getQualifiedName()},
                 // A placeholder that has to be replaced by the drive letter of the code file (Windows only)
                 { regex: /\$driveLetter/g, replaceValue: this.getDriveLetter() },
                 // A placeholder that has to be replaced by the directory of the code file without a trailing slash
