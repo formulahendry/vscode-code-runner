@@ -96,6 +96,7 @@ e.g. To set the executor PATH for ruby, php and html:
   * $fullFileName: The full name of the code file being run
   * $fileName: The base name of the code file being run, that is the file without the directory
   * $fileNameWithoutExt: The base name of the code file being run without its extension
+  * $qualifiedName: The qualified name of the code file for Java
   * $driveLetter: The drive letter of the code file being run (Windows only)
   * $pythonPath: The path of Python interpreter (set by `Python: Select Interpreter` command)
 
