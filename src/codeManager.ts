@@ -346,10 +346,8 @@ export class CodeManager implements vscode.Disposable {
      * Gets the Qualified Name of file 
      * Which is Code directory - workspace Root
      */ 
-     private getQualifiedName():string{
-        let codeDir = this.getCodeFileDir();
-        let workspaceRoot = this.getWorkspaceRoot(codeDir);
-        return codeDir.substr(workspaceRoot.length+1).replace(/\\/g,".")+this.getCodeFileWithoutDirAndExt();
+     private getQualifiedName():string {
+        return this._codeFile.substring(this._workspaceFolder.length+1,this._codeFile.length-5).replace(/\\/g,".");
     }
 
     /**
