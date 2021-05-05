@@ -1,3 +1,7 @@
+### 0.11.4 (2021-05-05)
+* Added the Command to Set ClassPath for Java Source Files
+* Command's Default KeyBind is ctrl+alt+p
+
 ### 0.11.3 (2021-04-13)
 * Added the PlaceHolder to get Qualified Name for Java Files
 

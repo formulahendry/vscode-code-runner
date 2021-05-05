@@ -26,10 +26,15 @@ export function activate(context: vscode.ExtensionContext) {
         codeManager.stop();
     });
 
+    const setRootFolder = vscode.commands.registerCommand("code-runner.setClassPath", () => {
+        codeManager.setClassPath();
+    });
+
     context.subscriptions.push(run);
     context.subscriptions.push(runCustomCommand);
     context.subscriptions.push(runByLanguage);
     context.subscriptions.push(stop);
+    context.subscriptions.push(setRootFolder);
     context.subscriptions.push(codeManager);
 }
 

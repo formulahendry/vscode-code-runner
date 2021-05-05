@@ -89,6 +89,26 @@ e.g. To set the executor PATH for ruby, php and html:
     }
 }
 ```
+
+
+New Java Command With classPath and Qualified Name Support can be invoked by modifying the
+Executor Map to : 
+```json
+{
+    "code-runner.executorMap": {
+        "javascript": "node",
+        "php": "C:\\php\\php.exe",
+        "python": "python",
+        "perl": "perl",
+        "ruby": "C:\\Ruby23-x64\\bin\\ruby.exe",
+        "go": "go run",
+        "html": "\"C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe\"",
+        "java": "cd $dir && javac $fileName && java $classPath $qualifiedName",
+        "c": "cd $dir && gcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt"
+    }
+}
+```
+
 **Supported customized parameters**
   * $workspaceRoot: The path of the folder opened in VS Code
   * $dir: The directory of the code file being run
@@ -97,6 +117,7 @@ e.g. To set the executor PATH for ruby, php and html:
   * $fileName: The base name of the code file being run, that is the file without the directory
   * $fileNameWithoutExt: The base name of the code file being run without its extension
   * $qualifiedName: The qualified name of the code file for Java
+  * $classPath: the ClassPath for Java Source Files
   * $driveLetter: The drive letter of the code file being run (Windows only)
   * $pythonPath: The path of Python interpreter (set by `Python: Select Interpreter` command)
 
@@ -185,6 +206,16 @@ To set whether to preserve focus on code editor after code run is triggered (def
 ```json
 {
     "code-runner.preserveFocus": true
+}
+```
+
+
+The ClassPath for Java Source Files which will be Replaced with $classPath (default is "." ,
+the JVM will use Current Folder as ClassPath):
+
+```json
+{
+    "code-runner.classPath": "."
 }
 ```
 

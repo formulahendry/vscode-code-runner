@@ -2,7 +2,7 @@
   "name": "code-runner",
   "displayName": "Code Runner",
   "description": "Run C, C++, Java, JS, PHP, Python, Perl, Ruby, Go, Lua, Groovy, PowerShell, CMD, BASH, F#, C#, VBScript, TypeScript, CoffeeScript, Scala, Swift, Julia, Crystal, OCaml, R, AppleScript, Elixir, VB.NET, Clojure, Haxe, Obj-C, Rust, Racket, Scheme, AutoHotkey, AutoIt, Kotlin, Dart, Pascal, Haskell, Nim, D, Lisp, Kit, V, SCSS, Sass, CUDA, Less, Fortran",
-  "version": "0.11.3",
+  "version": "0.11.4",
   "featureFlags": {
     "usingNewPythonInterpreterPathApi": true,
     "usingNewPythonInterpreterPathApiV2": true
@@ -37,6 +37,7 @@
     "onCommand:code-runner.run",
     "onCommand:code-runner.runCustomCommand",
     "onCommand:code-runner.runByLanguage",
+    "onCommand:code-runner.setClassPath",
     "onStartupFinished"
   ],
   "main": "./out/src/extension",
@@ -61,6 +62,10 @@
       {
         "command": "code-runner.stop",
         "title": "Stop Code Run"
+      },
+      {
+        "command": "code-runner.setClassPath",
+        "title": "Set Class Path for Java Source Files"
       }
     ],
     "keybindings": [
@@ -79,6 +84,10 @@
       {
         "command": "code-runner.stop",
         "key": "ctrl+alt+m"
+      },
+      {
+        "command":"code-runner.setClassPath",
+        "key":"ctrl+alt+p"
       }
     ],
     "menus": {
@@ -329,6 +338,12 @@
           "type": "boolean",
           "default": true,
           "description": "Whether to respect Shebang to run code.",
+          "scope": "resource"
+        },
+        "code-runner.classPath":{
+          "type":"string",
+          "default":".",
+          "description": "ClassPath for Java Source Files",
           "scope": "resource"
         }
       }

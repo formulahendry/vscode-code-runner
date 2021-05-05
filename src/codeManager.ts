@@ -22,6 +22,7 @@ export class CodeManager implements vscode.Disposable {
     private _runFromExplorer: boolean;
     private _document: vscode.TextDocument;
     private _workspaceFolder: string;
+    private _classPath: string;
     private _config: vscode.WorkspaceConfiguration;
     private _appInsightsClient: AppInsightsClient;
     private _TERMINAL_DEFAULT_SHELL_WINDOWS: string | null = null;
@@ -112,6 +113,22 @@ export class CodeManager implements vscode.Disposable {
         this.stopRunning();
     }
 
+    public setClassPath() : void {
+        vscode.window.showOpenDialog({
+            canSelectFolders: true,
+            canSelectMany:false,
+            canSelectFiles:false
+        }).then((uri) => {
+            if(uri){
+                const config = this.getConfiguration("code-runner");
+                config.update("classPath",uri[0].path);
+                vscode.window.showInformationMessage("Classpath Selected");
+            }else{
+                vscode.window.showInformationMessage("No ClassPath Selected using Default");
+            }
+        });
+    }
+
     private checkIsRunFromExplorer(fileUri: vscode.Uri): boolean {
         const editor = vscode.window.activeTextEditor;
         if (!fileUri || !fileUri.fsPath) {
@@ -137,6 +154,7 @@ export class CodeManager implements vscode.Disposable {
     private initialize(): void {
         this._config = this.getConfiguration("code-runner");
         this._cwd = this._config.get<string>("cwd");
+        this._classPath = this._config.get<string>("classPath");
         if (this._cwd) {
             return;
         }
@@ -346,8 +364,16 @@ export class CodeManager implements vscode.Disposable {
      * Gets the Qualified Name of file 
      * Which is Code directory - workspace Root
      */ 
-     private getQualifiedName():string {
-        return this._codeFile.substring(this._workspaceFolder.length+1,this._codeFile.length-5).replace(/\\/g,".");
+    private getQualifiedName():string {
+        return this._codeFile.substring(this._classPath.length,this._codeFile.length-5).replace(/\\/g,".");
+    }
+
+    /**
+     *  Gets the ClassPath of Java Source Files
+     *  Which can be set by user or default is  .
+     */
+    private getClassPath(): string {
+        return this._classPath;
     }
 
     /**
@@ -379,6 +405,8 @@ export class CodeManager implements vscode.Disposable {
                 { regex: /\$fileName/g, replaceValue: this.getCodeBaseFile() },
                 // A placeholder that has to be replaced by the Qualified Code Name in Java only
                 { regex: /\$qualifiedName/g, replaceValue: this.getQualifiedName()},
+                // A placeholder that has to be replaced by the ClassPath of Java Souce files
+                { regex: /\$classPath/g, replaceValue: this.getClassPath()},
                 // A placeholder that has to be replaced by the drive letter of the code file (Windows only)
                 { regex: /\$driveLetter/g, replaceValue: this.getDriveLetter() },
                 // A placeholder that has to be replaced by the directory of the code file without a trailing slash
