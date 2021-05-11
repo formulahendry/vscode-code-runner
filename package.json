@@ -70,7 +70,16 @@
       },
       {
         "command": "code-runner.runWithIO",
-        "title": "Run Code with IO Files"}
+        "title": "Run Code with IO Files"
+      },
+      {
+        "command": "code-runner.setInputFilePath",
+        "title": "Set the Input File Path"
+      },
+      {
+        "command": "code-runner.setOutputFilePath",
+        "title": "Set the Output File Path"
+      }
     ],
     "keybindings": [
       {
@@ -228,16 +237,6 @@
             ".cu": "cd $dir && nvcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt"
           },
           "description": "Set the executor of each file extension.",
-          "scope": "resource"
-        },
-        "code-runner.executorMapWithIO":{
-          "type":"object",
-          "default":{
-            "java": "cd $dir && javac $fileName && java -cp $classPath $qualifiedName < $inputFilePath > $outputFilePath",
-            "c": "cd $dir && gcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
-            "cpp": "cd $dir && g++ $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt"
-          },
-          "description": "Set the executor for Source Files with IO",
           "scope": "resource"
         },
         "code-runner.customCommand": {

@@ -115,21 +115,55 @@ export class CodeManager implements vscode.Disposable {
         this.stopRunning();
     }
 
-    public async setClassPath() : Promise<void> {
-        let classPath = await this.openFileOrFolderPicker("Select the ClassPath",true,false);
-        if(!classPath){
-            vscode.window.showInformationMessage("No ClassPath Selected Using Default");
-            return;
-        }
-        const config = vscode.workspace.getConfiguration("code-runner");
-        config.update("classPath",classPath);
-        vscode.window.showInformationMessage("ClassPath Selected");
+    public setClassPath() : void {
+        this.configModifierFromFileFolderPicker("classPath","Select The ClassPath Folder",true,false).then((uri)=>{
+            if(uri){
+                this._classPath = uri;
+            }
+        });
     }
 
-    public runWithIO(): void {
-        vscode.window.showInformationMessage("Run With IO Called");
-        console.log(this.getInputFilePath()+"Input FIle Path");
-        console.log(this.getOutputFilePath()+" Output File Path");
+    public setInputFilePath(): void {
+        this.configModifierFromFileFolderPicker("inputFilePath","Select Input File",false,false);
+    }
+
+    public setOutputFilePath(): void {
+        this.configModifierFromFileFolderPicker("outputFilePath","Select Output File",false,false);
+    }
+
+    public async runWithIO(): Promise<void>{
+        if (this._isRunning) {
+            vscode.window.showInformationMessage("Code is already running!");
+            return;
+        }
+
+        this._runFromExplorer = false;
+
+        const editor = vscode.window.activeTextEditor;
+        if (editor) {
+            this._document = editor.document;
+        } else {
+            vscode.window.showInformationMessage("No code found or selected.");
+            return;
+        }
+
+        this.initialize();
+
+        const IOFlag = await this.checkInputOutputFilePaths();
+        if(!IOFlag){
+            return;
+        }
+        const fileExtension = extname(this._document.fileName);
+        let executor = this.getExecutor(this._document.languageId, fileExtension);
+        // undefined or null
+        
+        if (executor == null) {
+            vscode.window.showInformationMessage("Code language not supported or defined.");
+            return;
+        }
+        executor += " < $inputFilePath > $outputFilePath";
+        
+        this.getCodeFileAndExecute(fileExtension,executor);
     }
 
     private checkIsRunFromExplorer(fileUri: vscode.Uri): boolean {
@@ -157,6 +191,9 @@ export class CodeManager implements vscode.Disposable {
     private initialize(): void {
         this._config = this.getConfiguration("code-runner");
         this._cwd = this._config.get<string>("cwd");
+        this._classPath = this._config.get<string>("classPath");
+        this._inputFilePath = this._config.get<string>("inputFilePath");
+        this._outputFilePath = this._config.get<string>("outputFilePath");
         if (this._cwd) {
             return;
         }
@@ -260,7 +297,7 @@ export class CodeManager implements vscode.Disposable {
         this._languageId = languageId === null ? this._document.languageId : languageId;
 
         let executor = null;
-
+    
         // Check if file contains hash-bang
         if (languageId == null && this._config.get<boolean>("respectShebang")) {
             const firstLineInFile = this._document.lineAt(0).text;
@@ -367,9 +404,6 @@ export class CodeManager implements vscode.Disposable {
      * Which is Code directory - workspace Root
      */ 
     private getQualifiedName():string {
-        console.log(this._codeFile)
-        console.log(this._classPath)
-        console.log(this._workspaceFolder)
         return this._codeFile.substring(Math.max(this._classPath.length,this._workspaceFolder.length+1),this._codeFile.length-5).replace(/\\/g,".");
     }
 
@@ -378,7 +412,6 @@ export class CodeManager implements vscode.Disposable {
      *  Which can be set by user or default is  .
      */
     private getClassPath(): string {
-        this._classPath = this._config.get<string>("classPath");
         return this._classPath;
     }
 
@@ -387,30 +420,66 @@ export class CodeManager implements vscode.Disposable {
      * if Selector is successfull then returns the Path
      * else returns Empty String
      */
-    private async openFileOrFolderPicker(title: string, selectFolder: boolean, selectMany: boolean): Promise<string> {
-        let returnPath = "";
+    private async openFileOrFolderPicker(title: string, selectFolder: boolean = false, selectMany: boolean = false): Promise<string> {
+        let returnString;
         await vscode.window.showOpenDialog({
             title:title,
             canSelectFolders: selectFolder,
             canSelectMany: selectMany,
-            canSelectFiles: !selectFolder
+            canSelectFiles: !selectFolder,
+            filters: {"input":["txt"]}
         }).then((uri) => {
             if(uri){
-                returnPath = uri[0].path;
+                returnString  = uri[0].path;
             }
         });
-        return returnPath;
+        return returnString;
     }
 
+    private async configModifierFromFileFolderPicker(configString: string, fileFolderPickerTitle: string,selectFolder: boolean = false, selectMany: boolean = false): Promise<string>{
+        let configModifiedSuccess;
+        const config = vscode.workspace.getConfiguration("code-runner");
+        await this.openFileOrFolderPicker(fileFolderPickerTitle, selectFolder, selectMany).then((uri) =>{
+            if(uri){
+                uri = uri.substr(1);
+                config.update(configString,uri);
+                vscode.window.showInformationMessage("Config Modified Successfully");
+                configModifiedSuccess = uri;
+            }else{
+                vscode.window.showErrorMessage("Config Modification error using Defaults");
+            }
+        });
+
+        return configModifiedSuccess;
+    }
+
+    private async checkInputOutputFilePaths(): Promise<boolean>{
+        let areInputOutputFilePathsPresent = true;
+        if(this._inputFilePath == ""){
+            const response = await this.configModifierFromFileFolderPicker("inputFilePath","Select The Input File");
+            if(response){
+                this._inputFilePath = response;
+            }else{
+                return false;
+            }
+        }
+        if(this._outputFilePath == ""){
+            const response = await this.configModifierFromFileFolderPicker("outputFilePath","select the Output File");
+            if(response){
+                this._outputFilePath = response;
+            }else{
+                return false;
+            }
+        }
+
+        return areInputOutputFilePathsPresent;
+    }
 
     /**
      *  Gets the Input Path of File 
      *  for IO Support in Run With IO Command
      */
     private getInputFilePath(): string {
-        if(!this._inputFilePath){
-            this._inputFilePath = "";
-        }
         return this._inputFilePath;
     }
 
@@ -419,9 +488,6 @@ export class CodeManager implements vscode.Disposable {
      *  for IO Support in Run With IO Command
      */
     private getOutputFilePath(): string {
-        if(!this._outputFilePath){
-            this._outputFilePath = "";
-        }
         return this._outputFilePath;
     }
 

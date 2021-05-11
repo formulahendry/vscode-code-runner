@@ -34,12 +34,22 @@ export function activate(context: vscode.ExtensionContext) {
         codeManager.runWithIO();
     })
 
+    const setInputFilePath = vscode.commands.registerCommand("code-runner.setInputFilePath",()=>{
+        codeManager.setInputFilePath();
+    })
+    
+    const setOutputFilePath = vscode.commands.registerCommand("code-runner.setOutputFilePath",()=>{
+        codeManager.setOutputFilePath();
+    })
+
     context.subscriptions.push(run);
     context.subscriptions.push(runCustomCommand);
     context.subscriptions.push(runByLanguage);
     context.subscriptions.push(stop);
     context.subscriptions.push(setClassPath);
     context.subscriptions.push(runWithIO);
+    context.subscriptions.push(setInputFilePath);
+    context.subscriptions.push(setOutputFilePath);
 }
 
 export function deactivate() {
