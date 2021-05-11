@@ -67,7 +67,10 @@ If you like this extension, you could become a backer or sponsor via **[Patreon]
 
 ![Usage](images/usageRunByLanguage.gif)
 
-* To run custom command, then use shortcut `Ctrl+Alt+K`, or press `F1` and then select/type `Run Custom Command`
+* To run custom command, then use shortcut `Ctrl+Alt+C`, or press `F1` and then select/type `Run Custom Command`
+
+* To run Program with IO command, then use shortcut `Ctrl+Alt+K`, or press `F1` and then select/type `Run Code With IO`
+
 
 ## Configuration
 
