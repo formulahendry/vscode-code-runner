@@ -38,6 +38,7 @@
     "onCommand:code-runner.runCustomCommand",
     "onCommand:code-runner.runByLanguage",
     "onCommand:code-runner.setClassPath",
+    "onCommand:code-runner.runWithIO",
     "onStartupFinished"
   ],
   "main": "./out/src/extension",
@@ -66,7 +67,10 @@
       {
         "command": "code-runner.setClassPath",
         "title": "Set Class Path for Java Source Files"
-      }
+      },
+      {
+        "command": "code-runner.runWithIO",
+        "title": "Run Code with IO Files"}
     ],
     "keybindings": [
       {
@@ -75,7 +79,7 @@
       },
       {
         "command": "code-runner.runCustomCommand",
-        "key": "ctrl+alt+k"
+        "key": "ctrl+alt+c"
       },
       {
         "command": "code-runner.runByLanguage",
@@ -88,6 +92,10 @@
       {
         "command":"code-runner.setClassPath",
         "key":"ctrl+alt+p"
+      },
+      {
+        "command": "code-runner.runWithIO",
+        "key": "ctrl+alt+k"
       }
     ],
     "menus": {
@@ -134,7 +142,7 @@
           "type": "object",
           "default": {
             "javascript": "node",
-            "java": "cd $dir && javac $fileName && java $fileNameWithoutExt",
+            "java": "cd $dir && javac $fileName && java -cp $classPath $qualifiedName",
             "c": "cd $dir && gcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
             "cpp": "cd $dir && g++ $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
             "objective-c": "cd $dir && gcc -framework Cocoa $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
@@ -220,6 +228,16 @@
             ".cu": "cd $dir && nvcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt"
           },
           "description": "Set the executor of each file extension.",
+          "scope": "resource"
+        },
+        "code-runner.executorMapWithIO":{
+          "type":"object",
+          "default":{
+            "java": "cd $dir && javac $fileName && java -cp $classPath $qualifiedName < $inputFilePath > $outputFilePath",
+            "c": "cd $dir && gcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+            "cpp": "cd $dir && g++ $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt"
+          },
+          "description": "Set the executor for Source Files with IO",
           "scope": "resource"
         },
         "code-runner.customCommand": {
@@ -344,6 +362,18 @@
           "type":"string",
           "default":".",
           "description": "ClassPath for Java Source Files",
+          "scope": "resource"
+        },
+        "code-runner.inputFilePath":{
+          "type":"string",
+          "default":"",
+          "description": "Input File Path for Run With IO Command",
+          "scope": "resource"
+        },
+        "code-runner.outputFilePath":{
+          "type":"string",
+          "default":"",
+          "description": "Output File Path for Run With IO Command",
           "scope": "resource"
         }
       }

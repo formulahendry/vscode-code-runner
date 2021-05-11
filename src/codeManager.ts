@@ -23,6 +23,8 @@ export class CodeManager implements vscode.Disposable {
     private _document: vscode.TextDocument;
     private _workspaceFolder: string;
     private _classPath: string;
+    private _inputFilePath: string;
+    private _outputFilePath: string;
     private _config: vscode.WorkspaceConfiguration;
     private _appInsightsClient: AppInsightsClient;
     private _TERMINAL_DEFAULT_SHELL_WINDOWS: string | null = null;
@@ -113,20 +115,21 @@ export class CodeManager implements vscode.Disposable {
         this.stopRunning();
     }
 
-    public setClassPath() : void {
-        vscode.window.showOpenDialog({
-            canSelectFolders: true,
-            canSelectMany:false,
-            canSelectFiles:false
-        }).then((uri) => {
-            if(uri){
-                const config = this.getConfiguration("code-runner");
-                config.update("classPath",uri[0].path);
-                vscode.window.showInformationMessage("Classpath Selected");
-            }else{
-                vscode.window.showInformationMessage("No ClassPath Selected using Default");
-            }
-        });
+    public async setClassPath() : Promise<void> {
+        let classPath = await this.openFileOrFolderPicker("Select the ClassPath",true,false);
+        if(!classPath){
+            vscode.window.showInformationMessage("No ClassPath Selected Using Default");
+            return;
+        }
+        const config = vscode.workspace.getConfiguration("code-runner");
+        config.update("classPath",classPath);
+        vscode.window.showInformationMessage("ClassPath Selected");
+    }
+
+    public runWithIO(): void {
+        vscode.window.showInformationMessage("Run With IO Called");
+        console.log(this.getInputFilePath()+"Input FIle Path");
+        console.log(this.getOutputFilePath()+" Output File Path");
     }
 
     private checkIsRunFromExplorer(fileUri: vscode.Uri): boolean {
@@ -154,7 +157,6 @@ export class CodeManager implements vscode.Disposable {
     private initialize(): void {
         this._config = this.getConfiguration("code-runner");
         this._cwd = this._config.get<string>("cwd");
-        this._classPath = this._config.get<string>("classPath");
         if (this._cwd) {
             return;
         }
@@ -376,7 +378,51 @@ export class CodeManager implements vscode.Disposable {
      *  Which can be set by user or default is  .
      */
     private getClassPath(): string {
+        this._classPath = this._config.get<string>("classPath");
         return this._classPath;
+    }
+
+    /**
+     * Invokes A File or Folder Selector
+     * if Selector is successfull then returns the Path
+     * else returns Empty String
+     */
+    private async openFileOrFolderPicker(title: string, selectFolder: boolean, selectMany: boolean): Promise<string> {
+        let returnPath = "";
+        await vscode.window.showOpenDialog({
+            title:title,
+            canSelectFolders: selectFolder,
+            canSelectMany: selectMany,
+            canSelectFiles: !selectFolder
+        }).then((uri) => {
+            if(uri){
+                returnPath = uri[0].path;
+            }
+        });
+        return returnPath;
+    }
+
+
+    /**
+     *  Gets the Input Path of File 
+     *  for IO Support in Run With IO Command
+     */
+    private getInputFilePath(): string {
+        if(!this._inputFilePath){
+            this._inputFilePath = "";
+        }
+        return this._inputFilePath;
+    }
+
+    /**
+     *  Gets the Output Path of File 
+     *  for IO Support in Run With IO Command
+     */
+    private getOutputFilePath(): string {
+        if(!this._outputFilePath){
+            this._outputFilePath = "";
+        }
+        return this._outputFilePath;
     }
 
     /**
@@ -410,6 +456,10 @@ export class CodeManager implements vscode.Disposable {
                 { regex: /\$qualifiedName/g, replaceValue: this.getQualifiedName()},
                 // A placeholder that has to be replaced by the ClassPath of Java Souce files
                 { regex: /\$classPath/g, replaceValue: this.getClassPath()},
+                // A placeholder that has to be replaced by  the Input FilePath
+                { regex: /\$inputFilePath/g, replaceValue: this.getInputFilePath()},
+                // A placeholder that has to be replaced by  the output FilePath
+                { regex: /\$outputFilePath/g, replaceValue: this.getOutputFilePath()},
                 // A placeholder that has to be replaced by the drive letter of the code file (Windows only)
                 { regex: /\$driveLetter/g, replaceValue: this.getDriveLetter() },
                 // A placeholder that has to be replaced by the directory of the code file without a trailing slash

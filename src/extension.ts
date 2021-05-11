@@ -26,16 +26,20 @@ export function activate(context: vscode.ExtensionContext) {
         codeManager.stop();
     });
 
-    const setRootFolder = vscode.commands.registerCommand("code-runner.setClassPath", () => {
+    const setClassPath = vscode.commands.registerCommand("code-runner.setClassPath", () => {
         codeManager.setClassPath();
     });
+
+    const runWithIO = vscode.commands.registerCommand("code-runner.runWithIO", () => {
+        codeManager.runWithIO();
+    })
 
     context.subscriptions.push(run);
     context.subscriptions.push(runCustomCommand);
     context.subscriptions.push(runByLanguage);
     context.subscriptions.push(stop);
-    context.subscriptions.push(setRootFolder);
-    context.subscriptions.push(codeManager);
+    context.subscriptions.push(setClassPath);
+    context.subscriptions.push(runWithIO);
 }
 
 export function deactivate() {
