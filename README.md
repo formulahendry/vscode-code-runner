@@ -118,6 +118,8 @@ Executor Map to :
   * $fileNameWithoutExt: The base name of the code file being run without its extension
   * $qualifiedName: The qualified name of the code file for Java
   * $classPath: the ClassPath for Java Source Files
+  * $inputFilePath: The Input File Path for IO run in Competitive Programming
+  * $outputFilePath: The Output File Path for IO run in Competitive Programming
   * $driveLetter: The drive letter of the code file being run (Windows only)
   * $pythonPath: The path of Python interpreter (set by `Python: Select Interpreter` command)
 
