@@ -10,7 +10,7 @@
   "publisher": "formulahendry",
   "icon": "images/logo.png",
   "engines": {
-    "vscode": "^1.54.0"
+    "vscode": "^1.56.0"
   },
   "categories": [
     "Programming Languages",
@@ -363,7 +363,7 @@
     "@types/micromatch": "^3.1.0",
     "@types/mocha": "^2.2.32",
     "@types/node": "^6.0.40",
-    "@types/vscode": "^1.54.0",
+    "@types/vscode": "^1.56.0",
     "mocha": "^6.1.4",
     "tslint": "^5.5.0",
     "typescript": "^3.8.3"
