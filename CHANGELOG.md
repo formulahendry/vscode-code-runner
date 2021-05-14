@@ -1,3 +1,6 @@
+### 0.11.4 (2021-05-14)
+* [#783](https://github.com/formulahendry/vscode-code-runner/issues/783): Not detect shell on Windows correctly in VS Code 1.56
+
 ### 0.11.3 (2021-03-11)
 * Adopt 'run' menu in editor title
 
