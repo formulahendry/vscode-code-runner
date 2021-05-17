@@ -69,6 +69,12 @@ If you like this extension, you could become a backer or sponsor via **[Patreon]
 
 * To run custom command, then use shortcut `Ctrl+Alt+C`, or press `F1` and then select/type `Run Custom Command`
 
+* To set the ClassPath for workspace use shortcut `Ctrl+Alt+P` or press `F1` and then select/type `Set ClassPath For Java Source Files`
+
+* To set the Input File Path for workspace press `F1` and then select/type `Set the Input File Path` used in generating Debug Logs and Competitive Programming.
+
+* To set the Output File Path for workspace press `F1` and then select/type `Set the Output File Path` used in generating Debug Logs and Competitive Programming.
+
 * To run Program with IO command, then use shortcut `Ctrl+Alt+K`, or press `F1` and then select/type `Run Code With IO`
 
 
