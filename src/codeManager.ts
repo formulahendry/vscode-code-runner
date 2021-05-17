@@ -408,7 +408,6 @@ export class CodeManager implements vscode.Disposable {
      */ 
     private getQualifiedName():string {
         let qualifiedName = this._codeFile.replace(/\\/g,".");
-        console.log("Qualified Name : "+qualifiedName.substring(Math.max(this._classPath.length,this._workspaceFolder.length+1),this._codeFile.length-5));
         return qualifiedName.substring(Math.max(this._classPath.length,this._workspaceFolder.length+1),this._codeFile.length-5);
         // return this._codeFile.substring(Math.max(this._classPath.length,this._workspaceFolder.length+1),this._codeFile.length-5).replace(/\\/g,".");
     }
@@ -556,11 +555,8 @@ export class CodeManager implements vscode.Disposable {
             executor = executor.replace("&&", replacement);
             replacement = "} " + replacement;
             executor = executor.replace(/&&/g, replacement);
-            console.log(isIOCommand+" is Io");
-            console.log(executor);
             if(isIOCommand){
                 let insertPosition = executor.lastIndexOf("{")+1;
-                console.log(executor.substring(0,insertPosition));
                 executor = executor.substring(0,insertPosition) + " Get-Content $inputFilePath |" + executor.substring(insertPosition);
             }
             executor = executor.replace(/\$dir\$fileNameWithoutExt/g, ".\\$fileNameWithoutExt");
@@ -616,7 +612,6 @@ export class CodeManager implements vscode.Disposable {
         this._terminal.show(this._config.get<boolean>("preserveFocus"));
         this.sendRunEvent(executor, true);
         executor = this.changeExecutorFromCmdToPs(executor, isIOCommand);
-        console.log(executor);
         let command = await this.getFinalCommandToRunCodeFile(executor, appendFile);
         command = this.changeFilePathForBashOnWindows(command);
         if (this._config.get<boolean>("clearPreviousOutput") && !isNewTerminal) {
