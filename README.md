@@ -87,26 +87,7 @@ e.g. To set the executor PATH for ruby, php and html:
         "ruby": "C:\\Ruby23-x64\\bin\\ruby.exe",
         "go": "go run",
         "html": "\"C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe\"",
-        "java": "cd $dir && javac $fileName && java $fileNameWithoutExt",
-        "c": "cd $dir && gcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt"
-    }
-}
-```
-
-
-New Java Command With classPath and Qualified Name Support can be invoked by modifying the
-Executor Map to : 
-```json
-{
-    "code-runner.executorMap": {
-        "javascript": "node",
-        "php": "C:\\php\\php.exe",
-        "python": "python",
-        "perl": "perl",
-        "ruby": "C:\\Ruby23-x64\\bin\\ruby.exe",
-        "go": "go run",
-        "html": "\"C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe\"",
-        "java": "cd $dir && javac $fileName && java $classPath $qualifiedName",
+        "java": "cd $dir && javac $fileName && java -cp $classPath $qualifiedName",
         "c": "cd $dir && gcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt"
     }
 }

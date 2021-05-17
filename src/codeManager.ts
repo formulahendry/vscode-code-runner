@@ -161,9 +161,12 @@ export class CodeManager implements vscode.Disposable {
             vscode.window.showInformationMessage("Code language not supported or defined.");
             return;
         }
-        executor += " < $inputFilePath > $outputFilePath";
-        
-        this.getCodeFileAndExecute(fileExtension,executor);
+
+        if(!this.isPowershellOnWindows()){
+            executor += " < $inputFilePath > $outputFilePath";
+        }
+
+        this.getCodeFileAndExecute(fileExtension,executor,false, true);
     }
 
     private checkIsRunFromExplorer(fileUri: vscode.Uri): boolean {
@@ -228,7 +231,7 @@ export class CodeManager implements vscode.Disposable {
         }
     }
 
-    private getCodeFileAndExecute(fileExtension: string, executor: string, appendFile: boolean = true): any {
+    private getCodeFileAndExecute(fileExtension: string, executor: string, appendFile: boolean = true, isIOCommand : boolean = false): any {
         let selection;
         const activeTextEditor = vscode.window.activeTextEditor;
         if (activeTextEditor) {
@@ -242,13 +245,13 @@ export class CodeManager implements vscode.Disposable {
 
             if (this._config.get<boolean>("saveAllFilesBeforeRun")) {
                 return vscode.workspace.saveAll().then(() => {
-                    this.executeCommand(executor, appendFile);
+                    this.executeCommand(executor, appendFile, isIOCommand);
                 });
             }
 
             if (this._config.get<boolean>("saveFileBeforeRun")) {
                 return this._document.save().then(() => {
-                    this.executeCommand(executor, appendFile);
+                    this.executeCommand(executor, appendFile, isIOCommand);
                 });
             }
         } else {
@@ -267,7 +270,7 @@ export class CodeManager implements vscode.Disposable {
             this.createRandomFile(text, folder, fileExtension);
         }
 
-        this.executeCommand(executor, appendFile);
+        this.executeCommand(executor, appendFile, isIOCommand);
     }
 
     private rndName(): string {
@@ -341,9 +344,9 @@ export class CodeManager implements vscode.Disposable {
         return executor;
     }
 
-    private executeCommand(executor: string, appendFile: boolean = true) {
+    private executeCommand(executor: string, appendFile: boolean = true, isIOCommand: boolean = false) {
         if (this._config.get<boolean>("runInTerminal")) {
-            this.executeCommandInTerminal(executor, appendFile);
+            this.executeCommandInTerminal(executor, appendFile, isIOCommand);
         } else {
             this.executeCommandInOutputChannel(executor, appendFile);
         }
@@ -404,7 +407,10 @@ export class CodeManager implements vscode.Disposable {
      * Which is Code directory - workspace Root
      */ 
     private getQualifiedName():string {
-        return this._codeFile.substring(Math.max(this._classPath.length,this._workspaceFolder.length+1),this._codeFile.length-5).replace(/\\/g,".");
+        let qualifiedName = this._codeFile.replace(/\\/g,".");
+        console.log("Qualified Name : "+qualifiedName.substring(Math.max(this._classPath.length,this._workspaceFolder.length+1),this._codeFile.length-5));
+        return qualifiedName.substring(Math.max(this._classPath.length,this._workspaceFolder.length+1),this._codeFile.length-5);
+        // return this._codeFile.substring(Math.max(this._classPath.length,this._workspaceFolder.length+1),this._codeFile.length-5).replace(/\\/g,".");
     }
 
     /**
@@ -427,7 +433,7 @@ export class CodeManager implements vscode.Disposable {
             canSelectFolders: selectFolder,
             canSelectMany: selectMany,
             canSelectFiles: !selectFolder,
-            filters: {"input":["txt"]}
+            filters: {"Text Files":["txt"]}
         }).then((uri) => {
             if(uri){
                 returnString  = uri[0].path;
@@ -544,13 +550,23 @@ export class CodeManager implements vscode.Disposable {
         return (cmd !== executor ? cmd : executor + (appendFile ? " " + this.quoteFileName(this._codeFile) : ""));
     }
 
-    private changeExecutorFromCmdToPs(executor: string): string {
+    private changeExecutorFromCmdToPs(executor: string, isIOCommand : boolean = false): string {
         if (executor.includes(" && ") && this.isPowershellOnWindows()) {
             let replacement = "; if ($?) {";
             executor = executor.replace("&&", replacement);
             replacement = "} " + replacement;
             executor = executor.replace(/&&/g, replacement);
+            console.log(isIOCommand+" is Io");
+            console.log(executor);
+            if(isIOCommand){
+                let insertPosition = executor.lastIndexOf("{")+1;
+                console.log(executor.substring(0,insertPosition));
+                executor = executor.substring(0,insertPosition) + " Get-Content $inputFilePath |" + executor.substring(insertPosition);
+            }
             executor = executor.replace(/\$dir\$fileNameWithoutExt/g, ".\\$fileNameWithoutExt");
+            if(isIOCommand){
+                executor += " > $outputFilePath"
+            }
             return executor + " }";
         }
         return executor;
@@ -591,7 +607,7 @@ export class CodeManager implements vscode.Disposable {
         return `/mnt/${p1.toLowerCase()}/`;
     }
 
-    private async executeCommandInTerminal(executor: string, appendFile: boolean = true) {
+    private async executeCommandInTerminal(executor: string, appendFile: boolean = true, isIOCommand : boolean = false) {
         let isNewTerminal = false;
         if (this._terminal === null) {
             this._terminal = vscode.window.createTerminal("Code");
@@ -599,7 +615,8 @@ export class CodeManager implements vscode.Disposable {
         }
         this._terminal.show(this._config.get<boolean>("preserveFocus"));
         this.sendRunEvent(executor, true);
-        executor = this.changeExecutorFromCmdToPs(executor);
+        executor = this.changeExecutorFromCmdToPs(executor, isIOCommand);
+        console.log(executor);
         let command = await this.getFinalCommandToRunCodeFile(executor, appendFile);
         command = this.changeFilePathForBashOnWindows(command);
         if (this._config.get<boolean>("clearPreviousOutput") && !isNewTerminal) {
