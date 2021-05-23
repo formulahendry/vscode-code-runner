@@ -339,6 +339,9 @@ export class CodeManager implements vscode.Disposable {
      * Includes double quotes around a given file name.
      */
     private quoteFileName(fileName: string): string {
+        if(this._config.get("runInTerminal") && os.platform() === "win32" && vscode.env.shell.toLowerCase().includes("powershell")) {
+            return "'" + fileName + "'";
+        }
         return '\"' + fileName + '\"';
     }
 
@@ -450,7 +453,11 @@ export class CodeManager implements vscode.Disposable {
         }
         if (this._config.get<boolean>("fileDirectoryAsCwd")) {
             const cwd = this.changeFilePathForBashOnWindows(this._cwd);
-            this._terminal.sendText(`cd "${cwd}"`);
+            if(os.platform() === "win32" && vscode.env.shell.toLowerCase().includes("powershell")) {
+                this._terminal.sendText(`cd '${cwd}'`);
+            } else {
+                this._terminal.sendText(`cd "${cwd}"`);
+            }
         }
         this._terminal.sendText(command);
     }
