@@ -151,7 +151,7 @@
           "type": "object",
           "default": {
             "javascript": "node",
-            "java": "cd $dir && javac $fileName && java -cp $classPath $qualifiedName",
+            "java": "cd $dir && javac $fileName && java -cp \"$classPath\" $qualifiedName",
             "c": "cd $dir && gcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
             "cpp": "cd $dir && g++ $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
             "objective-c": "cd $dir && gcc -framework Cocoa $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
