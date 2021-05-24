@@ -93,7 +93,7 @@ e.g. To set the executor PATH for ruby, php and html:
         "ruby": "C:\\Ruby23-x64\\bin\\ruby.exe",
         "go": "go run",
         "html": "\"C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe\"",
-        "java": "cd $dir && javac $fileName && java -cp $classPath $qualifiedName",
+        "java": "cd $dir && javac $fileName && java -cp \"$classPath\" $qualifiedName",
         "c": "cd $dir && gcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt"
     }
 }
