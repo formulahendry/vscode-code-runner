@@ -421,7 +421,7 @@ export class CodeManager implements vscode.Disposable {
 
     /**
      * Invokes A File or Folder Selector
-     * if Selector is successfull then returns the Path
+     * if Selector is successful then returns the Path
      * else returns Empty String
      */
     private async openFileOrFolderPicker(title: string, selectFolder: boolean = false, selectMany: boolean = false): Promise<string> {
@@ -441,7 +441,7 @@ export class CodeManager implements vscode.Disposable {
     }
 
     private async configModifierFromFileFolderPicker(configString: string, fileFolderPickerTitle: string,selectFolder: boolean = false, selectMany: boolean = false): Promise<string>{
-        let configModifiedSuccess;
+        let configModified;
         const config = vscode.workspace.getConfiguration("code-runner");
         await this.openFileOrFolderPicker(fileFolderPickerTitle, selectFolder, selectMany).then((uri) =>{
             if(uri){
@@ -450,14 +450,20 @@ export class CodeManager implements vscode.Disposable {
                 }
                 config.update(configString,uri);
                 vscode.window.showInformationMessage("Config Modified Successfully");
-                configModifiedSuccess = uri;
+                configModified = uri;
             }else{
                 vscode.window.showErrorMessage("Config Modification error using Defaults");
             }
         });
 
-        return configModifiedSuccess;
+        return configModified;
     }
+
+    /**
+     *  Checks the Input and Output File Paths
+     *  If the Paths are not present then opens
+     *  File Picker to select IO Files
+     */
 
     private async checkInputOutputFilePaths(): Promise<boolean>{
         let areInputOutputFilePathsPresent = true;
@@ -562,7 +568,7 @@ export class CodeManager implements vscode.Disposable {
             }
             executor = executor.replace(/\$dir\$fileNameWithoutExt/g, ".\\$fileNameWithoutExt");
             if(isIOCommand){
-                executor += " > \"$outputFilePath\""
+                executor += " | Set-Content \"$outputFilePath\""
             }
             return executor + " }";
         }
