@@ -2,7 +2,7 @@
 import * as fs from "fs";
 import * as micromatch from "micromatch";
 import * as os from "os";
-import { basename, dirname, extname, join } from "path";
+import { basename, dirname, extname, join, win32 } from "path";
 import * as vscode from "vscode";
 import { AppInsightsClient } from "./appInsightsClient";
 import { Constants } from "./constants";
@@ -163,7 +163,7 @@ export class CodeManager implements vscode.Disposable {
         }
 
         if(!this.isPowershellOnWindows()){
-            executor += " < $inputFilePath > $outputFilePath";
+            executor += " < \"$inputFilePath\" > \"$outputFilePath\"";
         }
 
         this.getCodeFileAndExecute(fileExtension,executor,false, true);
@@ -408,12 +408,7 @@ export class CodeManager implements vscode.Disposable {
      */ 
     private getQualifiedName():string {
         let qualifiedName = this._codeFile.replace(/[\/\\]/g,".");
-        console.log("qualifiedName before Processing " + qualifiedName);
-        // return qualifiedName.substring(Math.max(this._classPath.length+1,this._workspaceFolder.length+1),this._codeFile.length-5);
-        qualifiedName = qualifiedName.substring(Math.max(this._classPath.length+1,this._workspaceFolder.length+1),this._codeFile.length-5);
-        console.log("qualifiedName after Processing " + qualifiedName);
-        return qualifiedName;
-        // return this._codeFile.substring(Math.max(this._classPath.length,this._workspaceFolder.length+1),this._codeFile.length-5).replace(/\\/g,".");
+        return qualifiedName.substring(Math.max(this._classPath.length+1,this._workspaceFolder.length+1),this._codeFile.length-5);
     }
 
     /**
@@ -450,7 +445,9 @@ export class CodeManager implements vscode.Disposable {
         const config = vscode.workspace.getConfiguration("code-runner");
         await this.openFileOrFolderPicker(fileFolderPickerTitle, selectFolder, selectMany).then((uri) =>{
             if(uri){
-                uri = uri.substr(1);
+                if(os.platform() == "win32"){
+                    uri = uri.substr(1);
+                }
                 config.update(configString,uri);
                 vscode.window.showInformationMessage("Config Modified Successfully");
                 configModifiedSuccess = uri;
@@ -561,11 +558,11 @@ export class CodeManager implements vscode.Disposable {
             executor = executor.replace(/&&/g, replacement);
             if(isIOCommand){
                 let insertPosition = executor.lastIndexOf("{")+1;
-                executor = executor.substring(0,insertPosition) + " Get-Content $inputFilePath |" + executor.substring(insertPosition);
+                executor = executor.substring(0,insertPosition) + " Get-Content \"$inputFilePath\" |" + executor.substring(insertPosition);
             }
             executor = executor.replace(/\$dir\$fileNameWithoutExt/g, ".\\$fileNameWithoutExt");
             if(isIOCommand){
-                executor += " > $outputFilePath"
+                executor += " > \"$outputFilePath\""
             }
             return executor + " }";
         }
