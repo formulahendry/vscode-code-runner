@@ -60,7 +60,11 @@
       },
       {
         "command": "code-runner.stop",
-        "title": "Stop Code Run"
+        "title": "Stop Code Run",
+        "icon": {
+          "light": "./images/stop-light.svg",
+          "dark": "./images/stop-dark.svg"
+        }
       }
     ],
     "keybindings": [
@@ -98,6 +102,13 @@
         {
           "when": "config.code-runner.showRunIconInEditorTitleMenu",
           "command": "code-runner.run",
+          "group": "navigation"
+        }
+      ],
+      "editor/title": [
+        {
+          "when": "config.code-runner.showStopIconInEditorTitleMenu && code-runner.codeRunning",
+          "command": "code-runner.stop",
           "group": "navigation"
         }
       ],
@@ -305,6 +316,12 @@
           "type": "boolean",
           "default": true,
           "description": "Whether to show 'Run Code' icon in editor title menu.",
+          "scope": "resource"
+        },
+        "code-runner.showStopIconInEditorTitleMenu": {
+          "type": "boolean",
+          "default": true,
+          "description": "Whether to show 'Stop code run' icon in the editor title menu when code is running.",
           "scope": "resource"
         },
         "code-runner.showRunCommandInEditorContextMenu": {
