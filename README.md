@@ -6,15 +6,15 @@ Run code snippet or code file for multiple languages: **C, C++, Java, JavaScript
 
 ## Sponsors
 
-[![Tabnine](images/tabnine.png)](http://wd5a.2.vu/1)
-
-Increase your coding productivity with Tabnine’s AI code completions! Tabnine is a free powerful Artificial Intelligence assistant designed to help you code faster, reduce mistakes, and discover best coding practices - without ever leaving the comfort of VS Code.
-
+[![Tabnine](images/tabnine.png)](http://wd5a.2.vu/1)<br>
+Increase your coding productivity with Tabnine’s AI code completions! Tabnine is a free powerful Artificial Intelligence assistant designed to help you code faster, reduce mistakes, and discover best coding practices - without ever leaving the comfort of VS Code.<br>
 Tabnine is trusted by more than a million developers worldwide. [Get it now](http://wd5a.2.vu/1).
 
-[![CodeStream](https://alt-images.codestream.com/codestream_logo_coderunner.png)](https://sponsorlink.codestream.com/?utm_source=vscmarket&utm_campaign=coderunner&utm_medium=banner)
-
+[![CodeStream](https://alt-images.codestream.com/codestream_logo_coderunner.png)](https://sponsorlink.codestream.com/?utm_source=vscmarket&utm_campaign=coderunner&utm_medium=banner)<br>
 Eliminate context switching and costly distractions. Create and merge PRs and perform code reviews from inside your IDE while using jump-to-definition, your keybindings, and other IDE favorites. [Learn more](https://sponsorlink.codestream.com/?utm_source=vscmarket&utm_campaign=coderunner&utm_medium=banner).
+
+[![Stepsize](images/stepsize.png)](https://bit.ly/36ewoaU)<br>
+Track and prioritise tech debt and maintenance issues, straight from your IDE. Bookmark code while you work, organise TODOs and share codebase knowledge with your team. [Try it out for free today](https://bit.ly/36ewoaU).
 
 ## Book for VS Code
 
@@ -59,6 +59,7 @@ If you like this extension, you could become a backer or sponsor via **[Patreon]
 * To stop the running code:
   * use shortcut `Ctrl+Alt+M`
   * or press `F1` and then select/type `Stop Code Run`
+  * or click `Stop Code Run` button in editor title menu
   * or right click the Output Channel and then click `Stop Code Run` in context menu
 
 ![Usage](images/usage.gif)
@@ -194,6 +195,8 @@ To set whether to preserve focus on code editor after code run is triggered (def
 `code-runner.showRunCommandInEditorContextMenu`: Whether to show 'Run Code' command in editor context menu. (Default is **true**)
 
 `code-runner.showRunCommandInExplorerContextMenu`: Whether to show 'Run Code' command in explorer context menu. (Default is **true**)
+
+`code-runner.showStopIconInEditorTitleMenu`: Whether to show 'Stop Code Run' icon in editor title menu when code is running. (Default is **true**)
 
 `code-runner.terminalRoot`: For Windows system, replaces the Windows style drive letter in the command with a Unix style root when using a custom shell as the terminal, like Bash or Cgywin. Example: Setting this to `/mnt/` will replace `C:\path` with `/mnt/c/path` (Default is **""**)
 

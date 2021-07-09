@@ -1,3 +1,6 @@
+### 0.11.5 (2021-07-10)
+* [#776](https://github.com/formulahendry/vscode-code-runner/pull/776): Add stop button in editor title bar
+
 ### 0.11.4 (2021-05-14)
 * [#783](https://github.com/formulahendry/vscode-code-runner/issues/783): Not detect shell on Windows correctly in VS Code 1.56
 
