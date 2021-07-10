@@ -322,6 +322,32 @@ export class CodeManager implements vscode.Disposable {
     }
 
     /**
+     * Gets the package name for a java file.
+     */
+    private getJavaFilePackageName(): string {
+        const linecount = this._document.lineCount;
+        var packageName = "";
+        var packageRegEx = /package/gi;
+        var classRegEx = /public class/gi
+        for (var i = 0; i < linecount; i++) {
+            var line = this._document.lineAt(i);
+            if (line.text.search(packageRegEx) != -1) {
+                packageName = line.text.replace(packageRegEx, "");
+                packageName = packageName.trim();
+                packageName = packageName.replace(/;/gi, ".");
+                console.log("found package: " + packageName);
+                break;
+            }
+            if (line.text.search(classRegEx) != -1) {
+                console.log("found public class declaration");
+                break;
+            }
+        }
+        console.log("returning package name: " + packageName);
+        return packageName;
+    }
+
+    /**
      * Gets the drive letter of the code file.
      */
     private getDriveLetter(): string {
@@ -361,6 +387,8 @@ export class CodeManager implements vscode.Disposable {
             const codeFileDir = this.getCodeFileDir();
             const pythonPath = cmd.includes("$pythonPath") ? await Utility.getPythonPath(this._document) : Constants.python;
             const placeholders: Array<{ regex: RegExp, replaceValue: string }> = [
+                // A placeholder that has to be replaced by the directory of the workspace with quotes
+                { regex: /\$workspaceRootWithQuotes/g, replaceValue: this.quoteFileName(this.getWorkspaceRoot(codeFileDir)) },
                 // A placeholder that has to be replaced by the path of the folder opened in VS Code
                 // If no folder is opened, replace with the directory of the code file
                 { regex: /\$workspaceRoot/g, replaceValue: this.getWorkspaceRoot(codeFileDir) },
@@ -372,6 +400,8 @@ export class CodeManager implements vscode.Disposable {
                 { regex: /\$fileName/g, replaceValue: this.getCodeBaseFile() },
                 // A placeholder that has to be replaced by the drive letter of the code file (Windows only)
                 { regex: /\$driveLetter/g, replaceValue: this.getDriveLetter() },
+                // A placeholder that has to be replaced by the package name for java files
+                { regex: /\$javaPackageName/g, replaceValue: this.getJavaFilePackageName() },
                 // A placeholder that has to be replaced by the directory of the code file without a trailing slash
                 { regex: /\$dirWithoutTrailingSlash/g, replaceValue: this.quoteFileName(this.getCodeFileDirWithoutTrailingSlash()) },
                 // A placeholder that has to be replaced by the directory of the code file
