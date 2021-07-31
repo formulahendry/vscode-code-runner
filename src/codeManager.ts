@@ -129,7 +129,7 @@ export class CodeManager implements vscode.Disposable {
     private stopRunning() {
         if (this._isRunning) {
             this._isRunning = false;
-            vscode.commands.executeCommand('setContext', 'code-runner.codeRunning', false);
+            vscode.commands.executeCommand("setContext", "code-runner.codeRunning", false);
             const kill = require("tree-kill");
             kill(this._process.pid);
         }
@@ -458,7 +458,7 @@ export class CodeManager implements vscode.Disposable {
 
     private async executeCommandInOutputChannel(executor: string, appendFile: boolean = true) {
         this._isRunning = true;
-        vscode.commands.executeCommand('setContext', 'code-runner.codeRunning', true);
+        vscode.commands.executeCommand("setContext", "code-runner.codeRunning", true);
         const clearPreviousOutput = this._config.get<boolean>("clearPreviousOutput");
         if (clearPreviousOutput) {
             this._outputChannel.clear();
@@ -484,7 +484,7 @@ export class CodeManager implements vscode.Disposable {
 
         this._process.on("close", (code) => {
             this._isRunning = false;
-            vscode.commands.executeCommand('setContext', 'code-runner.codeRunning', false);
+            vscode.commands.executeCommand("setContext", "code-runner.codeRunning", false);
             const endTime = new Date();
             const elapsedTime = (endTime.getTime() - startTime.getTime()) / 1000;
             this._outputChannel.appendLine("");
