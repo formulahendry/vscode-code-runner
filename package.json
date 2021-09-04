@@ -165,7 +165,6 @@
             "applescript": "osascript",
             "clojure": "lein exec",
             "haxe": "haxe --cwd $dirWithoutTrailingSlash --run $fileNameWithoutExt",
-            "ring": "cd $dir && ring $fileName",
             "rust": "cd $dir && rustc $fileName && $dir$fileNameWithoutExt",
             "racket": "racket",
             "scheme": "csi -script",
@@ -221,7 +220,7 @@
             ".vsh": "v run",
             ".sass": "sass --style expanded",
             ".cu": "cd $dir && nvcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
-            ".ring": "cd $dir && ring $fileName"
+            ".ring": "ring"
           },
           "description": "Set the executor of each file extension.",
           "scope": "resource"
