@@ -411,8 +411,6 @@ export class CodeManager implements vscode.Disposable {
             if (defaultProfile && defaultProfile.toLocaleLowerCase().includes("powershell")) {
                 return true;
             }
-
-            return false;
         }
         return false;
     }
