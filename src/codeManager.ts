@@ -402,16 +402,17 @@ export class CodeManager implements vscode.Disposable {
 
     private isPowershellOnWindows(): boolean {
         if (os.platform() === "win32") {
+            const windowsShell = vscode.env.shell;
             const defaultProfile = vscode.workspace.getConfiguration("terminal").get<string>("integrated.defaultProfile.windows");
-			const windowsShell = vscode.env.shell;
-            if (defaultProfile) {
-                if (defaultProfile.toLowerCase().includes("powershell") || windowsShell.toLowerCase().includes("powershell")) {
-                    return true;
-                } else if (defaultProfile === "Command Prompt") {
-                    return false;
-                }
+            if (windowsShell && windowsShell.toLocaleLowerCase().includes("powershell")) {
+                return true;
             }
-            return (windowsShell && windowsShell.toLowerCase().includes("powershell"));
+
+            if (defaultProfile && defaultProfile.toLocaleLowerCase().includes("powershell")) {
+                return true;
+            }
+
+            return false;
         }
         return false;
     }
