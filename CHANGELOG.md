@@ -1,3 +1,6 @@
+### 0.11.6 (2021-10-10)
+* Add support for Ring
+
 ### 0.11.5 (2021-07-10)
 * [#776](https://github.com/formulahendry/vscode-code-runner/pull/776): Add stop button in editor title bar
 
