@@ -295,6 +295,12 @@
           "description": "Whether to run code in Integrated Terminal.",
           "scope": "resource"
         },
+        "code-runner.runWithPythonExtension": {
+          "type": "boolean",
+          "default": false,
+          "description": "Whether to run Python code with ms-python extension",
+          "scope": "resource"
+        },
         "code-runner.terminalRoot": {
           "type": "string",
           "default": "",
