@@ -45,7 +45,7 @@
       {
         "command": "code-runner.run",
         "title": "Run Code",
-        "icon": "$(notebook-execute)"
+        "icon": "$(play)"
       },
       {
         "command": "code-runner.runCustomCommand",
@@ -58,7 +58,7 @@
       {
         "command": "code-runner.stop",
         "title": "Stop Code Run",
-        "icon": "$(notebook-stop)"
+        "icon": "$(debug-stop)"
       }
     ],
     "keybindings": [
