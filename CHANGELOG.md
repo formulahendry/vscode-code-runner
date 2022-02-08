@@ -1,3 +1,6 @@
+### 0.11.7 (2022-02-08)
+* Update run/stop icons
+
 ### 0.11.6 (2021-10-10)
 * Add support for Ring
 
