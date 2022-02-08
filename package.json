@@ -45,10 +45,7 @@
       {
         "command": "code-runner.run",
         "title": "Run Code",
-        "icon": {
-          "light": "./images/run-light.svg",
-          "dark": "./images/run-dark.svg"
-        }
+        "icon": "$(notebook-execute)"
       },
       {
         "command": "code-runner.runCustomCommand",
@@ -61,10 +58,7 @@
       {
         "command": "code-runner.stop",
         "title": "Stop Code Run",
-        "icon": {
-          "light": "./images/stop-light.svg",
-          "dark": "./images/stop-dark.svg"
-        }
+        "icon": "$(notebook-stop)"
       }
     ],
     "keybindings": [
