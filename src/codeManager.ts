@@ -108,7 +108,7 @@ export class CodeManager implements vscode.Disposable {
             vscode.window.showInputBox().then((msg) => {
                 if (msg !== undefined) {
                     this._process.stdin.write(msg);
-                    this._process.stdin.write('\r\n');
+                    this._process.stdin.write("\r\n");
                 }
             });
         } else {
