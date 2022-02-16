@@ -75,6 +75,10 @@
         "key": "ctrl+alt+j"
       },
       {
+        "command": "code-runner.inputProcess",
+        "key": "ctrl+alt+i"
+      },
+      {
         "command": "code-runner.stop",
         "key": "ctrl+alt+m"
       }

@@ -22,6 +22,10 @@ export function activate(context: vscode.ExtensionContext) {
         codeManager.runByLanguage();
     });
 
+    const inputProcess = vscode.commands.registerCommand("code-runner.inputProcess", () => {
+        codeManager.inputProcess();
+    });
+
     const stop = vscode.commands.registerCommand("code-runner.stop", () => {
         codeManager.stop();
     });
@@ -29,6 +33,7 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(run);
     context.subscriptions.push(runCustomCommand);
     context.subscriptions.push(runByLanguage);
+    context.subscriptions.push(inputProcess);
     context.subscriptions.push(stop);
     context.subscriptions.push(codeManager);
 }

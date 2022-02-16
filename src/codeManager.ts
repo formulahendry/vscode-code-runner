@@ -103,6 +103,19 @@ export class CodeManager implements vscode.Disposable {
         });
     }
 
+    public inputProcess(): void {
+        if (this._isRunning) {
+            vscode.window.showInputBox().then((msg) => {
+                if (msg !== undefined) {
+                    this._process.stdin.write(msg);
+                    this._process.stdin.write('\r\n');
+                }
+            });
+        } else {
+            vscode.window.showInformationMessage("Code is not running!");
+        }
+    }
+
     public stop(): void {
         this._appInsightsClient.sendEvent("stop");
         this.stopRunning();
