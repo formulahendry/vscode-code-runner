@@ -1,8 +1,8 @@
 {
   "name": "code-runner",
   "displayName": "Code Runner",
-  "description": "Run C, C++, Java, JS, PHP, Python, Perl, Ruby, Go, Lua, Groovy, PowerShell, CMD, BASH, F#, C#, VBScript, TypeScript, CoffeeScript, Scala, Swift, Julia, Crystal, OCaml, R, AppleScript, Elixir, VB.NET, Clojure, Haxe, Obj-C, Rust, Racket, Scheme, AutoHotkey, AutoIt, Kotlin, Dart, Pascal, Haskell, Nim, D, Lisp, Kit, V, SCSS, Sass, CUDA, Less, Fortran, Ring",
-  "version": "0.11.7",
+  "description": "Run C, C++, Java, JS, PHP, Python, Perl, Ruby, Go, Lua, Groovy, PowerShell, CMD, BASH, F#, C#, VBScript, TypeScript, CoffeeScript, Scala, Swift, Julia, Crystal, OCaml, R, AppleScript, Elixir, VB.NET, Clojure, Haxe, Obj-C, Rust, Racket, Scheme, AutoHotkey, AutoIt, Kotlin, Dart, Pascal, Haskell, Nim, D, Lisp, Kit, V, SCSS, Sass, CUDA, Less, Fortran, Ring, Standard ML",
+  "version": "0.11.8",
   "featureFlags": {
     "usingNewPythonInterpreterPathApi": true,
     "usingNewPythonInterpreterPathApiV2": true
@@ -32,6 +32,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/formulahendry/vscode-code-runner.git"
+  },
+  "sponsor": {
+    "url": "https://www.patreon.com/junhan"
   },
   "activationEvents": [
     "onCommand:code-runner.run",

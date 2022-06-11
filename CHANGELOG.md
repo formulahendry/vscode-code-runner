@@ -1,3 +1,7 @@
+### 0.11.8 (2022-06-11)
+* Add support for Standard ML
+* Adopt extension sponsorship
+
 ### 0.11.7 (2022-02-08)
 * Update run/stop icons
 
