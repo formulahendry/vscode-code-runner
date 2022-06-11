@@ -178,7 +178,8 @@
             "FortranFreeForm": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
             "fortran-modern": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
             "fortran_fixed-form": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
-            "fortran": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt"
+            "fortran": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+            "sml": "cd $dir && sml $fileName"
           },
           "description": "Set the executor of each language.",
           "scope": "resource"
@@ -214,7 +215,8 @@
             ".vsh": "v run",
             ".sass": "sass --style expanded",
             ".cu": "cd $dir && nvcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
-            ".ring": "ring"
+            ".ring": "ring",
+            ".sml": "cd $dir && sml $fileName"
           },
           "description": "Set the executor of each file extension.",
           "scope": "resource"
