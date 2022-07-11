@@ -464,7 +464,11 @@ export class CodeManager implements vscode.Disposable {
             this._outputChannel.clear();
         }
         const showExecutionMessage = this._config.get<boolean>("showExecutionMessage");
-        this._outputChannel.show(this._config.get<boolean>("preserveFocus"));
+
+        if (this._config.get<boolean>("showOutputOnRun")) {
+            this._outputChannel.show(this._config.get<boolean>("preserveFocus"));
+        }
+
         const spawn = require("child_process").spawn;
         const command = await this.getFinalCommandToRunCodeFile(executor, appendFile);
         if (showExecutionMessage) {
@@ -472,30 +476,67 @@ export class CodeManager implements vscode.Disposable {
         }
         this.sendRunEvent(executor, false);
         const startTime = new Date();
-        this._process = spawn(command, [], { cwd: this._cwd, shell: true });
 
-        this._process.stdout.on("data", (data) => {
-            this._outputChannel.append(data.toString());
-        });
+        const run = (progressInfo?: {progress: vscode.Progress<{
+            message?: string;
+            increment?: number;
+        }>, token: vscode.CancellationToken}) => {
+            let {progress, token} = progressInfo ?? {};
+            this._process = spawn(command, [], { cwd: this._cwd, shell: true });
 
-        this._process.stderr.on("data", (data) => {
-            this._outputChannel.append(data.toString());
-        });
+            token?.onCancellationRequested(() => {
+				this._process.kill();
+			});
 
-        this._process.on("close", (code) => {
-            this._isRunning = false;
-            vscode.commands.executeCommand("setContext", "code-runner.codeRunning", false);
-            const endTime = new Date();
-            const elapsedTime = (endTime.getTime() - startTime.getTime()) / 1000;
-            this._outputChannel.appendLine("");
-            if (showExecutionMessage) {
-                this._outputChannel.appendLine("[Done] exited with code=" + code + " in " + elapsedTime + " seconds");
+            progress?.report({message: `Running \`${command}\``})
+
+            this._process.stdout.on("data", (data) => {
+                this._outputChannel.append(data.toString());
+            });
+
+            this._process.stderr.on("data", (data) => {
+                this._outputChannel.append(data.toString());
+            });
+
+            const onClose = (code) => {
+                this._isRunning = false;
+                vscode.commands.executeCommand("setContext", "code-runner.codeRunning", false);
+                const endTime = new Date();
+                const elapsedTime = (endTime.getTime() - startTime.getTime()) / 1000;
                 this._outputChannel.appendLine("");
+                if (showExecutionMessage) {
+                    this._outputChannel.appendLine("[Done] exited with code=" + code + " in " + elapsedTime + " seconds");
+                    this._outputChannel.appendLine("");
+                }
+                if (this._isTmpFile) {
+                    fs.unlinkSync(this._codeFile);
+                }
             }
-            if (this._isTmpFile) {
-                fs.unlinkSync(this._codeFile);
+
+            if (progress) {
+                return new Promise<void>(resolve => {
+                    this._process.on("close", (code) => {
+                        onClose(code);
+                        resolve();
+                    })
+                });
+            } else {
+                this._process.on("close", onClose);
             }
-        });
+        }
+
+        if (this._config.get<boolean>("showProgressOnRun")) {
+            vscode.window.withProgress({
+                location: vscode.ProgressLocation.Notification,
+                title: `Code Runner`,
+                cancellable: true
+            }, (progress, token) => {
+                return run({progress, token})
+            });
+        }else{
+            run();
+        }
+       
     }
 
     private sendRunEvent(executor: string, runFromTerminal: boolean) {
