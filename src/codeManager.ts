@@ -477,18 +477,21 @@ export class CodeManager implements vscode.Disposable {
         this.sendRunEvent(executor, false);
         const startTime = new Date();
 
-        const run = (progressInfo?: {progress: vscode.Progress<{
+        const run = (progressInfo?: {
+        progress: vscode.Progress<{
             message?: string;
             increment?: number;
-        }>, token: vscode.CancellationToken}) => {
-            let {progress, token} = progressInfo ?? {};
+        }>,
+        token: vscode.CancellationToken, 
+        message: string}) => {
+            let {progress, token, message} = progressInfo ?? {};
             this._process = spawn(command, [], { cwd: this._cwd, shell: true });
 
             token?.onCancellationRequested(() => {
 				this._process.kill();
 			});
 
-            progress?.report({message: `Running \`${command}\``})
+            progress?.report({message})
 
             this._process.stdout.on("data", (data) => {
                 this._outputChannel.append(data.toString());
@@ -525,13 +528,18 @@ export class CodeManager implements vscode.Disposable {
             }
         }
 
-        if (this._config.get<boolean>("showProgressOnRun")) {
+        const progressLocation = this._config.get<string>("showProgressOnRun");
+        const showProgress = progressLocation !== "none";
+        if (showProgress) {
+            const showInStatusBar = progressLocation === "statusBar";
+            const location = showInStatusBar ? vscode.ProgressLocation.Window : vscode.ProgressLocation.Notification;
+            const message = showInStatusBar ? "" : `Running \`${command}\``
             vscode.window.withProgress({
-                location: vscode.ProgressLocation.Notification,
+                location,
                 title: `Code Runner`,
                 cancellable: true
             }, (progress, token) => {
-                return run({progress, token})
+                return run({progress, token, message})
             });
         }else{
             run();
