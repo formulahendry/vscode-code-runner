@@ -482,16 +482,16 @@ export class CodeManager implements vscode.Disposable {
             message?: string;
             increment?: number;
         }>,
-        token: vscode.CancellationToken, 
+        token: vscode.CancellationToken,
         message: string}) => {
-            let {progress, token, message} = progressInfo ?? {};
+            const {progress, token, message} = progressInfo ?? {};
             this._process = spawn(command, [], { cwd: this._cwd, shell: true });
 
             token?.onCancellationRequested(() => {
-				this._process.kill();
-			});
+                this._process.kill();
+            });
 
-            progress?.report({message})
+            progress?.report({message});
 
             this._process.stdout.on("data", (data) => {
                 this._outputChannel.append(data.toString());
@@ -514,37 +514,37 @@ export class CodeManager implements vscode.Disposable {
                 if (this._isTmpFile) {
                     fs.unlinkSync(this._codeFile);
                 }
-            }
+            };
 
             if (progress) {
-                return new Promise<void>(resolve => {
+                return new Promise<void>((resolve) => {
                     this._process.on("close", (code) => {
                         onClose(code);
                         resolve();
-                    })
+                    });
                 });
             } else {
                 this._process.on("close", onClose);
             }
-        }
+        };
 
         const progressLocation = this._config.get<string>("showProgressOnRun");
         const showProgress = progressLocation !== "none";
         if (showProgress) {
             const showInStatusBar = progressLocation === "statusBar";
             const location = showInStatusBar ? vscode.ProgressLocation.Window : vscode.ProgressLocation.Notification;
-            const message = showInStatusBar ? "" : `Running \`${command}\``
+            const message = showInStatusBar ? "" : `Running \`${command}\``;
             vscode.window.withProgress({
                 location,
                 title: `Code Runner`,
-                cancellable: true
+                cancellable: true,
             }, (progress, token) => {
-                return run({progress, token, message})
+                return run({progress, token, message});
             });
-        }else{
+        } else {
             run();
         }
-       
+
     }
 
     private sendRunEvent(executor: string, runFromTerminal: boolean) {
