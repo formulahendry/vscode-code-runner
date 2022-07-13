@@ -1,7 +1,7 @@
 {
   "name": "code-runner",
   "displayName": "Code Runner",
-  "description": "Run C, C++, Java, JS, PHP, Python, Perl, Ruby, Go, Lua, Groovy, PowerShell, CMD, BASH, F#, C#, VBScript, TypeScript, CoffeeScript, Scala, Swift, Julia, Crystal, OCaml, R, AppleScript, Elixir, VB.NET, Clojure, Haxe, Obj-C, Rust, Racket, Scheme, AutoHotkey, AutoIt, Kotlin, Dart, Pascal, Haskell, Nim, D, Lisp, Kit, V, SCSS, Sass, CUDA, Less, Fortran, Ring, Standard ML",
+  "description": "Run C, C++, Java, zig, JS, PHP, Python, Perl, Ruby, Go, Lua, Groovy, PowerShell, CMD, BASH, F#, C#, VBScript, TypeScript, CoffeeScript, Scala, Swift, Julia, Crystal, OCaml, R, AppleScript, Elixir, VB.NET, Clojure, Haxe, Obj-C, Rust, Racket, Scheme, AutoHotkey, AutoIt, Kotlin, Dart, Pascal, Haskell, Nim, D, Lisp, Kit, V, SCSS, Sass, CUDA, Less, Fortran, Ring, Standard ML",
   "version": "0.11.8",
   "featureFlags": {
     "usingNewPythonInterpreterPathApi": true,
@@ -135,6 +135,7 @@
             "javascript": "node",
             "java": "cd $dir && javac $fileName && java $fileNameWithoutExt",
             "c": "cd $dir && gcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+            "zig": "zig run $fileName",
             "cpp": "cd $dir && g++ $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
             "objective-c": "cd $dir && gcc -framework Cocoa $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
             "php": "php",
@@ -196,6 +197,7 @@
             ".jl": "julia",
             ".cr": "crystal",
             ".ml": "ocaml",
+            ".zig": "zig run $fileName",
             ".exs": "elixir",
             ".hx": "haxe --cwd $dirWithoutTrailingSlash --run $fileNameWithoutExt",
             ".rkt": "racket",
