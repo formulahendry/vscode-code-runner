@@ -264,6 +264,27 @@
           "description": "Whether to clear previous output before each run.",
           "scope": "resource"
         },
+        "code-runner.showOutputOnRun": {
+          "type": "boolean",
+          "default": true,
+          "description": "Whether to bring up the output pane on every run",
+          "scope": "resource"
+        },
+        "code-runner.showProgressOnRun": {
+          "type": "string",
+          "default": "none",
+          "description": "How to show a progress notification while the code is running",
+          "enum": [
+            "none",
+            "statusBar",
+            "notification"
+          ],
+          "enumDescriptions": [
+            "Do not show a progress notification",
+            "Show a progress message in the status bar (not cancellable)",
+            "Show a progress notification with a \"Cancel\" button"],
+          "scope": "resource"
+        },
         "code-runner.saveAllFilesBeforeRun": {
           "type": "boolean",
           "default": false,

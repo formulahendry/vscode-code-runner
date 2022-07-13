@@ -464,7 +464,11 @@ export class CodeManager implements vscode.Disposable {
             this._outputChannel.clear();
         }
         const showExecutionMessage = this._config.get<boolean>("showExecutionMessage");
-        this._outputChannel.show(this._config.get<boolean>("preserveFocus"));
+
+        if (this._config.get<boolean>("showOutputOnRun")) {
+            this._outputChannel.show(this._config.get<boolean>("preserveFocus"));
+        }
+
         const spawn = require("child_process").spawn;
         const command = await this.getFinalCommandToRunCodeFile(executor, appendFile);
         if (showExecutionMessage) {
@@ -472,30 +476,75 @@ export class CodeManager implements vscode.Disposable {
         }
         this.sendRunEvent(executor, false);
         const startTime = new Date();
-        this._process = spawn(command, [], { cwd: this._cwd, shell: true });
 
-        this._process.stdout.on("data", (data) => {
-            this._outputChannel.append(data.toString());
-        });
+        const run = (progressInfo?: {
+        progress: vscode.Progress<{
+            message?: string;
+            increment?: number;
+        }>,
+        token: vscode.CancellationToken,
+        message: string}) => {
+            const {progress, token, message} = progressInfo ?? {};
+            this._process = spawn(command, [], { cwd: this._cwd, shell: true });
 
-        this._process.stderr.on("data", (data) => {
-            this._outputChannel.append(data.toString());
-        });
+            token?.onCancellationRequested(() => {
+                this._process.kill();
+            });
 
-        this._process.on("close", (code) => {
-            this._isRunning = false;
-            vscode.commands.executeCommand("setContext", "code-runner.codeRunning", false);
-            const endTime = new Date();
-            const elapsedTime = (endTime.getTime() - startTime.getTime()) / 1000;
-            this._outputChannel.appendLine("");
-            if (showExecutionMessage) {
-                this._outputChannel.appendLine("[Done] exited with code=" + code + " in " + elapsedTime + " seconds");
+            progress?.report({message});
+
+            this._process.stdout.on("data", (data) => {
+                this._outputChannel.append(data.toString());
+            });
+
+            this._process.stderr.on("data", (data) => {
+                this._outputChannel.append(data.toString());
+            });
+
+            const onClose = (code) => {
+                this._isRunning = false;
+                vscode.commands.executeCommand("setContext", "code-runner.codeRunning", false);
+                const endTime = new Date();
+                const elapsedTime = (endTime.getTime() - startTime.getTime()) / 1000;
                 this._outputChannel.appendLine("");
+                if (showExecutionMessage) {
+                    this._outputChannel.appendLine("[Done] exited with code=" + code + " in " + elapsedTime + " seconds");
+                    this._outputChannel.appendLine("");
+                }
+                if (this._isTmpFile) {
+                    fs.unlinkSync(this._codeFile);
+                }
+            };
+
+            if (progress) {
+                return new Promise<void>((resolve) => {
+                    this._process.on("close", (code) => {
+                        onClose(code);
+                        resolve();
+                    });
+                });
+            } else {
+                this._process.on("close", onClose);
             }
-            if (this._isTmpFile) {
-                fs.unlinkSync(this._codeFile);
-            }
-        });
+        };
+
+        const progressLocation = this._config.get<string>("showProgressOnRun");
+        const showProgress = progressLocation !== "none";
+        if (showProgress) {
+            const showInStatusBar = progressLocation === "statusBar";
+            const location = showInStatusBar ? vscode.ProgressLocation.Window : vscode.ProgressLocation.Notification;
+            const message = showInStatusBar ? "" : `Running \`${command}\``;
+            vscode.window.withProgress({
+                location,
+                title: `Code Runner`,
+                cancellable: true,
+            }, (progress, token) => {
+                return run({progress, token, message});
+            });
+        } else {
+            run();
+        }
+
     }
 
     private sendRunEvent(executor: string, runFromTerminal: boolean) {
