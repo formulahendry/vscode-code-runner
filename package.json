@@ -170,7 +170,7 @@
             "dart": "dart",
             "pascal": "cd $dir && fpc $fileName && $dir$fileNameWithoutExt",
             "d": "cd $dir && dmd $fileName && $dir$fileNameWithoutExt",
-            "haskell": "runhaskell",
+            "haskell": "runghc",
             "nim": "nim compile --verbosity:0 --hints:off --run",
             "lisp": "sbcl --script",
             "kit": "kitc --run",
