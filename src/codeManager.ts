@@ -436,6 +436,16 @@ export class CodeManager implements vscode.Disposable {
     }
 
     private async executeCommandInTerminal(executor: string, appendFile: boolean = true) {
+        if (this._config.get<boolean>("runWithPythonExtension") && executor.startsWith('python')) {
+            const python_ext = vscode.extensions.getExtension('ms-python.python');
+            if (python_ext?.isActive) {
+                await vscode.commands.executeCommand('python.execInTerminal');
+                return;
+            } else {
+                vscode.window.showErrorMessage('ms-python did not activated');
+                return;
+            }
+        }
         let isNewTerminal = false;
         if (this._terminal === null) {
             this._terminal = vscode.window.createTerminal("Code");

@@ -2,3 +2,4 @@
 npm-debug.log
 out
 node_modules
+yarn.lock
