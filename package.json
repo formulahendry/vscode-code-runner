@@ -134,8 +134,8 @@
           "default": {
             "javascript": "node",
             "java": "cd $dir && javac $fileName && java $fileNameWithoutExt",
-            "c": "cd $dir && gcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
-            "cpp": "cd $dir && g++ $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+            "c": "cd $dir & gcc -std=c17 \"$fileName\" -o \"$fileNameWithoutExt\" & ./\"$dir$fileNameWithoutExt.exe\" & del \"$dir$fileNameWithoutExt.exe\"",
+            "cpp": "cd $dir & g++ -std=c++17 \"$fileName\" -o \"$fileNameWithoutExta.exe\" & ./\"$dir$fileNameWithoutExt.exe\" & del \"$dir$fileNameWithoutExt.exe\"",
             "objective-c": "cd $dir && gcc -framework Cocoa $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
             "php": "php",
             "python": "python -u",
