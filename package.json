@@ -119,7 +119,7 @@
     },
     "configuration": {
       "type": "object",
-      "title": "Run Code configuration",
+      "title": "Code Runner configuration",
       "properties": {
         "code-runner.executorMapByGlob": {
           "type": "object",
@@ -134,8 +134,8 @@
           "default": {
             "javascript": "node",
             "java": "cd $dir && javac $fileName && java $fileNameWithoutExt",
-            "c": "cd $dir && gcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
-            "cpp": "cd $dir && g++ $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+            "c": "cd $dir && gcc -std=c11 $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+            "cpp": "cd $dir && clang++ -std=c++17 -stdlib=libc++ $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
             "objective-c": "cd $dir && gcc -framework Cocoa $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
             "php": "php",
             "python": "python -u",
