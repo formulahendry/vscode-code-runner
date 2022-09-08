@@ -262,7 +262,7 @@
         },
         "code-runner.clearPreviousOutput": {
           "type": "boolean",
-          "default": false,
+          "default": true,
           "description": "Whether to clear previous output before each run.",
           "scope": "resource"
         },
