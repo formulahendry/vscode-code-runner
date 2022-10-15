@@ -140,6 +140,7 @@
             "objective-c": "cd $dir && gcc -framework Cocoa $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
             "php": "php",
             "python": "python3 -u",
+            "Algol68g": "a68g",
             "perl": "perl",
             "perl6": "perl6",
             "ruby": "ruby",
