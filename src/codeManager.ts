@@ -417,15 +417,17 @@ export class CodeManager implements vscode.Disposable {
     }
 
     private changeFilePathForBashOnWindows(command: string): string {
-        if (os.platform() === "win32") {
-            const windowsShell = vscode.env.shell;
+        const windowsShell = vscode.env.shell;
+        if (os.platform() === "win32" && windowsShell.toLowerCase().indexOf("powershell") === -1 && windowsShell.toLowerCase().indexOf("cmd") === -1) {
             const terminalRoot = this._config.get<string>("terminalRoot");
-            if (windowsShell && terminalRoot) {
+            if (windowsShell && windowsShell.toLowerCase().indexOf("wsl") > -1 && windowsShell.toLowerCase().indexOf("windows") > -1) {
+                command = command.replace(/([A-Za-z]):\\/g, this.replacer).replace(/\\/g, "/");
+            } else if (windowsShell && windowsShell.toLowerCase().indexOf("bash") > -1 && windowsShell.toLowerCase().indexOf("windows") > -1) {
+                command = command.replace(/([A-Za-z]):\\/g, this.replacer).replace(/\\/g, "/");
+            } else if (windowsShell && terminalRoot) {
                 command = command
                     .replace(/([A-Za-z]):\\/g, (match, p1) => `${terminalRoot}${p1.toLowerCase()}/`)
                     .replace(/\\/g, "/");
-            } else if (windowsShell && windowsShell.toLowerCase().indexOf("bash") > -1 && windowsShell.toLowerCase().indexOf("windows") > -1) {
-                command = command.replace(/([A-Za-z]):\\/g, this.replacer).replace(/\\/g, "/");
             }
         }
         return command;
