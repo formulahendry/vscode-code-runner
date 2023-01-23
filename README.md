@@ -6,18 +6,11 @@ Run code snippet or code file for multiple languages: **C, C++, Java, JavaScript
 
 ## Sponsors
 
-[![Tabnine](images/tabnine.png)](https://bit.ly/2LZsrQ9)<br>
-Increase your coding productivity with Tabnine’s AI code completions! Tabnine is a free powerful Artificial Intelligence assistant designed to help you code faster, reduce mistakes, and discover best coding practices - without ever leaving the comfort of VS Code.<br>
-Tabnine is trusted by more than a million developers worldwide. [Get it now](https://bit.ly/2LZsrQ9).
-
 [![CodeStream](https://alt-images.codestream.com/codestream_logo_coderunner.png)](https://sponsorlink.codestream.com/?utm_source=vscmarket&utm_campaign=coderunner&utm_medium=banner)<br>
 Eliminate context switching and costly distractions. Create and merge PRs and perform code reviews from inside your IDE while using jump-to-definition, your keybindings, and other IDE favorites. [Learn more](https://sponsorlink.codestream.com/?utm_source=vscmarket&utm_campaign=coderunner&utm_medium=banner).
 
 [![Stepsize](images/stepsize.png)](https://bit.ly/36ewoaU)<br>
 Track and prioritise tech debt and maintenance issues, straight from your IDE. Bookmark code while you work, organise TODOs and share codebase knowledge with your team. [Try it out for free today](https://bit.ly/36ewoaU).
-
-[![Duckly](https://storage.googleapis.com/gitduck/img/duckly-sponsor-vsc-opt.png)](https://bit.ly/3LiahUf)<br>
-Easy pair programming with any IDE. Duckly enables you to talk, share your code in real-time, server and terminal with people using different IDEs. [Try it out for free](https://bit.ly/3LiahUf).
 
 ## Book for VS Code
 
