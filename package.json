@@ -204,7 +204,7 @@
             ".scm": "csi -script",
             ".ahk": "autohotkey",
             ".au3": "autoit3",
-            ".kt": "cd $dir && kotlinc $fileName -include-runtime -d $fileNameWithoutExt.jar && java -jar $fileNameWithoutExt.jar",
+            ".kt": "cd $dir && kotlinc $fileName -include-runtime -d $fileNameWithoutExt.jar && java -jar $fileNameWithoutExt.jar && rm $fileNameWithoutExt.jar",
             ".kts": "kotlinc -script",
             ".dart": "dart",
             ".pas": "cd $dir && fpc $fileName && $dir$fileNameWithoutExt",
