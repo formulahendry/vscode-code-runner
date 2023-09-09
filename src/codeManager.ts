@@ -171,6 +171,20 @@ export class CodeManager implements vscode.Disposable {
             return undefined;
         }
     }
+    private asRelativePath(): string {
+        if (vscode.workspace.workspaceFolders) {
+            if (this._document) {
+                const RelativePath = vscode.workspace.asRelativePath(this._document.uri);
+                if (RelativePath) {
+                    return RelativePath.uri.fsPath;
+                }
+            }
+            return vscode.workspace.RelativePath[0].uri.fsPath;
+        } else {
+            return undefined;
+        }
+    }
+
 
     private getCodeFileAndExecute(fileExtension: string, executor: string, appendFile: boolean = true): any {
         let selection;
@@ -378,6 +392,11 @@ export class CodeManager implements vscode.Disposable {
                 { regex: /\$dir/g, replaceValue: this.quoteFileName(codeFileDir) },
                 // A placeholder that has to be replaced by the path of Python interpreter
                 { regex: /\$pythonPath/g, replaceValue: pythonPath },
+                 // A placeholder that has to be replaced by the relative path of the code file to the workspace folder
+                { regex: /\$relativeDir/g, replaceValue: this.quoteFileName(this.asRelativePath(this._codeFile)) },
+                // A placeholder that has to be replaced by the relative path of the code file's dirname to the workspace folder
+                { regex: /\$relativeFileDirname/g, replaceValue: this.quoteFileName(this.asRelativePath(codeFileDir)) },
+            
             ];
 
             placeholders.forEach((placeholder) => {
