@@ -1,3 +1,6 @@
+### 0.12.1 (2023-10-08)
+* Add support for Mojo language
+
 ### 0.12.0 (2023-01-23)
 * Add support for Zig language
 * Use `runghc` to replace `runhaskell` for Haskell 
