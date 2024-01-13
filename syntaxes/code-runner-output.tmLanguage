@@ -16,14 +16,14 @@
                         <key>name</key>
                         <string>token.info-token</string>
                     </dict>
-                    <key>2</key>
+                    <key>3</key>
                     <dict>
                         <key>name</key>
                         <string>string</string>
                     </dict>
                 </dict>
                 <key>match</key>
-                <string>(\[Running\])(.*)</string>
+                <string>(\[Running([^\]]*)?\])(.*)</string>
                 <key>name</key>
                 <string>code-runner.running</string>
             </dict>
