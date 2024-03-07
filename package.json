@@ -1,7 +1,7 @@
 {
   "name": "code-runner",
   "displayName": "Code Runner",
-  "description": "Run C, C++, Java, JS, PHP, Python, Perl, Ruby, Go, Lua, Groovy, PowerShell, CMD, BASH, F#, C#, VBScript, TypeScript, CoffeeScript, Scala, Swift, Julia, Crystal, OCaml, R, AppleScript, Elixir, VB.NET, Clojure, Haxe, Obj-C, Rust, Racket, Scheme, AutoHotkey, AutoIt, Kotlin, Dart, Pascal, Haskell, Nim, D, Lisp, Kit, V, SCSS, Sass, CUDA, Less, Fortran, Ring, Standard ML, Zig, Mojo",
+  "description": "Run C, C++, Java, JS, PHP, Python, Perl, Ruby, Go, Lua, Groovy, PowerShell, CMD, BASH, F#, C#, VBScript, TypeScript, CoffeeScript, Scala, Swift, Julia, Crystal, OCaml, R, AppleScript, Elixir, VB.NET, Clojure, Haxe, Obj-C, Rust, Racket, Scheme, AutoHotkey, AutoIt, Kotlin, Dart, Pascal, Haskell, Nim, D, Lisp, Kit, V, SCSS, Sass, CUDA, Less, Fortran, Ring, Standard ML, Zig, Mojo, Erlang",
   "version": "0.12.1",
   "featureFlags": {
     "usingNewPythonInterpreterPathApi": true,
@@ -184,7 +184,8 @@
             "fortran_fixed-form": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
             "fortran": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
             "sml": "cd $dir && sml $fileName",
-            "mojo": "mojo run"
+            "mojo": "mojo run",
+            "erlang": "cd $dir && erlc $fileName && erl -noshell -s $fileNameWithoutExt start -s init stop"
           },
           "description": "Set the executor of each language.",
           "scope": "resource"
@@ -223,7 +224,8 @@
             ".cu": "cd $dir && nvcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
             ".ring": "ring",
             ".sml": "cd $dir && sml $fileName",
-            ".mojo": "mojo run"
+            ".mojo": "mojo run",
+            ".erl": "cd $dir && erlc $fileName && erl -noshell -s $fileNameWithoutExt start -s init stop"
           },
           "description": "Set the executor of each file extension.",
           "scope": "resource"
