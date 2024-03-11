@@ -185,7 +185,7 @@
             "fortran": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
             "sml": "cd $dir && sml $fileName",
             "mojo": "mojo run",
-            "erlang": "cd $dir && erlc $fileName && erl -noshell -s $fileNameWithoutExt start -s init stop"
+            "erlang": "cd $dir && escript $fileName"
           },
           "description": "Set the executor of each language.",
           "scope": "resource"
@@ -225,7 +225,7 @@
             ".ring": "ring",
             ".sml": "cd $dir && sml $fileName",
             ".mojo": "mojo run",
-            ".erl": "cd $dir && erlc $fileName && erl -noshell -s $fileNameWithoutExt start -s init stop"
+            ".erl": "cd $dir && escript $fileName"
           },
           "description": "Set the executor of each file extension.",
           "scope": "resource"
