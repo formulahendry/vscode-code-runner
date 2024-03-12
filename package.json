@@ -185,7 +185,7 @@
             "fortran": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
             "sml": "cd $dir && sml $fileName",
             "mojo": "mojo run",
-            "erlang": "cd $dir && escript $fileName"
+            "erlang": "escript"
           },
           "description": "Set the executor of each language.",
           "scope": "resource"
