@@ -225,7 +225,7 @@
             ".ring": "ring",
             ".sml": "cd $dir && sml $fileName",
             ".mojo": "mojo run",
-            ".erl": "cd $dir && escript $fileName"
+            ".erl": "escript"
           },
           "description": "Set the executor of each file extension.",
           "scope": "resource"
