@@ -1,7 +1,7 @@
 {
   "name": "code-runner",
   "displayName": "Code Runner",
-  "description": "Run C, C++, Java, JS, PHP, Python, Perl, Ruby, Go, Lua, Groovy, PowerShell, CMD, BASH, F#, C#, VBScript, TypeScript, CoffeeScript, Scala, Swift, Julia, Crystal, OCaml, R, AppleScript, Elixir, VB.NET, Clojure, Haxe, Obj-C, Rust, Racket, Scheme, AutoHotkey, AutoIt, Kotlin, Dart, Pascal, Haskell, Nim, D, Lisp, Kit, V, SCSS, Sass, CUDA, Less, Fortran, Ring, Standard ML, Zig, Mojo, Erlang",
+  "description": "Run C, C++, Java, JS, PHP, Python, Perl, Ruby, Go, Lua, Groovy, PowerShell, CMD, BASH, F#, C#, VBScript, TypeScript, CoffeeScript, Scala, Swift, Julia, Crystal, OCaml, R, AppleScript, Elixir, VB.NET, Clojure, Haxe, Obj-C, Rust, Racket, Scheme, AutoHotkey, AutoIt, Kotlin, Dart, Pascal, Haskell, Nim, D, Lisp, Kit, V, SCSS, Sass, CUDA, Less, Fortran, Ring, Standard ML, Zig, Mojo, Erlang, Pickle
   "version": "0.12.1",
   "featureFlags": {
     "usingNewPythonInterpreterPathApi": true,
@@ -22,7 +22,8 @@
     "python",
     "perl",
     "ruby",
-    "multi-root ready"
+    "multi-root ready",
+    "pickle"
   ],
   "bugs": {
     "url": "https://github.com/formulahendry/vscode-code-runner/issues",
@@ -185,7 +186,8 @@
             "fortran": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
             "sml": "cd $dir && sml $fileName",
             "mojo": "mojo run",
-            "erlang": "escript"
+            "erlang": "escript",
+            "pickle": "pkl eval -f yaml $fileName -o $fileNameWithoutExt.yaml"
           },
           "description": "Set the executor of each language.",
           "scope": "resource"
@@ -225,7 +227,8 @@
             ".ring": "ring",
             ".sml": "cd $dir && sml $fileName",
             ".mojo": "mojo run",
-            ".erl": "escript"
+            ".erl": "escript",
+            ".pkl": "pkl eval -f yaml $fileName -o $fileNameWithoutExt.yaml"
           },
           "description": "Set the executor of each file extension.",
           "scope": "resource"
