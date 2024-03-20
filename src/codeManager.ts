@@ -438,7 +438,7 @@ export class CodeManager implements vscode.Disposable {
     private async executeCommandInTerminal(executor: string, appendFile: boolean = true) {
         let isNewTerminal = false;
         if (this._terminal === null) {
-            this._terminal = vscode.window.createTerminal("Code");
+            this._terminal = vscode.window.activeTerminal;
             isNewTerminal = true;
         }
         this._terminal.show(this._config.get<boolean>("preserveFocus"));
