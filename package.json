@@ -163,7 +163,7 @@
             "applescript": "osascript",
             "clojure": "lein exec",
             "haxe": "haxe --cwd $dirWithoutTrailingSlash --run $fileNameWithoutExt",
-            "rust": "cd $dir && rustc $fileName && $dir$fileNameWithoutExt",
+            "rust": "cargo run",
             "racket": "racket",
             "scheme": "csi -script",
             "ahk": "autohotkey",
