@@ -185,7 +185,8 @@
             "fortran": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
             "sml": "cd $dir && sml $fileName",
             "mojo": "mojo run",
-            "erlang": "escript"
+            "erlang": "escript",
+            "spwn": "spwn build"
           },
           "description": "Set the executor of each language.",
           "scope": "resource"
@@ -225,7 +226,8 @@
             ".ring": "ring",
             ".sml": "cd $dir && sml $fileName",
             ".mojo": "mojo run",
-            ".erl": "escript"
+            ".erl": "escript",
+            ".spwn": "spwn build"
           },
           "description": "Set the executor of each file extension.",
           "scope": "resource"
