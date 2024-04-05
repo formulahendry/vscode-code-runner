@@ -1,3 +1,9 @@
+### 0.12.2 (2024-04-05)
+* Add support for Erlang
+* Add support for SPWN
+* Add support for Pkl
+* Add support for Gleam
+
 ### 0.12.1 (2023-10-08)
 * Add support for Mojo language
 
