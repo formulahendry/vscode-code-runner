@@ -225,7 +225,7 @@
             ".vsh": "v run",
             ".sass": "sass --style expanded",
             ".cu": "cd $dir && nvcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
-            ".ring": "ring",
+            ".ring": "cd $dir && ring $fileName",
             ".sml": "cd $dir && sml $fileName",
             ".mojo": "mojo run",
             ".erl": "escript",
