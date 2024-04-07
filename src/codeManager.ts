@@ -27,7 +27,7 @@ export class CodeManager implements vscode.Disposable {
     private _TERMINAL_DEFAULT_SHELL_WINDOWS: string | null = null;
 
     constructor() {
-        this._outputChannel = vscode.window.createOutputChannel("Code");
+        this._outputChannel = vscode.window.createOutputChannel("Code", "code-runner-output");
         this._terminal = null;
         this._appInsightsClient = new AppInsightsClient();
     }
