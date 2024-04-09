@@ -426,6 +426,10 @@ export class CodeManager implements vscode.Disposable {
                     .replace(/\\/g, "/");
             } else if (windowsShell && windowsShell.toLowerCase().indexOf("bash") > -1 && windowsShell.toLowerCase().indexOf("windows") > -1) {
                 command = command.replace(/([A-Za-z]):\\/g, this.replacer).replace(/\\/g, "/");
+            } else if (windowsShell && windowsShell.toLowerCase().indexOf("wsl") > -1) {
+                command = command.replace(/([A-Za-z]):\\/g, this.replacer).replace(/\\/g, "/");
+            } else if (windowsShell && windowsShell.toLowerCase().indexOf("bash") > -1  && command.includes("&&")) {
+                command = command.replace(/\\/g, "/");
             }
         }
         return command;
