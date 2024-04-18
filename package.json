@@ -1,7 +1,7 @@
 {
   "name": "code-runner",
   "displayName": "Code Runner",
-  "description": "Run C, C++, Java, JS, PHP, Python, Perl, Ruby, Go, Lua, Groovy, PowerShell, CMD, BASH, F#, C#, VBScript, TypeScript, CoffeeScript, Scala, Swift, Julia, Crystal, OCaml, R, AppleScript, Elixir, VB.NET, Clojure, Haxe, Obj-C, Rust, Racket, Scheme, AutoHotkey, AutoIt, Kotlin, Dart, Pascal, Haskell, Nim, D, Lisp, Kit, V, SCSS, Sass, CUDA, Less, Fortran, Ring, Standard ML, Zig, Mojo, Erlang, SPWN, Pkl, Gleam",
+  "description": "Run C, C++, Java, JS, PHP, Python, Perl, Ruby, Go, Lua, Groovy, PowerShell, CMD, BASH, F#, C#, VBScript, TypeScript, CoffeeScript, Scala, Swift, Julia, Crystal, Odin, OCaml, R, AppleScript, Elixir, VB.NET, Clojure, Haxe, Obj-C, Rust, Racket, Scheme, AutoHotkey, AutoIt, Kotlin, Dart, Pascal, Haskell, Nim, D, Lisp, Kit, V, SCSS, Sass, CUDA, Less, Fortran, Ring, Standard ML, Zig, Mojo, Erlang, SPWN, Pkl, Gleam",
   "version": "0.12.2",
   "featureFlags": {
     "usingNewPythonInterpreterPathApi": true,
@@ -188,7 +188,8 @@
             "erlang": "escript",
             "spwn": "spwn build",
             "pkl": "cd $dir && pkl eval -f yaml $fileName -o $fileNameWithoutExt.yaml",
-            "gleam": "gleam run -m $fileNameWithoutExt"
+            "gleam": "gleam run -m $fileNameWithoutExt",
+            "odin": "odin run $fileName -file"
           },
           "description": "Set the executor of each language.",
           "scope": "resource"
@@ -231,7 +232,8 @@
             ".erl": "escript",
             ".spwn": "spwn build",
             ".pkl": "cd $dir && pkl eval -f yaml $fileName -o $fileNameWithoutExt.yaml",
-            ".gleam": "gleam run -m $fileNameWithoutExt"
+            ".gleam": "gleam run -m $fileNameWithoutExt",
+            ".odin": "odin run $fileName -file"
           },
           "description": "Set the executor of each file extension.",
           "scope": "resource"
