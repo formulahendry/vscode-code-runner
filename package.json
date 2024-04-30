@@ -359,6 +359,12 @@
           "default": true,
           "description": "Whether to respect Shebang to run code.",
           "scope": "resource"
+        },
+        "code-runner.quatedFileName":{
+          "type":"boolean",
+          "default":false,
+          "description": "Whether to quote FileName,Path and etc.",
+          "scope": "resource"
         }
       }
     },
