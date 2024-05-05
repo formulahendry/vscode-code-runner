@@ -296,6 +296,11 @@ export class CodeManager implements vscode.Disposable {
     private getWorkspaceRoot(codeFileDir: string): string {
         return this._workspaceFolder ? this._workspaceFolder : codeFileDir;
     }
+    
+    private getWorkspaceName(workspaceRoot: string): string {
+        const regexMatch = workspaceRoot.match(/([^\/\\]+)[\/\\]?$/);
+        return regexMatch ? regexMatch[1] : workspaceRoot;
+    }
 
     /**
      * Gets the base name of the code file, that is without its directory.
@@ -364,6 +369,9 @@ export class CodeManager implements vscode.Disposable {
                 // A placeholder that has to be replaced by the path of the folder opened in VS Code
                 // If no folder is opened, replace with the directory of the code file
                 { regex: /\$workspaceRoot/g, replaceValue: this.getWorkspaceRoot(codeFileDir) },
+                // A placeholder that has to be replaced by the name of the folder opened in VS Code
+                // If no folder is opened, replace with the directory of the code file
+                { regex: /\$workspaceName/g, replaceValue: this.getWorkspaceName(this.getWorkspaceRoot(codeFileDir)) },
                 // A placeholder that has to be replaced by the code file name without its extension
                 { regex: /\$fileNameWithoutExt/g, replaceValue: this.getCodeFileWithoutDirAndExt() },
                 // A placeholder that has to be replaced by the full code file name
