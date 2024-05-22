@@ -489,7 +489,11 @@ export class CodeManager implements vscode.Disposable {
             const elapsedTime = (endTime.getTime() - startTime.getTime()) / 1000;
             this._outputChannel.appendLine("");
             if (showExecutionMessage) {
-                this._outputChannel.appendLine("[Done] exited with code=" + code + " in " + elapsedTime + " seconds");
+                this._outputChannel.appendLine("[Finished] with exit code=" + code + " in " + elapsedTime + " seconds");
+                this._outputChannel.appendLine("");
+            }
+            else {
+                this._outputChannel.appendLine("[Finished]");
                 this._outputChannel.appendLine("");
             }
             if (this._isTmpFile) {
