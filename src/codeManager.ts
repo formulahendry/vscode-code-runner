@@ -464,15 +464,21 @@ export class CodeManager implements vscode.Disposable {
             this._outputChannel.clear();
         }
         const showExecutionMessage = this._config.get<boolean>("showExecutionMessage");
+        const showExecutionTimestamp = this._config.get<boolean>("showExecutionTimestamp");
         this._outputChannel.show(this._config.get<boolean>("preserveFocus"));
         const spawn = require("child_process").spawn;
         const command = await this.getFinalCommandToRunCodeFile(executor, appendFile);
+        const startTime = new Date();
         if (showExecutionMessage) {
-            this._outputChannel.appendLine("[Running] " + command);
+            let executionMessage = "[Running] ";
+            if (showExecutionTimestamp) {
+                executionMessage = "[Running @" + startTime.toLocaleTimeString() + "] ";
+            }
+            this._outputChannel.appendLine(executionMessage + command);
         }
         this.sendRunEvent(executor, false);
-        const startTime = new Date();
         this._process = spawn(command, [], { cwd: this._cwd, shell: true });
+        
 
         this._process.stdout.on("data", (data) => {
             this._outputChannel.append(data.toString());
