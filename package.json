@@ -150,7 +150,7 @@
             "bat": "cmd /c",
             "shellscript": "bash",
             "fsharp": "fsi",
-            "csharp": "scriptcs",
+            "csharp": "dotnet script",
             "vbscript": "cscript //Nologo",
             "typescript": "ts-node",
             "coffeescript": "coffee",
