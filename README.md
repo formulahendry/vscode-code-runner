@@ -40,7 +40,7 @@ If you like this extension, you could become a backer or sponsor via **[Patreon]
 
 * To run code:
   * use shortcut `Ctrl+Alt+N`
-  * or press `F1` and then select/type `Run Code`, 
+  * or press `F1` and then select/type `Run Code`,
   * or right click the Text Editor and then click `Run Code` in editor context menu
   * or click `Run Code` button in editor title menu
   * or click `Run Code` button in context menu of file explorer
@@ -87,6 +87,7 @@ e.g. To set the executor PATH for ruby, php and html:
   * $fileNameWithoutExt: The base name of the code file being run without its extension
   * $driveLetter: The drive letter of the code file being run (Windows only)
   * $pythonPath: The path of Python interpreter (set by `Python: Select Interpreter` command)
+  * $currentLine: The current line under cursor.
 
 **Please take care of the back slash and the space in file path of the executor**
   * Back slash: please use `\\`
