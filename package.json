@@ -396,5 +396,10 @@
     "mocha": "^6.1.4",
     "tslint": "^5.5.0",
     "typescript": "^3.8.3"
+  },
+    "capabilities": {
+    "virtualWorkspaces": {
+      "supported": true
+    }
   }
 }
