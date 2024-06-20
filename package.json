@@ -151,7 +151,7 @@
             "shellscript": "bash",
             "fsharp": "fsi",
             "csharp": "scriptcs",
-            "vbscript": "cscript //Nologo",
+            "vbscript": "cd $dir && cscript //Nologo $fileName",
             "typescript": "ts-node",
             "coffeescript": "coffee",
             "scala": "scala",
@@ -197,7 +197,7 @@
           "type": "object",
           "default": {
             ".vb": "cd $dir && vbc /nologo $fileName && $dir$fileNameWithoutExt",
-            ".vbs": "cscript //Nologo",
+            ".vbs": "cd $dir && cscript //Nologo $fileName",
             ".scala": "scala",
             ".jl": "julia",
             ".cr": "crystal",
