@@ -7,6 +7,7 @@ import * as vscode from "vscode";
 import { AppInsightsClient } from "./appInsightsClient";
 import { Constants } from "./constants";
 import { Utility } from "./utility";
+import * as iconv from "iconv-lite";
 
 const TmpDir = os.tmpdir();
 
@@ -465,6 +466,8 @@ export class CodeManager implements vscode.Disposable {
         }
         const showExecutionMessage = this._config.get<boolean>("showExecutionMessage");
         this._outputChannel.show(this._config.get<boolean>("preserveFocus"));
+        const decodeMap = this._config.get<any>("decodeMap");
+        const decodeOutput = decodeMap[this._languageId] || "utf8";
         const spawn = require("child_process").spawn;
         const command = await this.getFinalCommandToRunCodeFile(executor, appendFile);
         if (showExecutionMessage) {
@@ -475,11 +478,11 @@ export class CodeManager implements vscode.Disposable {
         this._process = spawn(command, [], { cwd: this._cwd, shell: true });
 
         this._process.stdout.on("data", (data) => {
-            this._outputChannel.append(data.toString());
+            this._outputChannel.append(iconv.decode(data, decodeOutput));
         });
 
         this._process.stderr.on("data", (data) => {
-            this._outputChannel.append(data.toString());
+            this._outputChannel.append(iconv.decode(data, decodeOutput));
         });
 
         this._process.on("close", (code) => {
