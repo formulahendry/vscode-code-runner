@@ -10,7 +10,7 @@
   "publisher": "formulahendry",
   "icon": "images/logo.png",
   "engines": {
-    "vscode": "^1.56.0"
+    "vscode": "^1.90.0"
   },
   "categories": [
     "Programming Languages",
@@ -37,9 +37,6 @@
     "url": "https://www.patreon.com/junhan"
   },
   "activationEvents": [
-    "onCommand:code-runner.run",
-    "onCommand:code-runner.runCustomCommand",
-    "onCommand:code-runner.runByLanguage",
     "onStartupFinished"
   ],
   "main": "./out/src/extension",
@@ -119,14 +116,14 @@
     },
     "configuration": {
       "type": "object",
-      "title": "Run Code configuration",
+      "title": "%config.configuration%",
       "properties": {
         "code-runner.executorMapByGlob": {
           "type": "object",
           "default": {
             "pom.xml": "cd $dir && mvn clean package"
           },
-          "description": "Set the executor by glob.",
+          "markdownDescription": "%config.executorMapByGlob%",
           "scope": "resource"
         },
         "code-runner.executorMap": {
@@ -190,7 +187,7 @@
             "pkl": "cd $dir && pkl eval -f yaml $fileName -o $fileNameWithoutExt.yaml",
             "gleam": "gleam run -m $fileNameWithoutExt"
           },
-          "description": "Set the executor of each language.",
+          "markdownDescription": "%config.executorMap%",
           "scope": "resource"
         },
         "code-runner.executorMapByFileExtension": {
@@ -233,13 +230,19 @@
             ".pkl": "cd $dir && pkl eval -f yaml $fileName -o $fileNameWithoutExt.yaml",
             ".gleam": "gleam run -m $fileNameWithoutExt"
           },
-          "description": "Set the executor of each file extension.",
+          "markdownDescription": "%config.executorMapByFileExtension%",
           "scope": "resource"
         },
         "code-runner.customCommand": {
           "type": "string",
           "default": "echo Hello",
-          "description": "Set the custom command to run.",
+          "markdownDescription": "%config.customCommand%",
+          "scope": "resource"
+        },
+        "code-runner.decodeMap": {
+          "type": "object",
+          "default": {},
+          "markdownDescription": "%config.decodeMap%",
           "scope": "resource"
         },
         "code-runner.languageIdToFileExtensionMap": {
@@ -249,115 +252,115 @@
             "powershell": ".ps1",
             "typescript": ".ts"
           },
-          "description": "Set the mapping of languageId to file extension.",
+          "markdownDescription": "%config.languageIdToFileExtensionMap%",
           "scope": "resource"
         },
         "code-runner.defaultLanguage": {
           "type": "string",
           "default": "",
-          "description": "Set the default language to run.",
+          "markdownDescription": "%config.defaultLanguage%",
           "scope": "resource"
         },
         "code-runner.cwd": {
           "type": "string",
           "default": "",
-          "description": "Set the working directory.",
+          "markdownDescription": "%config.cwd%",
           "scope": "resource"
         },
         "code-runner.fileDirectoryAsCwd": {
           "type": "boolean",
           "default": false,
-          "description": "Whether to use the directory of the file to be executed as the working directory.",
+          "markdownDescription": "%config.fileDirectoryAsCwd%",
           "scope": "resource"
         },
         "code-runner.clearPreviousOutput": {
           "type": "boolean",
           "default": false,
-          "description": "Whether to clear previous output before each run.",
+          "markdownDescription": "%config.clearPreviousOutput%",
           "scope": "resource"
         },
         "code-runner.saveAllFilesBeforeRun": {
           "type": "boolean",
           "default": false,
-          "description": "Whether to save all files before running.",
+          "markdownDescription": "%config.saveAllFilesBeforeRun%",
           "scope": "resource"
         },
         "code-runner.saveFileBeforeRun": {
           "type": "boolean",
           "default": false,
-          "description": "Whether to save the current file before running.",
+          "markdownDescription": "%config.saveFileBeforeRun%",
           "scope": "resource"
         },
         "code-runner.enableAppInsights": {
           "type": "boolean",
           "default": true,
-          "description": "Whether to enable AppInsights to track user telemetry data.",
+          "markdownDescription": "%config.enableAppInsights%",
           "scope": "resource"
         },
         "code-runner.showExecutionMessage": {
           "type": "boolean",
           "default": true,
-          "description": "Whether to show extra execution message like [Running] ... and [Done] ...",
+          "markdownDescription": "%config.showExecutionMessage%",
           "scope": "resource"
         },
         "code-runner.runInTerminal": {
           "type": "boolean",
           "default": false,
-          "description": "Whether to run code in Integrated Terminal.",
+          "markdownDescription": "%config.runInTerminal%",
           "scope": "resource"
         },
         "code-runner.terminalRoot": {
           "type": "string",
           "default": "",
-          "description": "For Windows system, replaces the Windows style drive letter in the command with a Unix style root when using a custom shell as the terminal, like Bash or Cgywin. Example: Setting this to '/mnt/' will replace 'C:\\path' with '/mnt/c/path'",
+          "markdownDescription": "%config.terminalRoot%",
           "scope": "resource"
         },
         "code-runner.preserveFocus": {
           "type": "boolean",
           "default": true,
-          "description": "Whether to preserve focus on code editor after code run is triggered.",
+          "markdownDescription": "%config.preserveFocus%",
           "scope": "resource"
         },
         "code-runner.ignoreSelection": {
           "type": "boolean",
           "default": false,
-          "description": "Whether to ignore selection to always run entire file.",
+          "markdownDescription": "%config.ignoreSelection%",
           "scope": "resource"
         },
         "code-runner.showRunIconInEditorTitleMenu": {
           "type": "boolean",
           "default": true,
-          "description": "Whether to show 'Run Code' icon in editor title menu.",
+          "markdownDescription": "%config.showRunIconInEditorTitleMenu%",
           "scope": "resource"
         },
         "code-runner.showStopIconInEditorTitleMenu": {
           "type": "boolean",
           "default": true,
-          "description": "Whether to show 'Stop code run' icon in the editor title menu when code is running.",
+          "markdownDescription": "%config.showStopIconInEditorTitleMenu%",
           "scope": "resource"
         },
         "code-runner.showRunCommandInEditorContextMenu": {
           "type": "boolean",
           "default": true,
-          "description": "Whether to show 'Run Code' command in editor context menu.",
+          "markdownDescription": "%config.showRunCommandInEditorContextMenu%",
           "scope": "resource"
         },
         "code-runner.showRunCommandInExplorerContextMenu": {
           "type": "boolean",
           "default": true,
-          "description": "Whether to show 'Run Code' command in explorer context menu.",
+          "markdownDescription": "%config.showRunCommandInExplorerContextMenu%",
           "scope": "resource"
         },
         "code-runner.temporaryFileName": {
           "type": "string",
           "default": "tempCodeRunnerFile",
-          "description": "Temporary file name used in running selected code snippet. When it is set as empty, the file name will be random.",
+          "markdownDescription": "%config.temporaryFileName%",
           "scope": "resource"
         },
         "code-runner.respectShebang": {
           "type": "boolean",
           "default": true,
-          "description": "Whether to respect Shebang to run code.",
+          "markdownDescription": "%config.respectShebang%",
           "scope": "resource"
         }
       }
@@ -385,16 +388,17 @@
   },
   "dependencies": {
     "applicationinsights": "^0.19.0",
+    "iconv-lite": "^0.6.3",
     "micromatch": "^4.0.2",
     "tree-kill": "^1.2.2"
   },
   "devDependencies": {
     "@types/micromatch": "^3.1.0",
     "@types/mocha": "^2.2.32",
-    "@types/node": "^6.0.40",
-    "@types/vscode": "^1.56.0",
-    "mocha": "^6.1.4",
+    "@types/node": "^6.14.13",
+    "@types/vscode": "^1.90.0",
+    "mocha": "^10.5.2",
     "tslint": "^5.5.0",
-    "typescript": "^3.8.3"
+    "typescript": "^5.5.2"
   }
 }
