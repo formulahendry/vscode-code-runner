@@ -231,7 +231,8 @@
             ".erl": "escript",
             ".spwn": "spwn build",
             ".pkl": "cd $dir && pkl eval -f yaml $fileName -o $fileNameWithoutExt.yaml",
-            ".gleam": "gleam run -m $fileNameWithoutExt"
+            ".gleam": "gleam run -m $fileNameWithoutExt",
+            ".typ": "typst compile"
           },
           "description": "Set the executor of each file extension.",
           "scope": "resource"
