@@ -40,7 +40,7 @@ If you like this extension, you could become a backer or sponsor via **[Patreon]
 
 * To run code:
   * use shortcut `Ctrl+Alt+N`
-  * or press `F1` and then select/type `Run Code`, 
+  * or press `F1` and then select/type `Run Code`,
   * or right click the Text Editor and then click `Run Code` in editor context menu
   * or click `Run Code` button in editor title menu
   * or click `Run Code` button in context menu of file explorer
@@ -109,7 +109,7 @@ Besides, you could set the default language to run:
     "code-runner.defaultLanguage": "javascript"
 }
 ```
-**For the default language:** It should be set with language id defined in [VS Code](https://github.com/Microsoft/vscode/tree/master/extensions). The languages you could set are `java, c, cpp, javascript, php, python, perl, ruby, go, lua, groovy, powershell, bat, shellscript, fsharp, csharp, vbscript, typescript, coffeescript, swift, r, clojure, haxe, objective-c, rust, racket, ahk, autoit, kotlin, dart, pascal, haskell, nim, d, lisp`
+**For the default language:** It should be set with language id defined in [VS Code](https://github.com/Microsoft/vscode/tree/master/extensions). The languages you could set are `java, c, cpp, javascript, php, python, perl, ruby, go, lua, groovy, powershell, bat, shellscript, fsharp, csharp, vbscript, typescript, coffeescript, swift, r, clojure, haxe, objective-c, rust, racket, ahk, autoit, kotlin, dart, pascal, haskell, nim, d, lisp, nix`
 
 Also, you could set the executor per file extension:
 ```json
@@ -169,6 +169,15 @@ To set whether to show extra execution message like [Running] ... and [Done] ...
 }
 ```
 
+Which integrated terminal profile to use, set it by platform. If value is empty string, default will be used.
+```json
+{
+    "code-runner.profiles.linux": "",
+    "code-runner.profiles.osx": "",
+    "code-runner.profiles.windows": ""
+}
+```
+
 To set whether to preserve focus on code editor after code run is triggered (default is true, the code editor will keep focus; when it is false, Terminal or Output Channel will take focus):
 ```json
 {
@@ -203,6 +212,7 @@ To set whether to preserve focus on code editor after code run is triggered (def
 * To run C# script, you need to install [scriptcs](http://scriptcs.net/)
 * To run TypeScript, you need to install [ts-node](https://github.com/TypeStrong/ts-node)
 * To run Clojure, you need to install [Leiningen](https://leiningen.org/) and [lein-exec](https://github.com/kumarshantanu/lein-exec)
+* To run code in terminal, you can't use shell, managed with [home-manager](https://nix-community.github.io/home-manager/). Change your profile to one that uses `/run/current-system/sw/bin/sh` or other not affected shell.
 
 ## Telemetry data
 By default, telemetry data collection is turned on to understand user behavior to improve this extension. To disable it, update the settings.json as below:
