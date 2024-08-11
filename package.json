@@ -361,6 +361,24 @@
           "default": true,
           "description": "Whether to respect Shebang to run code.",
           "scope": "resource"
+        },
+        "code-runner.profiles.linux": {
+          "type": "string",
+          "default": "",
+          "description": "Set the terminal profile to run code on Linux.",
+          "scope": "resource"
+        },
+        "code-runner.profiles.osx": {
+          "type": "string",
+          "default": "",
+          "description": "Set the terminal profile to run code on macOS.",
+          "scope": "resource"
+        },
+        "code-runner.profiles.windows": {
+          "type": "string",
+          "default": "",
+          "description": "Set the terminal profile to run code on Windows.",
+          "scope": "resource"
         }
       }
     },

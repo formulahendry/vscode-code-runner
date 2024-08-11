@@ -24,7 +24,6 @@ export class CodeManager implements vscode.Disposable {
     private _workspaceFolder: string;
     private _config: vscode.WorkspaceConfiguration;
     private _appInsightsClient: AppInsightsClient;
-    private _TERMINAL_DEFAULT_SHELL_WINDOWS: string | null = null;
 
     constructor() {
         this._outputChannel = vscode.window.createOutputChannel("Code");
@@ -436,11 +435,7 @@ export class CodeManager implements vscode.Disposable {
     }
 
     private async executeCommandInTerminal(executor: string, appendFile: boolean = true) {
-        let isNewTerminal = false;
-        if (this._terminal === null) {
-            this._terminal = vscode.window.createTerminal("Code");
-            isNewTerminal = true;
-        }
+        const isNewTerminal = await this.createTerminal();
         this._terminal.show(this._config.get<boolean>("preserveFocus"));
         this.sendRunEvent(executor, true);
         executor = this.changeExecutorFromCmdToPs(executor);
@@ -454,6 +449,29 @@ export class CodeManager implements vscode.Disposable {
             this._terminal.sendText(`cd "${cwd}"`);
         }
         this._terminal.sendText(command);
+    }
+
+    /**
+     * Creates a new terminal if needed. Uses the shell path from the configuration if available.
+     * @param cwd Current working directory of the terminal
+     * @returns Boolean indicating whether a new terminal was created
+     */
+    private async createTerminal(cwd: string = this._cwd): Promise<boolean> {
+        if (this._terminal) {
+            return false;
+        }
+        const platform = os.platform() === "win32"
+            ? "windows" : os.platform() === "darwin" ? "osx" : "linux";
+        const profile = this._config.get<string>("profiles." + platform);
+        const shellPath = profile === "" ? vscode.env.shell
+            : vscode.workspace.getConfiguration("terminal")
+            .get<{ path: string }>("integrated.profiles." + platform + "." + profile).path;
+        this._terminal = vscode.window.createTerminal({
+            name: "Code",
+            cwd,
+            shellPath,
+        });
+        return true;
     }
 
     private async executeCommandInOutputChannel(executor: string, appendFile: boolean = true) {
