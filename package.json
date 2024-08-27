@@ -85,7 +85,7 @@
     "menus": {
       "editor/context": [
         {
-          "when": "!inOutput && config.code-runner.showRunCommandInEditorContextMenu",
+          "when": "!inOutput && config.code-runner.showRunCommandInEditorContextMenu && resourceExtname not in code-runner.excludedFileExtension",
           "command": "code-runner.run",
           "group": "navigation"
         },
@@ -97,21 +97,21 @@
       ],
       "editor/title/run": [
         {
-          "when": "config.code-runner.showRunIconInEditorTitleMenu",
+          "when": "config.code-runner.showRunIconInEditorTitleMenu && resourceExtname not in code-runner.excludedFileExtension",
           "command": "code-runner.run",
           "group": "navigation"
         }
       ],
       "editor/title": [
         {
-          "when": "config.code-runner.showStopIconInEditorTitleMenu && code-runner.codeRunning",
+          "when": "config.code-runner.showStopIconInEditorTitleMenu && code-runner.codeRunning && resourceExtname not in code-runner.excludedFileExtension",
           "command": "code-runner.stop",
           "group": "navigation"
         }
       ],
       "explorer/context": [
         {
-          "when": "!explorerResourceIsFolder && config.code-runner.showRunCommandInExplorerContextMenu",
+          "when": "!explorerResourceIsFolder && config.code-runner.showRunCommandInExplorerContextMenu && resourceExtname not in code-runner.excludedFileExtension",
           "command": "code-runner.run",
           "group": "navigation"
         }
@@ -358,6 +358,15 @@
           "type": "boolean",
           "default": true,
           "description": "Whether to respect Shebang to run code.",
+          "scope": "resource"
+        },
+        "code-runner.excludedFileExtension": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Exclude Code-Runner from running with certain file extensions",
+          "default": [],
           "scope": "resource"
         }
       }

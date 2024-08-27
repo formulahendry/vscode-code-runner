@@ -31,6 +31,9 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(runByLanguage);
     context.subscriptions.push(stop);
     context.subscriptions.push(codeManager);
+
+    const excludedExts = vscode.workspace.getConfiguration('code-runner').get<string[]>('excludedFileExtension', []);
+    vscode.commands.executeCommand('setContext', 'code-runner.excludedFileExtension', excludedExts);
 }
 
 export function deactivate() {

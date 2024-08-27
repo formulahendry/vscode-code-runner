@@ -58,6 +58,11 @@ export class CodeManager implements vscode.Disposable {
         this.initialize();
 
         const fileExtension = extname(this._document.fileName);
+        const excludedExts = this._config.get<string[]>('excludedFileExtension', []);
+        if (excludedExts.includes(fileExtension)) {
+            vscode.window.showInformationMessage("The file extension is excluded.");
+            return;
+        }
         const executor = this.getExecutor(languageId, fileExtension);
         // undefined or null
         if (executor == null) {
