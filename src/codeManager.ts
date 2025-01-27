@@ -380,6 +380,12 @@ export class CodeManager implements vscode.Disposable {
                 { regex: /\$pythonPath/g, replaceValue: pythonPath },
             ];
 
+            let customParameters = this._config.get<any>("customParameters");
+            customParameters.forEach((customParameter) => {
+                let regex = new RegExp(`\\$${customParameter.param}`, 'g');
+                cmd = cmd.replace(regex, customParameter.value);
+            });
+
             placeholders.forEach((placeholder) => {
                 cmd = cmd.replace(placeholder.regex, placeholder.replaceValue);
             });
