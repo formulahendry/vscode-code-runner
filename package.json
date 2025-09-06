@@ -129,6 +129,12 @@
           "description": "Set the executor by glob.",
           "scope": "resource"
         },
+        "code-runner.executorMapByGlobOverride": {
+          "type": "object",
+          "default": {},
+          "description": "If set, overrides `code-runner.executorMapByGlob` without merging the default settings.",
+          "scope": "resource"
+        },
         "code-runner.executorMap": {
           "type": "object",
           "default": {
@@ -193,6 +199,12 @@
           "description": "Set the executor of each language.",
           "scope": "resource"
         },
+        "code-runner.executorMapOverride": {
+          "type": "object",
+          "default": {},
+          "description": "If set, overrides `code-runner.executorMap` without merging the default settings.",
+          "scope": "resource"
+        },
         "code-runner.executorMapByFileExtension": {
           "type": "object",
           "default": {
@@ -236,6 +248,12 @@
           "description": "Set the executor of each file extension.",
           "scope": "resource"
         },
+        "code-runner.executorMapByFileExtensionOverride": {
+          "type": "object",
+          "default": {},
+          "description": "If set, overrides `code-runner.executorMapByFileExtension` without merging the default settings.",
+          "scope": "resource"
+        },
         "code-runner.customCommand": {
           "type": "string",
           "default": "echo Hello",
@@ -250,6 +268,12 @@
             "typescript": ".ts"
           },
           "description": "Set the mapping of languageId to file extension.",
+          "scope": "resource"
+        },
+        "code-runner.languageIdToFileExtensionMapOverride": {
+          "type": "object",
+          "default": {},
+          "description": "If set, overrides `code-runner.languageIdToFileExtensionMap` without merging the default settings.",
           "scope": "resource"
         },
         "code-runner.defaultLanguage": {

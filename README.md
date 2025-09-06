@@ -120,6 +120,8 @@ Also, you could set the executor per file extension:
 }
 ```
 
+**Note:** All of `code-runner.executorMapByFileExtension`, `code-runner.executorMapByGlob`, and `code-runner.executorMap` merge the default setting with what you set. If you want to remove one of the defaults, you can switch your setting to use `code-runner.executorMapByFileExtensionOverride`, `code-runner.executorMapByGlobOverride`, and `code-runner.executorMapOverride` respectively.
+
 To set the custom command to run:
 ```json
 {
@@ -127,7 +129,7 @@ To set the custom command to run:
 }
 ```
 
-To set the the working directory:
+To set the working directory:
 ```json
 {
     "code-runner.cwd": "path/to/working/directory"

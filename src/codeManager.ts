@@ -95,7 +95,7 @@ export class CodeManager implements vscode.Disposable {
     public runByLanguage(): void {
         this._appInsightsClient.sendEvent("runByLanguage");
         const config = this.getConfiguration("code-runner");
-        const executorMap = config.get<any>("executorMap");
+        const executorMap = this.getExecutorMap(config);
         vscode.window.showQuickPick(Object.keys(executorMap), { placeHolder: "Type or select language to run" }).then((languageId) => {
             if (languageId !== undefined) {
                 this.run(languageId);
@@ -220,15 +220,15 @@ export class CodeManager implements vscode.Disposable {
 
     private createRandomFile(content: string, folder: string, fileExtension: string) {
         let fileType = "";
-        const languageIdToFileExtensionMap = this._config.get<any>("languageIdToFileExtensionMap");
-        if (this._languageId && languageIdToFileExtensionMap[this._languageId]) {
-            fileType = languageIdToFileExtensionMap[this._languageId];
-        } else {
-            if (fileExtension) {
-                fileType = fileExtension;
-            } else {
-                fileType = "." + this._languageId;
+        if (this._languageId && this._languageId !== "") {
+            let languageIdToFileExtensionMap = this._config.get<any>("languageIdToFileExtensionMapOverride", {});
+            if (Object.keys(languageIdToFileExtensionMap).length === 0) {
+                languageIdToFileExtensionMap = this._config.get<any>("languageIdToFileExtensionMap", {});
             }
+
+            fileType = languageIdToFileExtensionMap[this._languageId] ?? fileExtension ?? ("." + this._languageId);
+        } else {
+            fileType = fileExtension ?? ("." + (this._languageId || ""));
         }
         const temporaryFileName = this._config.get<string>("temporaryFileName");
         const tmpFileNameWithoutExt = temporaryFileName ? temporaryFileName : "temp" + this.rndName();
@@ -251,27 +251,33 @@ export class CodeManager implements vscode.Disposable {
         }
 
         if (executor == null) {
-            const executorMapByGlob = this._config.get<any>("executorMapByGlob");
-            if (executorMapByGlob) {
-                const fileBasename = basename(this._document.fileName);
-                for (const glob of Object.keys(executorMapByGlob)) {
-                    if (micromatch.isMatch(fileBasename, glob)) {
-                        executor = executorMapByGlob[glob];
-                        break;
-                    }
+            let executorMapByGlob = this._config.get<any>("executorMapByGlobOverride", {});
+            if (Object.keys(executorMapByGlob).length === 0) {
+                executorMapByGlob = this._config.get<any>("executorMapByGlob", {});
+            }
+
+            executorMapByGlob = Object.fromEntries(Object.entries(executorMapByGlob).filter(([key]) => key !== ""))
+            const fileBasename = basename(this._document.fileName);
+            for (const glob of Object.keys(executorMapByGlob)) {
+                if (micromatch.isMatch(fileBasename, glob)) {
+                    executor = executorMapByGlob[glob];
+                    break;
                 }
             }
         }
 
-        const executorMap = this._config.get<any>("executorMap");
+        const executorMap = this.getExecutorMap(this._config);
 
         if (executor == null) {
             executor = executorMap[this._languageId];
         }
 
         // executor is undefined or null
-        if (executor == null && fileExtension) {
-            const executorMapByFileExtension = this._config.get<any>("executorMapByFileExtension");
+        if (executor == null && fileExtension && fileExtension !== "") {
+            let executorMapByFileExtension = this._config.get<any>("executorMapByFileExtensionOverride", {});
+            if (Object.keys(executorMapByFileExtension).length === 0) {
+                executorMapByFileExtension = this._config.get<any>("executorMapByFileExtension", {});
+            }
             executor = executorMapByFileExtension[fileExtension];
             if (executor != null) {
                 this._languageId = fileExtension;
@@ -283,6 +289,14 @@ export class CodeManager implements vscode.Disposable {
         }
 
         return executor;
+    }
+
+    private getExecutorMap(config: vscode.WorkspaceConfiguration): any {
+        let executorMap = config.get<any>("executorMapOverride", {});
+        if (Object.keys(executorMap).length === 0) {
+            executorMap = config.get<any>("executorMap", {});
+        }
+        return Object.fromEntries(Object.entries(executorMap).filter(([key]) => key !== ""));
     }
 
     private executeCommand(executor: string, appendFile: boolean = true) {
