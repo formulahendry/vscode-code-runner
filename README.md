@@ -178,7 +178,9 @@ To set whether to preserve focus on code editor after code run is triggered (def
 
 `code-runner.ignoreSelection`: Whether to ignore selection to always run entire file. (Default is **false**)
 
-`code-runner.showRunIconInEditorTitleMenu`: Whether to show 'Run Code' icon in editor title menu. (Default is **true**)
+`code-runner.onlyShowRunIconIfExecutorExists`: Whether to only show 'Run Code' icon in editor title menu if the current file can be ran. If false, the icon will show for every file. (Default is **true**)
+
+`code-runner.showRunIconInEditorTitleMenu`: Whether to show 'Run Code' icon in editor title menu. If false, overrides `code-runner.onlyShowRunIconIfExecutorExists` setting. (Default is **true**)
 
 `code-runner.showRunCommandInEditorContextMenu`: Whether to show 'Run Code' command in editor context menu. (Default is **true**)
 

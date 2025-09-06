@@ -112,6 +112,22 @@ export class CodeManager implements vscode.Disposable {
         this.stopRunning();
     }
 
+    public fileHasExecutor(): boolean {
+        const editor = vscode.window.activeTextEditor;
+        if (editor) {
+            this._document = editor.document;
+        }
+
+        if (!this._document) {
+            return false;
+        }
+
+        this.initialize();
+        const fileExtension = extname(this._document.fileName);
+        const executor = this.getExecutor(this._document.languageId, fileExtension);
+        return executor != null;
+    }
+
     private checkIsRunFromExplorer(fileUri: vscode.Uri): boolean {
         const editor = vscode.window.activeTextEditor;
         if (!fileUri || !fileUri.fsPath) {

@@ -31,6 +31,25 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(runByLanguage);
     context.subscriptions.push(stop);
     context.subscriptions.push(codeManager);
+
+    const updateContext = () => {
+        const config = vscode.workspace.getConfiguration("code-runner");
+        if (!config.get<boolean>("showRunIconInEditorTitleMenu", true)) {
+            vscode.commands.executeCommand("setContext", "code-runner.showRunButton", false);
+            return;
+        }
+
+        if (!config.get<boolean>("onlyShowRunIconIfExecutorExists", true)) {
+            vscode.commands.executeCommand("setContext", "code-runner.showRunButton", true);
+            return;
+        }
+
+        vscode.commands.executeCommand("setContext", "code-runner.showRunButton", codeManager.fileHasExecutor());
+    };
+    vscode.workspace.onDidChangeConfiguration(updateContext);
+    vscode.window.onDidChangeActiveTextEditor(updateContext);
+
+    updateContext();
 }
 
 export function deactivate() {

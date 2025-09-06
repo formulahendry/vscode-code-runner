@@ -97,7 +97,7 @@
       ],
       "editor/title/run": [
         {
-          "when": "config.code-runner.showRunIconInEditorTitleMenu",
+          "when": "code-runner.showRunButton",
           "command": "code-runner.run",
           "group": "navigation"
         }
@@ -324,10 +324,16 @@
           "description": "Whether to ignore selection to always run entire file.",
           "scope": "resource"
         },
+        "code-runner.onlyShowRunIconIfExecutorExists": {
+          "type": "boolean",
+          "default": true,
+          "description": "Whether to only show 'Run Code' icon in editor title menu if the current file can be ran. If false, the icon will show for every file.",
+          "scope": "resource"
+        },
         "code-runner.showRunIconInEditorTitleMenu": {
           "type": "boolean",
           "default": true,
-          "description": "Whether to show 'Run Code' icon in editor title menu.",
+          "description": "Whether to show 'Run Code' icon in editor title menu. If false, overrides `code-runner.onlyShowRunIconIfExecutorExists` setting.",
           "scope": "resource"
         },
         "code-runner.showStopIconInEditorTitleMenu": {
