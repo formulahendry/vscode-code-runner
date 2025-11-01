@@ -25,6 +25,7 @@ export class CodeManager implements vscode.Disposable {
     private _config: vscode.WorkspaceConfiguration;
     private _appInsightsClient: AppInsightsClient;
     private _TERMINAL_DEFAULT_SHELL_WINDOWS: string | null = null;
+    private _closePromise: Promise<void> = null;
 
     constructor() {
         this._outputChannel = vscode.window.createOutputChannel("Code");
@@ -103,9 +104,9 @@ export class CodeManager implements vscode.Disposable {
         });
     }
 
-    public stop(): void {
+    public stop(): Promise<void> {
         this._appInsightsClient.sendEvent("stop");
-        this.stopRunning();
+        return this.stopRunning();
     }
 
     public dispose() {
@@ -132,6 +133,7 @@ export class CodeManager implements vscode.Disposable {
             vscode.commands.executeCommand("setContext", "code-runner.codeRunning", false);
             const kill = require("tree-kill");
             kill(this._process.pid);
+            return this._closePromise;
         }
     }
 
@@ -471,7 +473,10 @@ export class CodeManager implements vscode.Disposable {
             this._outputChannel.appendLine("[Running] " + command);
         }
         this.sendRunEvent(executor, false);
-        const startTime = new Date();
+        let resolveClosePromise;
+        this._closePromise = new Promise<void>(resolve => (resolveClosePromise = resolve));
+        const { performance } = require('node:perf_hooks');
+        const startTime = performance.now();
         this._process = spawn(command, [], { cwd: this._cwd, shell: true });
 
         this._process.stdout.on("data", (data) => {
@@ -485,16 +490,17 @@ export class CodeManager implements vscode.Disposable {
         this._process.on("close", (code) => {
             this._isRunning = false;
             vscode.commands.executeCommand("setContext", "code-runner.codeRunning", false);
-            const endTime = new Date();
-            const elapsedTime = (endTime.getTime() - startTime.getTime()) / 1000;
+            const endTime = performance.now();
+            const elapsedTime = (endTime - startTime) / 1000;
             this._outputChannel.appendLine("");
             if (showExecutionMessage) {
-                this._outputChannel.appendLine("[Done] exited with code=" + code + " in " + elapsedTime + " seconds");
+                this._outputChannel.appendLine("[Done] exited with code=" + code + " in " + elapsedTime.toFixed(3) + " seconds");
                 this._outputChannel.appendLine("");
             }
             if (this._isTmpFile) {
                 fs.unlinkSync(this._codeFile);
             }
+            resolveClosePromise();
         });
     }
 

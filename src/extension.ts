@@ -26,10 +26,15 @@ export function activate(context: vscode.ExtensionContext) {
         codeManager.stop();
     });
 
+    const stopWait = vscode.commands.registerCommand("code-runner.stopWait", () => {
+        return codeManager.stop();
+    });
+
     context.subscriptions.push(run);
     context.subscriptions.push(runCustomCommand);
     context.subscriptions.push(runByLanguage);
     context.subscriptions.push(stop);
+    context.subscriptions.push(stopWait);
     context.subscriptions.push(codeManager);
 }
 

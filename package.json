@@ -62,6 +62,11 @@
         "command": "code-runner.stop",
         "title": "Stop Code Run",
         "icon": "$(debug-stop)"
+      },
+      {
+        "command": "code-runner.stopWait",
+        "title": "Stop Code Run and wait for it to exit",
+        "icon": "$(debug-stop)"
       }
     ],
     "keybindings": [

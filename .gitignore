@@ -3,3 +3,4 @@ npm-debug.log
 out
 node_modules
 *.vsix
+!Build.ps1
