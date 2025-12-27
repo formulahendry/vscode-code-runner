@@ -1,0 +1,68 @@
+<footer>
+  Built with respect, memories & brotherhood — 2025
+</footer>
+
+<script>
+let time=10;
+const cd=document.getElementById("countdown");
+const hero=document.getElementById("hero");
+
+const timer=setInterval(()=>{
+  time--;
+  cd.innerText=time;
+  if(time===0){
+    clearInterval(timer);
+    cd.style.display="none";
+    hero.style.display="flex";
+    confetti();
+  }
+},1000);
+
+function scrollToStory(){
+  document.getElementById("story").scrollIntoView({behavior:"smooth"});
+}
+
+function confetti(){
+  for(let i=0;i<120;i++){
+    const c=document.createElement("div");
+    c.className="confetti";
+    c.style.left=Math.random()*100+"vw";
+    c.style.background=hsl(${Math.random()*360},100%,60%);
+    c.style.animationDuration=(Math.random()*3+2)+"s";
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),5000);
+  }
+}
+
+function joke(){
+  const j=[
+    "You don’t age. You just level up.",
+    "Still handsome. Slightly wiser.",
+    "Legend status: confirmed.",
+    "Aging like premium software."
+  ];
+  output(j[Math.floor(Math.random()*j.length)]);
+}
+
+function compliment(){
+  const c=[
+    "You’re solid. Always have been.",
+    "Your loyalty is rare.",
+    "You make life lighter.",
+    "Respect follows you naturally."
+  ];
+  output(c[Math.floor(Math.random()*c.length)]);
+}
+
+function surprise(){
+  output("Surprise 🎉 You’re deeply appreciated — always.");
+  confetti();
+}
+
+function output(t){
+  document.getElementById("output").innerText=t;
+}
+</script>
+
+</body>
+</html>
