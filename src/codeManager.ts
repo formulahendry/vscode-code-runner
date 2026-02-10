@@ -337,6 +337,91 @@ export class CodeManager implements vscode.Disposable {
     }
 
     /**
+     * Gets the output directory for compiled files.
+     * Returns empty string if not configured.
+     */
+    private getOutputDirectory(): string {
+        const outputDir = this._config.get<string>("outputDirectory");
+        return outputDir ? outputDir : "";
+    }
+
+    /**
+     * Modifies the executor command to use output directory for compiled languages.
+     * Handles directory creation and path adjustments automatically.
+     */
+    private applyOutputDirectory(executor: string): string {
+        const outputDir = this.getOutputDirectory();
+        if (!outputDir) {
+            return executor;
+        }
+
+        const isWindows = os.platform() === "win32";
+        const mkdirCmd = isWindows ? `if not exist "${outputDir}" mkdir "${outputDir}"` : `mkdir -p ${outputDir}`;
+        const pathSep = isWindows ? "\\" : "/";
+        
+        // Language-specific patterns for compiled languages
+        const patterns = [
+            // C++: g++ file.cpp -o file && ./file  =>  mkdir && g++ file.cpp -o bin/file && bin/file
+            {
+                regex: /g\+\+\s+(\$fileName)\s+-o\s+(\$fileNameWithoutExt)\s+&&\s+(\$dir)?(\$fileNameWithoutExt)/g,
+                replacement: `${mkdirCmd} && g++ $1 -o ${outputDir}${pathSep}$2 && ${outputDir}${pathSep}$2`
+            },
+            // C: gcc file.c -o file && ./file
+            {
+                regex: /gcc\s+(\$fileName)\s+-o\s+(\$fileNameWithoutExt)\s+&&\s+(\$dir)?(\$fileNameWithoutExt)/g,
+                replacement: `${mkdirCmd} && gcc $1 -o ${outputDir}${pathSep}$2 && ${outputDir}${pathSep}$2`
+            },
+            // Java: javac file.java && java ClassName
+            {
+                regex: /javac\s+(\$fileName)\s+&&\s+java\s+(\$fileNameWithoutExt)/g,
+                replacement: `${mkdirCmd} && javac $1 -d ${outputDir} && java -cp ${outputDir} $2`
+            },
+            // Rust: rustc file.rs && ./file
+            {
+                regex: /rustc\s+(\$fileName)\s+&&\s+(\$dir)?(\$fileNameWithoutExt)/g,
+                replacement: `${mkdirCmd} && rustc $1 -o ${outputDir}${pathSep}$2 && ${outputDir}${pathSep}$2`
+            },
+            // D: dmd file.d && ./file
+            {
+                regex: /dmd\s+(\$fileName)\s+&&\s+(\$dir)?(\$fileNameWithoutExt)/g,
+                replacement: `${mkdirCmd} && dmd $1 -of${outputDir}${pathSep}$2 && ${outputDir}${pathSep}$2`
+            },
+            // Pascal: fpc file.pas && ./file
+            {
+                regex: /fpc\s+(\$fileName)\s+&&\s+(\$dir)?(\$fileNameWithoutExt)/g,
+                replacement: `${mkdirCmd} && fpc $1 -o${outputDir}${pathSep}$2 && ${outputDir}${pathSep}$2`
+            },
+            // Fortran: gfortran file.f90 -o file && ./file
+            {
+                regex: /gfortran\s+(\$fileName)\s+-o\s+(\$fileNameWithoutExt)\s+&&\s+(\$dir)?(\$fileNameWithoutExt)/g,
+                replacement: `${mkdirCmd} && gfortran $1 -o ${outputDir}${pathSep}$2 && ${outputDir}${pathSep}$2`
+            },
+            // Objective-C: gcc -framework Cocoa file.m -o file && ./file
+            {
+                regex: /gcc\s+-framework\s+Cocoa\s+(\$fileName)\s+-o\s+(\$fileNameWithoutExt)\s+&&\s+(\$dir)?(\$fileNameWithoutExt)/g,
+                replacement: `${mkdirCmd} && gcc -framework Cocoa $1 -o ${outputDir}${pathSep}$2 && ${outputDir}${pathSep}$2`
+            },
+            // VB.NET: vbc file.vb && ./file
+            {
+                regex: /vbc\s+\/nologo\s+(\$fileName)\s+&&\s+(\$dir)?(\$fileNameWithoutExt)/g,
+                replacement: `${mkdirCmd} && vbc /nologo $1 /out:${outputDir}${pathSep}$2.exe && ${outputDir}${pathSep}$2`
+            },
+            // Kotlin: kotlinc file.kt -include-runtime -d file.jar && java -jar file.jar
+            {
+                regex: /kotlinc\s+(\$fileName)\s+-include-runtime\s+-d\s+(\$fileNameWithoutExt)\.jar\s+&&\s+java\s+-jar\s+(\$fileNameWithoutExt)\.jar/g,
+                replacement: `${mkdirCmd} && kotlinc $1 -include-runtime -d ${outputDir}${pathSep}$2.jar && java -jar ${outputDir}${pathSep}$2.jar`
+            },
+        ];
+
+        let modifiedExecutor = executor;
+        patterns.forEach(pattern => {
+            modifiedExecutor = modifiedExecutor.replace(pattern.regex, pattern.replacement);
+        });
+
+        return modifiedExecutor;
+    }
+
+    /**
      * Includes double quotes around a given file name.
      */
     private quoteFileName(fileName: string): string {
@@ -360,6 +445,7 @@ export class CodeManager implements vscode.Disposable {
         if (this._codeFile) {
             const codeFileDir = this.getCodeFileDir();
             const pythonPath = cmd.includes("$pythonPath") ? await Utility.getPythonPath(this._document) : Constants.python;
+            const outputDir = this.getOutputDirectory();
             const placeholders: Array<{ regex: RegExp, replaceValue: string }> = [
                 // A placeholder that has to be replaced by the path of the folder opened in VS Code
                 // If no folder is opened, replace with the directory of the code file
@@ -378,11 +464,16 @@ export class CodeManager implements vscode.Disposable {
                 { regex: /\$dir/g, replaceValue: this.quoteFileName(codeFileDir) },
                 // A placeholder that has to be replaced by the path of Python interpreter
                 { regex: /\$pythonPath/g, replaceValue: pythonPath },
+                // A placeholder that has to be replaced by the output directory for compiled files
+                { regex: /\$outputDir/g, replaceValue: outputDir },
             ];
 
             placeholders.forEach((placeholder) => {
                 cmd = cmd.replace(placeholder.regex, placeholder.replaceValue);
             });
+            
+            // Apply output directory transformations for compiled languages
+            cmd = this.applyOutputDirectory(cmd);
         }
 
         return (cmd !== executor ? cmd : executor + (appendFile ? " " + this.quoteFileName(this._codeFile) : ""));
