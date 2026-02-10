@@ -264,6 +264,12 @@
           "description": "Set the working directory.",
           "scope": "resource"
         },
+        "code-runner.outputDirectory": {
+          "type": "string",
+          "default": "",
+          "description": "Set the output directory for compiled files (e.g., 'bin' or 'build'). If empty, compiled files will be placed in the same directory as the source file.",
+          "scope": "resource"
+        },
         "code-runner.fileDirectoryAsCwd": {
           "type": "boolean",
           "default": false,
