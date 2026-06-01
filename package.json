@@ -97,14 +97,14 @@
       ],
       "editor/title/run": [
         {
-          "when": "config.code-runner.showRunIconInEditorTitleMenu",
+          "when": "config.code-runner.showRunIconInEditorTitleMenu && resourceScheme =~ /^file$|^untitled$|^vscode-remote$/",
           "command": "code-runner.run",
           "group": "navigation"
         }
       ],
       "editor/title": [
         {
-          "when": "config.code-runner.showStopIconInEditorTitleMenu && code-runner.codeRunning",
+          "when": "config.code-runner.showStopIconInEditorTitleMenu && code-runner.codeRunning && resourceScheme =~ /^file$|^untitled$|^vscode-remote$/",
           "command": "code-runner.stop",
           "group": "navigation"
         }
