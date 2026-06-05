@@ -1,3 +1,3 @@
-<h2 align="center">Backers</h2>
+# Backers
 
 - Daniel Wotapka

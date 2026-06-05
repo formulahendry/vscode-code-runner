@@ -3,26 +3,34 @@
     "version": "0.1.0",
     "configurations": [
         {
-            "name": "Launch Extension",
-            "type": "extensionHost",
+            "name": "Launch Apex Replay Debugger",
+            "type": "apex-replay",
             "request": "launch",
-            "runtimeExecutable": "${execPath}",
-            "args": ["--extensionDevelopmentPath=${workspaceRoot}" ],
-            "stopOnEntry": false,
-            "sourceMaps": true,
-            "outDir": "${workspaceRoot}/out/src",
-            "preLaunchTask": "npm"
+            "logFile": "${command:AskForLogFileName}",
+            "stopOnEntry": true,
+            "trace": true
         },
         {
-            "name": "Launch Tests",
-            "type": "extensionHost",
-            "request": "launch",
-            "runtimeExecutable": "${execPath}",
-            "args": ["--extensionDevelopmentPath=${workspaceRoot}", "--extensionTestsPath=${workspaceRoot}/out/test" ],
-            "stopOnEntry": false,
-            "sourceMaps": true,
-            "outDir": "${workspaceRoot}/out/test",
-            "preLaunchTask": "npm"
+            = "name": "Launch Extension",
+            = "type": "extensionHost",
+            = "request": "launch",
+            = "runtimeExecutable": "${execPath}",
+            = "args": ["--extensionDevelopmentPath=${workspaceRoot}" ],
+            = "stopOnEntry": false,
+            = "sourceMaps": true,
+            = "outDir": "${workspaceRoot}/out/src",
+            = "preLaunchTask": "npm",
+        },  
+        {
+            = "name": "Launch Tests",
+            = "type": "extensionHost",
+            = "request": "launch",
+            = "runtimeExecutable": "${execPath}",
+            = "args": ["--extensionDevelopmentPath=${workspaceRoot}", "--extensionTestsPath=${workspaceRoot}/out/test" ],
+            = "stopOnEntry": false,
+            = "sourceMaps": true,
+            = "outDir": "${workspaceRoot}/out/test",
+            = "preLaunchTask": "npm"
         }
     ]
 }
