@@ -129,6 +129,7 @@ export class CodeManager implements vscode.Disposable {
     private stopRunning() {
         if (this._isRunning) {
             this._isRunning = false;
+            vscode.commands.executeCommand("setContext", "code-runner.codeRunning", false);
             const kill = require("tree-kill");
             kill(this._process.pid);
         }
@@ -388,45 +389,36 @@ export class CodeManager implements vscode.Disposable {
     }
 
     private changeExecutorFromCmdToPs(executor: string): string {
-        if (os.platform() === "win32") {
-            let windowsShell = vscode.workspace.getConfiguration("terminal").get<string>("integrated.shell.windows");
-            if (windowsShell === null) {
-                windowsShell = this.getTerminalDefaultShellWindows();
-            }
-            if (windowsShell && windowsShell.toLowerCase().indexOf("powershell") > -1 && executor.indexOf(" && ") > -1) {
-                let replacement = "; if ($?) {";
-                executor = executor.replace("&&", replacement);
-                replacement = "} " + replacement;
-                executor = executor.replace(/&&/g, replacement);
-                executor = executor.replace(/\$dir\$fileNameWithoutExt/g, ".\\$fileNameWithoutExt");
-                return executor + " }";
-            }
+        if (executor.includes(" && ") && this.isPowershellOnWindows()) {
+            let replacement = "; if ($?) {";
+            executor = executor.replace("&&", replacement);
+            replacement = "} " + replacement;
+            executor = executor.replace(/&&/g, replacement);
+            executor = executor.replace(/\$dir\$fileNameWithoutExt/g, ".\\$fileNameWithoutExt");
+            return executor + " }";
         }
         return executor;
     }
 
-    /*
-    Workaround for https://github.com/formulahendry/vscode-code-runner/issues/491
-    The following code is based on https://github.com/microsoft/vscode-maven/commit/7c1dea723fe91f665c4e624e3bf71a411ceafd93
-    This is only a fall back to identify the default shell used by VSC.
-    */
-    private getTerminalDefaultShellWindows(): string {
-        if (!this._TERMINAL_DEFAULT_SHELL_WINDOWS) {
-            const isAtLeastWindows10 = os.platform() === "win32" && parseFloat(os.release()) >= 10;
-            const is32ProcessOn64Windows = process.env.hasOwnProperty("PROCESSOR_ARCHITEW6432");
-            const powerShellPath =
-                `${process.env.windir}\\${is32ProcessOn64Windows ? "Sysnative" : "System32"}\\WindowsPowerShell\\v1.0\\powershell.exe`;
-            this._TERMINAL_DEFAULT_SHELL_WINDOWS = isAtLeastWindows10 ? powerShellPath : this.getWindowsShell();
+    private isPowershellOnWindows(): boolean {
+        if (os.platform() === "win32") {
+            const defaultProfile = vscode.workspace.getConfiguration("terminal").get<string>("integrated.defaultProfile.windows");
+            if (defaultProfile) {
+                if (defaultProfile.toLowerCase().includes("powershell")) {
+                    return true;
+                } else if (defaultProfile === "Command Prompt") {
+                    return false;
+                }
+            }
+            const windowsShell = vscode.env.shell;
+            return (windowsShell && windowsShell.toLowerCase().includes("powershell"));
         }
-        return this._TERMINAL_DEFAULT_SHELL_WINDOWS;
-    }
-    private getWindowsShell(): string {
-        return process.env.comspec || "cmd.exe";
+        return false;
     }
 
     private changeFilePathForBashOnWindows(command: string): string {
         if (os.platform() === "win32") {
-            const windowsShell = vscode.workspace.getConfiguration("terminal").get<string>("integrated.shell.windows");
+            const windowsShell = vscode.env.shell;
             const terminalRoot = this._config.get<string>("terminalRoot");
             if (windowsShell && terminalRoot) {
                 command = command
@@ -466,6 +458,7 @@ export class CodeManager implements vscode.Disposable {
 
     private async executeCommandInOutputChannel(executor: string, appendFile: boolean = true) {
         this._isRunning = true;
+        vscode.commands.executeCommand("setContext", "code-runner.codeRunning", true);
         const clearPreviousOutput = this._config.get<boolean>("clearPreviousOutput");
         if (clearPreviousOutput) {
             this._outputChannel.clear();
@@ -491,6 +484,7 @@ export class CodeManager implements vscode.Disposable {
 
         this._process.on("close", (code) => {
             this._isRunning = false;
+            vscode.commands.executeCommand("setContext", "code-runner.codeRunning", false);
             const endTime = new Date();
             const elapsedTime = (endTime.getTime() - startTime.getTime()) / 1000;
             this._outputChannel.appendLine("");

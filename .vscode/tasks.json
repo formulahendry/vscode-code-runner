@@ -22,4 +22,20 @@
     // use the standard tsc in watch mode problem matcher to find compile problems in the output.
     "problemMatcher": "$tsc-watch",
     "tasks": []
+    "tasks": [
+        {
+            "label": "npm",
+            "type": "shell",
+            "command": "npm",
+            "args": [
+                "run",
+                "compile",
+                "--loglevel",
+                "silent"
+            ],
+            "isBackground": true,
+            "problemMatcher": "$tsc-watch",
+            "group": "build"
+        }
+    ]
 }
