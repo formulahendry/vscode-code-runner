@@ -132,6 +132,7 @@
         "code-runner.executorMap": {
           "type": "object",
           "default": {
+            "tekst": "tekst $fullFileName"
             "javascript": "node",
             "java": "cd $dir && javac $fileName && java $fileNameWithoutExt",
             "c": "cd $dir && gcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
@@ -196,6 +197,7 @@
         "code-runner.executorMapByFileExtension": {
           "type": "object",
           "default": {
+            ".tk": "tekst $fullFileName"
             ".vb": "cd $dir && vbc /nologo $fileName && $dir$fileNameWithoutExt",
             ".vbs": "cscript //Nologo",
             ".scala": "scala",
